@@ -69,14 +69,14 @@
                                             <input type="password" ng-model="userLogin.password" id="password" placeholder="Password"
                                                    required class="form-control" ng-change="change()">
                                         </div>                                        
-                                    </div>
-                                    <span ng-show="invalid === true" class="label label-danger">
-                                        Invalid credentials provided. please try again.<br />
-                                    </span>
+                                    </div>                                    
                                     <a href="" tooltip-placement="bottom" tooltip="Login" ng-disabled="myform.$invalid"
                                        ng-click="login(userLogin)">
                                         <span style="color:green;" class="glyphicon glyphicon-log-in"></span>
                                     </a>
+                                    <span ng-show="invalid === true" class="label label-danger pull-left">
+                                        Invalid credentials provided. please try again.<br />
+                                    </span>
                                 </form>
                             </div>
                         </div>

@@ -4,6 +4,7 @@
     $scope.view_tab = 'updateProfile';
     $scope.changeTab = function (tab) {
         $scope.view_tab = tab;
+        $scope.showPasswordSavedMsg = null;
     }
 
     $(document).ready(function () {
@@ -22,20 +23,15 @@
 
     $scope.changePassword = function (newPassword) {
         var currentUser = $rootScope.currentUser;
-        console.log(newPassword);
-        console.log(currentUser);
         var newUser = { username: currentUser.username, password: newPassword };
         UserService.updateUserLogin(currentUser._id, newUser, function (response) {
             console.log(response);
             $scope.currentUser = response;
+            $scope.showPasswordSavedMsg = "Your password is changed. Thanks!";
+            $scope.password = '';
+            $scope.cnfPassword = '';
         })
-        /*$http.put("/api/userLogin/" + currentUser._id, newUser)
-        .success(function (response) {
-            console.log(response);
-            $scope.currentUser = response;
-        })*/
     };
-
 
     $scope.getDet = function () {
         $http.get("/api/findUserDetails/" + $rootScope.currentUser.username)
@@ -43,6 +39,10 @@
                 $scope.userDetails = response;
             })
     };
+
+    $scope.change = function (response) {
+        $scope.showPasswordSavedMsg = null;
+    }
 
     $scope.updateUser = function () {
         console.log($scope.userDetails);
@@ -55,4 +55,19 @@
                 $("#updtUser").hide();
             });
     }
+
+    $scope.deleteProfile = function () {
+        UserService.deleteUser($rootScope.currentUser._id, function (response) {
+            console.log(response);
+            console.log("Calling Logout");
+            $http.post("/api/logout").success(function (response) {
+                console.log("After Logout");
+                $scope.currentUser = null;
+                $rootScope.currentUser = null;
+                $scope.userLogin = null;
+                $location.url('/');
+            });
+        })
+    };
+
 });

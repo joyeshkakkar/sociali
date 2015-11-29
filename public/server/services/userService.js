@@ -5,7 +5,13 @@
         .success(callback);
     }
 
+    var deleteUser = function (currentUserId, callback) {
+        $http.delete("/api/deleteUser/" + currentUserId)
+        .success(callback);
+    }
+
     return {
-        updateUserLogin: updateUserLogin
+        updateUserLogin: updateUserLogin,
+        deleteUser: deleteUser
     }
 });

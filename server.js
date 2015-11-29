@@ -57,17 +57,14 @@ var PreferenceSchema = new mongoose.Schema({
 
 
 var UserLoginModel = mongoose.model("UserLogin", UserLoginSchema);
+var UserDetailsModel = mongoose.model("UserDetails", UserDetailsSchema);
+var PreferencesModel = mongoose.model("Preferences", PreferenceSchema);
 
 var initialUserLogin = new UserLoginModel({
     username: "admin",
     password: "admin",
     role: "Admin"
 });
-
-//initialUserLogin.save();
-
-var UserDetailsModel = mongoose.model("UserDetails", UserDetailsSchema);
-
 var initialUserDetails = new UserDetailsModel({
     username: "admin",
     firstName: "admin",
@@ -77,9 +74,12 @@ var initialUserDetails = new UserDetailsModel({
     dob: Date.now
 });
 
+//initialUserLogin.save();
 //initialUserDetails.save();
 
 
+
+/*********User related functions**********/
 //Find all users
 app.get("/api/user", function (req, res) {
     UserLoginModel.find(function (err, data) {
@@ -89,9 +89,9 @@ app.get("/api/user", function (req, res) {
 
 //Adds one user
 app.post("/api/userDetails", function (req, res) {
-    console.log(req.body);
+    //console.log(req.body);
     var userDetails = new UserDetailsModel(req.body);
-    console.log(userDetails);
+    //console.log(userDetails);
     userDetails.save(function (err, doc) {
         UserDetailsModel.find(function (err, data) {
             res.json(data);
@@ -135,6 +135,26 @@ app.put("/api/userLogin/:id", function (req, res) {
     UserLoginModel.update({ _id: req.params.id }, { $set: { username: req.body.username, password: req.body.password } }, function (err, doc) {
         UserLoginModel.find(function (err, data) {
             res.json(data);
+        });
+    });
+});
+
+//Delete one user
+app.delete("/api/deleteUser/:id", function (req, res) {
+    UserLoginModel.findById(req.params.id, function (err, doc) {
+        var currentUsername = doc.username;
+        doc.remove();
+        UserDetailsModel.findOne({ username: currentUsername }, function (err, doc) {
+            doc.remove();
+            PreferencesModel.find({ username: currentUsername }, function (err, docs) {
+                if (docs) {
+                    console.log(docs.length);
+                    if (docs.length > 0)
+                        docs.remove();
+                }
+                console.log("removed from preferences");
+                res.json({msg: "deleted"});
+            });
         });
     });
 });
