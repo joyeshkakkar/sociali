@@ -1,35 +1,87 @@
 app.controller("EventsController", function ($scope, $http, $rootScope, $location,uiGmapGoogleMapApi,$templateCache) {
-    var userLat;
-    var userLong;
-    uiGmapGoogleMapApi.then(function(maps) {
-        //$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
-        navigator.geolocation.getCurrentPosition(function(pos) {
-            //alert(pos.coords.longitude);
-            userLat = pos.coords.latitude;
-            userLong = pos.coords.longitude;
-            $scope.map = { center: { latitude: userLat, longitude: userLong }, zoom: 15 };
-            $scope.marker = {
-                id: 0,
-                coords: {
-                    latitude: userLat,
-                    longitude: userLong
-                }
-            };
-            $scope.options = {icon:'../../images/blue.png'};
-            //$scope.loading.hide();
-        }, function(error) {
-            alert('Unable to get location: ' + error.message);
-        });
-        //alert(userLat);
-    });
+    //setting up the map
+    var map;
+    var markers = [];
+    var myCenter = new google.maps.LatLng(40.69847032728747,
+        -73.9514422416687);
+    var browserSupportFlag = new Boolean();
+
+    //initializing the map
+    function initialize() {
+        var mapProp = {
+            center : myCenter,
+            zoom : 10,
+            mapTypeId : google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map"),
+            mapProp);
+        //getting users current location
+        if (navigator.geolocation) {
+            browserSupportFlag = true;
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    initialLocation = new google.maps.LatLng(
+                        position.coords.latitude,
+                        position.coords.longitude);
+                    map.setCenter(initialLocation);
+                    var marker = new google.maps.Marker({
+                        animation: google.maps.Animation.DROP,
+                        position : initialLocation,
+                        title: 'lat:'+position.coords.latitude+' long:'+position.coords.longitude,
+                        //icon : 'images/blue.png'
+                    });
+                    marker.setMap(map);
+                    //to zoom
+                    google.maps.event.addListener(marker, 'click',
+                        function() {
+                            map.setZoom(15);
+                            map.setCenter(marker.getPosition());
+                        });
+
+                }, function() {
+                    handleNoGeolocation(browserSupportFlag);
+                });
+        }
+        // Browser doesn't support Geolocation
+        else {
+            browserSupportFlag = false;
+            handleNoGeolocation(browserSupportFlag);
+        }
+        function handleNoGeolocation(errorFlag) {
+            if (errorFlag == true) {
+                alert("Geolocation service failed.");
+                initialLocation = myCenter;
+            } else {
+                alert("Your browser doesn't support geolocation. We've placed you in newyork.");
+                initialLocation = myCenter;
+            }
+            map.setCenter(initialLocation);
+            var marker = new google.maps.Marker({
+                position : initialLocation,
+                icon : 'images/green.png'
+            });
+            marker.setMap(map);
+            //to zoom
+            google.maps.event.addListener(marker, 'click', function() {
+                map.setZoom(15);
+                map.setCenter(marker.getPosition());
+            });
+        }
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+
+    //method to fetch the events
     $scope.fetch = function() {
         var url= 'https://www.eventbriteapi.com/v3//events/search/';
         var token = 'JJJKFTCUFVWB2HPKT2DS';
         var token2 = 'QC44X66MUP27NDX7MDZL';
+        var location = '&location.within=5mi&location.latitude=42.3372703&location.longitude=-71.0913595';
         //*var batchurl = "https://www.eventbriteapi.com/v3/batch/" + '?token=' + token;
         //var venueURL = '{"method":"GET", "relative_url":"venues/';
 
-        var searchQuery = url + '?q=' + $scope.query + '&token=' + token + '&expand=venue';
+        var searchQuery = url + '?q=' + $scope.query + location +
+            '&token=' + token + '&expand=venue';
         //var venues = [];
         //var batchRequest = '[' + venueURL;
         $scope.code = null;
@@ -41,25 +93,8 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         then(function(response) {
             $scope.status = response.status;
             $scope.data = response.data;
-            alert($scope.data.events.length);
-            //updatemap($scope.data);
-            $scope.markers = [];
-            for(var i=0;i<$scope.data.events.length;i++){
-                if(i==10){
-                    break;
-                }
-                $scope.markers[i] =
-                {
-                    id:'marker'+i,
-                    coords: {
-                        latitude: $scope.data.events[i].venue.address.latitude,
-                        longitude: $scope.data.events[i].venue.address.longitude
-                    },
-                    icon :'../../images/green.png',
-                    show :true
-                };
-            }
-            alert($scope.markers);
+            if($scope.data != null)
+                setMarkers();
         }, function(response) {
             $scope.data = response.data || "Request failed";
             $scope.status = response.status;
@@ -67,23 +102,30 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
 
     };
 
-    function updatemap(data){
-        $scope.markers = [];
-        alert(data.length);
-        for(var i=0;i<data.length;i++){
 
-            $scope.markers[i] =
-            {
-                id:'marker'+i,
-                coords: {
-                    latitude: data[i].event.venue.address.latitude,
-                    longitude: data[i].event.venue.address.longitude
-                },
-                icon :'../../images/green.png',
-                show :true
-            };
+    //to set event markers
+    function setMarkers() {
+        for (var i = 0; i < $scope.data.events.length; i++) {
+            var event = $scope.data.events[i];
+            if (event.venue != null) {
+                var infowindow = new google.maps.InfoWindow({
+                    content: event.name.text
+                });
+                var myLatLng = new google.maps.LatLng(event.venue.address.latitude, event.venue.address.longitude);
+                var marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map,
+                    animation: google.maps.Animation.DROP,
+                    title: event.name.text,
+                    icon: '../../images/green.png'
+                });
+                /*marker.addListener('mouseover', function() {
+                    infowindow.open(map, marker);
+                });*/
+                markers.push(marker);
+            }
         }
-        alert($scope.markers);
     }
+
 });
 
