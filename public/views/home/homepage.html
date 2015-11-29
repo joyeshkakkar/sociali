@@ -4,30 +4,8 @@
     <title>Home</title>
 </head>
 <body>
-    <div ng-app="app">
-        <div class="row col-md-12">
-            <div class="jumbotron text-center">
-                <h1>Social-I</h1>
-                <c:url value="/searchEvents" var="searchUrl" />
-                <form class="form-horizontal text-center" id="searchForm">
-                    <fieldset>
-                        <div class="form-group">
-                            <div class="row col-md-3 col-md-offset-4 center-align">
-                                <div class="input-group">
-                                    <input type="text" id="keyword" name="keyword"
-                                           placeholder="Search for Events" required
-                                           class="text form-control"> 
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-md btn-warning btn-block" type="submit">
-                                                <span class="glyphicon glyphicon-search"></span>
-                                            </button>
-                                        </span>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
+        <div class="jumbotron text-center">
+            <h1>Social-I</h1>
         </div>
         <div class="row col-md-12">
             <div class="col-md-8 center-align">
@@ -39,31 +17,42 @@
                     </carousel>
                 </div>
             </div>
-            <div class="col-md-4 center-align padding-20">
-                <div class="row col-md-12 text-center">
+            <div class="col-md-4 padding-20">
+                <div class="text-center">
                     <p style="font-size: 30px; font-weight: 700;">Sign Up</p>
                 </div>
-                <div class="row col-md-12 padding-20">
+                <div class="padding-20">
                     <div ng-controller="SignupController">
-                        <form class="form-horizontal text-center" ng-submit="signup(user)" name="myform">
+                        <form class="form-horizontal text-center" ng-submit="signup(user)" name="myform" data-toggle="validator" role="form">
                             <fieldset>
-                                <div class="row col-md-12">
-                                    <div class="form-group">
-                                        <div class="col-md-6">
-                                            <input type="text" ng-model="userDetails.firstName" id="firstName" placeholder="First Name"
-                                                   required class="text form-control margin">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input type="text" ng-model="userDetails.lastName" id="lastName" placeholder="Last Name"
-                                                   required class="text form-control margin">
-                                        </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon " id="basic-addon1">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </span>
+                                        <input type="text" ng-model="userDetails.firstName" id="firstName" placeholder="First Name"
+                                                required class="text form-control margin">
+                                    </div>                                          
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon " id="basic-addon1">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </span>
+                                        <input type="text" ng-model="userDetails.lastName" id="lastName" placeholder="Last Name"
+                                                required class="text form-control margin">
                                     </div>
                                 </div>
+
+                                
                                 <div class="form-group" ng-class="{'has-error': myform.username.$invalid}">
-                                    <div class="col-md-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon " id="basic-addon1">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </span>
                                         <input type="text" ng-model="userLogin.username" id="username" placeholder="Username"
                                                required class="text form-control margin" ng-change="change()">
-                                    </div>
+                                    </div>                                    
                                 </div>
                                 <p>
                                     <span ng-show="invalidUsername === true" class="label label-danger  center-align text-center">
@@ -71,28 +60,58 @@
                                     </span>
                                 </p>
                                 <div class="form-group">
-                                    <div class="col-md-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon " id="basic-addon1">
+                                            <span class="glyphicon glyphicon-envelope"></span>
+                                        </span>
                                         <input type="email" ng-model="userDetails.email" id="email" placeholder="Email"
                                                required class="text form-control margin">
-                                    </div>
+                                    </div>   
+                                    
                                 </div>
 
                                 <div class="form-group" ng-class="{'has-error': myform.password.$invalid}">
-                                    <div class="col-md-12">
-                                        <input type="password" ng-model="userLogin.password" id="password" placeholder="New Password"
-                                               required class="text form-control margin">
-                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon " id="basic-addon1">
+                                            <span class="glyphicon glyphicon-lock"></span>
+                                        </span>
+                                        <input type="password" ng-model="userLogin.password" id="password" placeholder="Password"
+                                               required class="form-control">
+                                    </div> 
+                                    
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-md-12">
-                                        <input type="text" ng-model="userDetails.phone" id="phone" placeholder="Enter your 10 digit mobile number"
-                                               class="text form-control margin">
-                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon " id="basic-addon1">
+                                            <span class="glyphicon glyphicon-lock"></span>
+                                        </span>
+                                        <input type="password" ng-model="userLogin.cnfPassword" id="password" placeholder="Confirm Password"
+                                               required class="form-control">
+                                    </div> 
+                                    
+
+                                </div>
+
+                                <div class="form-group">
+                                    <div ng-password-strength="userLogin.password" strength="passStrength" inner-class="progress-bar" inner-class-prefix="progress-bar-" ng-model-options="{ allowInvalid: true }"></div>
+
+                                    Current password strength is <strong>{{passStrength}}</strong>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon " id="basic-addon1">
+                                            <span class="glyphicon glyphicon-earphone"></span>
+                                        </span>
+                                        <input type="number" ng-model="userDetails.phone" id="phone" placeholder="Enter your 10 digit mobile number"
+                                               class=" form-control ">
+                                    </div> 
+                                    
                                 </div>
 
                                 <div class="col-sm-offset-3 col-md-6 center-align">
-                                    <button type="submit" class="btn btn-lg btn-primary btn-block" ng-disabled="myForm.$invalid">
+                                    <button type="submit" class="btn btn-sm btn-primary btn-block" ng-disabled="myForm.$invalid">
                                         Sign up
                                     </button>
                                 </div>
@@ -102,6 +121,5 @@
                 </div>
             </div>
         </div>
-    </div>
 </body>
 </html>
