@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Social-i</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="stylesheet" href="css/jquery-ui.css">
+</head>
+<body style="padding-top:50px" ng-app="SocialiApp">
+    <div class="container-fluid">
+        <div>
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#/home">
+                            Sociali
+                        </a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#/home">Home</a></li>
+                            <li ng-show="currentUser"><a href="#/events">Events</a></li>
+                            <li ng-show="currentUser">
+                                <!--<a href="#/profile">
+                                    <p ng-show="!currentUser">Profile</p>
+                                    <p ng-show="currentUser">{{currentUser.firstName}}'s Profile</p>
+                                </a>-->
+                                <a href="#/profile">Profile</a>
+                            </li>
+                            <li ng-show="currentUser"><a href="#/myEvents">My Events</a></li>
+                            <li><a href="#/contact">Contact</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li ng-show="currentUser">
+                                <a href="#/logout" tooltip-placement="bottom" tooltip="Log out">
+                                    <span style="color:red;" class="glyphicon glyphicon-log-out"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div ng-hide="currentUser">
+                            <div ng-controller="LoginController">
+                                <form class="navbar-form navbar-right" ng-submit="login(userLogin)" name="myform">
+                                    <div class="form-group" ng-class="{'has-error': myform.username.$invalid}">
+                                        <div class="input-group">
+                                            <span class="input-group-addon alert-info" id="basic-addon1">
+                                                <span class="glyphicon glyphicon-user"></span>
+                                            </span>
+                                            <input type="text" ng-model="userLogin.username" id="username" placeholder="Username"
+                                                   required class="text form-control margin" ng-change="change()">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error': myform.password.$invalid}">
+                                        <input type="password" ng-model="userLogin.password" id="password" placeholder="xxxxxxx"
+                                               required class="text form-control margin" ng-change="change()">
+                                    </div>
+                                    <span ng-show="invalid === true" class="label label-danger">
+                                        Invalid credentials provided. please try again.<br />
+                                    </span>
+                                    <a href="" tooltip-placement="bottom" tooltip="Login" ng-disabled="myform.$invalid"
+                                       ng-click="login(userLogin)">
+                                        <span style="color:green;" class="glyphicon glyphicon-log-in"></span>
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                    </div><!--/.navbar-collapse -->
+                </div>
+            </nav>
+        </div>
+        <div ng-view>
+        </div>
+    </div><!--Main div ends-->
+
+    <script src='//maps.googleapis.com/maps/api/js?key=AIzaSyDyA2ZxKMduBRg3b3s4-ZgLgvHBzjWYtGk'></script>
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-switch.min.js"></script>
+    <script src="js/angular.js"></script>
+    <script src="js/angular-route.js"></script>
+    <script src='js/lodash.js'></script>
+    <script src="js/ng-password-strength.min.js"></script>
+    <script src='js/angular-simple-logger.js'></script>
+    <script src='js/angular-google-maps.min.js'></script>
+    <script src="js/ui-bootstrap-tpls-0.12.1.js"></script>
+
+    <!--Services-->
+    <script src="js/sociali.js"></script>
+    <script src="server/services/userService.js"></script>
+    <!--
+    <script src="service/searchService.js"></script>
+    <script src="service/playlistService.js"></script>
+    <script src="service/userService.js"></script>
+    <script src="service/followerService.js"></script>
+        -->
+    <!--Controllers-->
+    <script src="views/home/homeCtrl.js"></script>
+    <script src="views/events/eventsCtrl.js"></script>
+    <script src="views/myEvents/myEventsCtrl.js"></script>
+    <script src="views/profile/profileCtrl.js"></script>
+    <script src="views/contact/contactCtrl.js"></script>
+    <script src="views/authentication/loginCtrl.js"></script>
+    <script src="views/authentication/logoutCtrl.js"></script>
+    <script src="views/authentication/signupCtrl.js"></script>
+
+    <!--
+        <script src="views/signup/signupCtrl.js"></script>
+
+        <script src="views/profile/profileCtrl.js"></script>
+
+        <script src="views/search/searchCtrl.js"></script>
+        <script src="views/contact/contactCtrl.js"></script>
+        <script src="views/playlist/playlistCtrl.js"></script>
+
+        -->
+
+</body>
+</html>

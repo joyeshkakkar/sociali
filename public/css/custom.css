@@ -1,0 +1,26 @@
+.menuheight {
+	height: 70px;
+}
+
+.padding-tab-content{
+	padding-top:20px;
+}
+
+.padding-20{
+	padding-top:20px;
+}
+
+/*.bb {
+	<!--background: url('../images/background.jpg');
+	background-repeat:no-repeat;
+	display: compact;
+	background-size: 1980px 1080px;
+	color:white
+}*/
+
+.img-poster{
+    position: relative;
+    height: 150px;
+    width: 200px;
+    border-radius: 5%;
+}

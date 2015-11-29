@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Events</title>
+	<style>
+
+		.angular-google-map-container { height: 400px; }
+	</style>
+
+</head>
+<body>
+<div ng-controller="EventsController">
+    <!--<ui-gmap-google-map center="map.center" options="options" zoom="map.zoom">
+        <ui-gmap-marker coords="marker.coords" options="options" idkey="marker.id">
+        </ui-gmap-marker>
+        <ui-gmap-marker ng-repeat="m in markers" icon="m.icon" coords="m.coords"  idkey="m.id">
+            <ui-gmap-window show="m.show" ng-cloak>
+                <p>
+                    Latitude: {{m.coords.latitude}}<br/>
+                    Longitude: {{m.coords.longitude}}<br/>
+                    Last signal: <strong>test</strong>
+                </p>
+            </ui-gmap-window>
+        </ui-gmap-marker>
+    </ui-gmap-google-map>-->
+
+    <div ng-controller="EventsController">
+
+        <div ng-show="markers">
+        <ui-gmap-google-map center="map.center" options="options" zoom="map.zoom">
+            <ui-gmap-marker coords="marker.coords" options="options" idkey="marker.id">
+            </ui-gmap-marker>
+            <ui-gmap-marker ng-repeat="m in markers" icon="m.icon" coords="m.coords"  idkey="m.id">
+                <ui-gmap-window show="m.show" ng-cloak>
+                    <p>
+                        Latitude: {{m.coords.latitude}}<br/>
+                        Longitude: {{m.coords.longitude}}<br/>
+                        Last signal: <strong>test</strong>
+                    </p>
+                </ui-gmap-window>
+            </ui-gmap-marker>
+        </ui-gmap-google-map>
+        </div>
+
+        <div class="input-group">
+            <input type="text" ng-model="query"
+                   placeholder="Search for Events" required
+                   class="text form-control">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-md btn-warning btn-block" id="fetchbtn" ng-click="fetch()">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                        </span>
+        </div>
+
+
+        <table class="table table-striped">
+            <tr ng-repeat="event in data.events">
+                <td><img src="{{event.logo.url}}"></td>
+                <td><table>
+                    <tr><td>Start Time: {{event.start.local}}</td></tr>
+                    <tr><td>{{event.name.text}}</td></tr>
+                    <tr><td>
+                        <button type="button" class="btn btn-info" data-toggle="collapse"
+                                data-target="#{{$index + 1}}det">Details</button>
+                        <div id="{{$index + 1}}det" class="collapse">
+                            {{event.description.text}}
+                        </div>
+                    </td></tr>
+                    <tr><td><a href="{{event.url}}">Check event</a></td></tr>
+                    <tr><td>latitude:{{event.venue.address.latitude}}</td></tr>
+                    <tr><td>longitude:{{event.venue.address.longitude}}</td></tr>
+                </table></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
