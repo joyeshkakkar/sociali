@@ -27,7 +27,7 @@
                             <a class="navbar-brand" href="#/home">
                                 Sociali
                             </a>
-                        </div>                       
+                        </div>
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
@@ -49,6 +49,20 @@
                                 </a>
                             </li>
                         </ul>
+                        <div class="pull-left" ng-controller="EventsController">
+                            <form class="navbar-form navbar-right" name="searchform">
+                                <div class="input-group">
+                                    <input type="text" ng-model="query"
+                                           placeholder="Search for Events" required
+                                           class="form-control input-sm">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-sm btn-warning" id="fetchbtn" ng-click="fetchShowEvents()">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
                         <div ng-hide="currentUser">
                             <div ng-controller="LoginController">
                                 <form class="navbar-form navbar-right" ng-submit="login(userLogin)" name="myform">
@@ -58,7 +72,7 @@
                                                 <span class="glyphicon glyphicon-user"></span>
                                             </span>
                                             <input type="text" ng-model="userLogin.username" id="username" placeholder="Username"
-                                                   required class="form-control" ng-change="change()">
+                                                   required class="form-control input-sm" ng-change="change()">
                                         </div>
                                     </div>
                                     <div class="form-group" ng-class="{'has-error': myform.password.$invalid}">
@@ -67,13 +81,15 @@
                                                 <span class="glyphicon glyphicon-lock"></span>
                                             </span>
                                             <input type="password" ng-model="userLogin.password" id="password" placeholder="Password"
-                                                   required class="form-control" ng-change="change()">
-                                        </div>                                        
-                                    </div>                                    
+                                                   required class="form-control input-sm" ng-change="change()">
+                                        </div>
+                                    </div>
+
                                     <a href="" tooltip-placement="bottom" tooltip="Login" ng-disabled="myform.$invalid"
                                        ng-click="login(userLogin)">
-                                        <span style="color:green;" class="glyphicon glyphicon-log-in"></span>
+                                        <span style="color:limegreen;" class="glyphicon glyphicon-log-in"></span>
                                     </a>
+
                                     <span ng-show="invalid === true" class="label label-danger pull-left">
                                         Invalid credentials provided. please try again.<br />
                                     </span>
@@ -84,9 +100,10 @@
                 </div>
             </nav>
         </div>
-        <div ng-view>
-        </div>
-    </div><!--Main div ends-->
+    </div>
+    <div ng-view>
+    </div>
+    <!--Main div ends-->
 
     <script src='//maps.googleapis.com/maps/api/js?key=AIzaSyDyA2ZxKMduBRg3b3s4-ZgLgvHBzjWYtGk'></script>
     <script src="js/jquery-2.1.4.min.js"></script>
