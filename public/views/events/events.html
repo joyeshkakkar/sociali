@@ -11,7 +11,7 @@
 
 </head>
 <body>
-<div ng-controller="EventsController" ng-init="getMap()">
+<div ng-controller="EventsController" ng-init="loadUserEvents()">
 
     <!-- place holder for map-->
     <div class="row col-md-12">
@@ -28,7 +28,8 @@
                                             </button>
                                         </span>
         </div>
-
+        <input type="hidden" ng-model="latitude">
+        <input type="hidden" ng-model="longitude">
 
         <table class="table table-striped">
             <tr ng-repeat="event in data.events">
