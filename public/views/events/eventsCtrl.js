@@ -1,4 +1,4 @@
-app.controller("EventsController", function ($scope, $http, $rootScope, $location,uiGmapGoogleMapApi,$templateCache) {
+app.controller("EventsController", function ($scope, $http, $rootScope, $location,$templateCache) {
 
     var map;
     var markers = [];

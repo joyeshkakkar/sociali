@@ -10,6 +10,8 @@
 	padding-top:20px;
 }
 
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
 /*.bb {
 	<!--background: url('../images/background.jpg');
 	background-repeat:no-repeat;
