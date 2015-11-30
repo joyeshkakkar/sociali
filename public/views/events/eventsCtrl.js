@@ -166,13 +166,40 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                     title: event.name.text,
                     icon: '../../images/green.png'
                 });
+
                 /*marker.addListener('mouseover', function() {
                     infowindow.open(map, marker);
                 });*/
                 markers.push(marker);
             }
         }
+
+        setMarkerListeners();
     }
+
+    function setMarkerListeners() {
+
+        for (var i=0; i<markers.length; i++) {
+            var event = $scope.data.events[i];
+            var marker = markers[i];
+            var infowindow = new google.maps.InfoWindow();
+            bindInfoWindow(marker,infowindow,event,i);
+        }
+    }
+
+    function bindInfoWindow(marker, infowindow, event,num) {
+        google.maps.event.addListener(marker, 'click', (function (marker, num) {
+            return function () {
+
+                infowindow.setContent(event.name.text);
+                infowindow.open(map, marker);
+                map.setZoom(15);
+                map.setCenter(marker.getPosition());
+                hideOthers(event.id);
+            }
+        })(marker, num));
+    }
+
 
     //reset any previous markers if available
     function resetMarkers(){
@@ -183,6 +210,18 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         markers = [];
         setMarkers();
     }
+
+    function hideOthers(id){
+        //$('.eventRow').show();
+        $('.eventRow').hide();
+        $('#'+id).show();
+        $('#showAll').show();
+    }
+
+    $scope.showall = function(){
+        $('.eventRow').show();
+        $('#showAll').hide();
+    };
 
 });
 
