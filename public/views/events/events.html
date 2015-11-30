@@ -35,7 +35,7 @@
         <input type="hidden" ng-model="longitude">
 
         <table class="table table-striped">
-            <tr ng-repeat="event in data.events">
+            <tr ng-repeat="event in data.events" id="{{event.id}}" class="eventRow">
                 <td><img src="{{event.logo.url}}"></td>
                 <td>
                     <table>
@@ -59,6 +59,7 @@
                 </td>
             </tr>
         </table>
+        <button id="showAll" ng-click="showall()">Show All</button>
     </div>
 
     <!--<script src="map.js"></script>-->
