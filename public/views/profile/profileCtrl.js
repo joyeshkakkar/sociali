@@ -1,4 +1,4 @@
-﻿app.controller("ProfileController", function ($scope, $http, $rootScope, $location, UserService) {
+﻿app.controller("ProfileController", function ($scope, $http, $rootScope, $scope, $location, UserService) {
     $scope.currentUser = $rootScope.currentUser;
 
     $scope.view_tab = 'updateProfile';
@@ -62,6 +62,8 @@
                 $scope.currentUser = null;
                 $rootScope.currentUser = null;
                 $scope.userLogin = null;
+                $scope.userDetails = null;
+                $rootScope.userDetails = null;
                 $location.url('/');
             });
         })

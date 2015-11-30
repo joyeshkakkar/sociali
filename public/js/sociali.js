@@ -79,7 +79,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 
-var checkUserLoggedin = function ($q, $timeout, $http, $location, $rootScope) {
+var checkUserLoggedin = function ($q, $timeout, $http, $location, $rootScope, UserService) {
     var deferred = $q.defer();
     $http.get('/api/loggedin')
         .success(function (user) {
@@ -90,6 +90,11 @@ var checkUserLoggedin = function ($q, $timeout, $http, $location, $rootScope) {
                 console.log(user);
                 console.log("user found");
                 $rootScope.currentUser = user;
+                var username = user.username;
+                UserService.getUserDetails(username, function (response) {
+                    console.log(response);
+                    $rootScope.userDetails = response;
+                })
                 deferred.resolve();
             } else {
                 console.log("user not found");

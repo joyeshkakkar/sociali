@@ -4,6 +4,8 @@
             $scope.currentUser = null;
             $rootScope.currentUser = null;
             $scope.userLogin = null;
+            $scope.userDetails = null;
+            $rootScope.userDetails = null;
             $location.url('/');
             //window.location.reload();
         }
