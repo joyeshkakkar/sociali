@@ -1,277 +1,313 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Profile</title>
-</head>
-<body>
-    <div ng-controller="ProfileController" ng-init="getDet()">
-        <div class="row">
-        <div class="col-md-2">
-            <ul class="nav nav-tabs nav-stacked nav-pills" role="tablist">
-                <li ng-class="{'active': view_tab == 'updateProfile'}">
-                    <a class="btn-sm" ng-click="changeTab('updateProfile')" href="">Update Profile</a>
-                </li>
-                <li ng-class="{'active': view_tab == 'changePassword'}">
-                    <a class="btn-sm" ng-click="changeTab('changePassword')" href="">Change Password</a>
-                </li>
-                <li ng-class="{'active': view_tab == 'updatePreferences'}">
-                    <a class="btn-sm" ng-click="changeTab('updatePreferences')" href="">Update Preferences</a>
-                </li>
-                <li ng-class="{'active': view_tab == 'deleteProfile'}">
-                    <a class="btn-sm" ng-click="changeTab('deleteProfile')" href="">Delete Profile</a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-md-10">
-            <div class="tab-content">
-                <div ng-show="view_tab == 'updateProfile'">
-                    <div class="tab-pane padding-20">
-                        <form class="form-horizontal text-center" id="updateProfileForm">
-                            <fieldset>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="firstName" class="col-md-2 control-label">
-                                            First Name&nbsp;&nbsp;*
-                                        </label>
-                                        <div class="col-md-6">
-                                            <input ng-model="userDetails.firstName" type="text" id="firstName" name="firstName"
-                                                   value="" disabled="disabled"
-                                                   placeholder="First Name" required
-                                                   class="text form-control makeEditable">
-                                        </div>
-                                    </div>
+﻿    <!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Profile</title>
+    </head>
+    <body>
+        <div ng-controller="ProfileController">
+            <div class="row">
+            <div class="col-md-2">
+                <ul class="nav nav-tabs nav-stacked nav-pills" role="tablist">
+                    <li ng-class="{'active': view_tab == 'updateProfile'}">
+                        <a class="btn-sm" ng-click="changeTab('updateProfile')" href="">Update Profile</a>
+                    </li>
+                    <li ng-class="{'active': view_tab == 'changePassword'}">
+                        <a class="btn-sm" ng-click="changeTab('changePassword')" href="">Change Password</a>
+                    </li>
+                    <li ng-class="{'active': view_tab == 'updatePreferences'}">
+                        <a class="btn-sm" ng-click="changeTab('updatePreferences')" href="">Update Preferences</a>
+                    </li>
+                    <li ng-class="{'active': view_tab == 'deleteProfile'}">
+                        <a class="btn-sm" ng-click="changeTab('deleteProfile')" href="">Delete Profile</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-10">
+                <div class="tab-content">
+                    <div ng-show="view_tab == 'updateProfile'">
+                        <div class="tab-pane padding-20">
+                            <form class="form-horizontal text-center" id="updateProfileForm">
+                                <fieldset>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="firstName" class="col-md-2 control-label">
+                                                First Name&nbsp;&nbsp;*
+                                            </label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                <span class="input-group-addon " id="basic-addon6">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </span>
+                                                    <input ng-model="userDetails.firstName" type="text" id="firstName" name="firstName"
+                                                           value="" disabled="disabled"
+                                                           placeholder="First Name" required
+                                                           class="text input-sm form-control makeEditable">
+                                                </div>
 
-                                    <div class="form-group">
-                                        <label for="lastName" class="col-md-2 control-label">
-                                            Last
-                                            Name&nbsp;&nbsp;*
-                                        </label>
-                                        <div class="col-md-6">
-                                            <input ng-model="userDetails.lastName" type="text" id="lastName" name="lastName"
-                                                   value="" disabled="disabled"
-                                                   placeholder="Last Name" required
-                                                   class="text form-control makeEditable">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="email" class="col-md-2 control-label">
-                                            Email&nbsp;&nbsp;*
-                                        </label>
-                                        <div class="col-md-6">
-                                            <input ng-model="userDetails.email" type="email" id="email" name="email" disabled="disabled"
-                                                   value="" placeholder="abc@domain.com"
-                                                   required class="text form-control makeEditable">
-                                        </div>
-                                    </div>
+                                        <div class="form-group">
+                                            <label for="lastName" class="col-md-2 control-label">
+                                                Last
+                                                Name&nbsp;&nbsp;*
+                                            </label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                <span class="input-group-addon " id="basic-addon5">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </span>
+                                                    <input ng-model="userDetails.lastName" type="text" id="lastName" name="lastName"
+                                                           value="" disabled="disabled"
+                                                           placeholder="Last Name" required
+                                                           class="text input-sm form-control makeEditable">
+                                                </div>
 
-                                    <div class="form-group">
-                                        <label for="phone" class=" col-md-2 control-label">Phone</label>
-                                        <div class="col-md-6">
-                                            <input ng-model="userDetails.phone" type="text" id="phone" name="phone" disabled="disabled"
-                                                   value="" placeholder="XXX-XXX-XXXX"
-                                                   class="text form-control makeEditable">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-2 control-label">
+                                                Email&nbsp;&nbsp;*
+                                            </label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                <span class="input-group-addon " id="basic-addon4">
+                                    <span class="glyphicon glyphicon-envelope"></span>
+                                </span>
+                                                    <input ng-model="userDetails.email" type="email" id="email" name="email" disabled="disabled"
+                                                           value="" placeholder="abc@domain.com"
+                                                           required class="text input-sm form-control makeEditable">
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="phone" class=" col-md-2 control-label">Phone</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                <span class="input-group-addon " id="basic-addon1">
+                                    <span class="glyphicon glyphicon-earphone"></span>
+                                </span>
+                                                    <input ng-model="userDetails.phone" type="number" id="phone" name="phone" disabled="disabled"
+                                                           value="" placeholder="Enter your 10 digit mobile number"
+                                                           class="text input-sm form-control makeEditable">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-offset-2 col-md-6 center-align">
+                                            <button id="editBtn" type="button"
+                                                    class="btn btn-sm btn-warning ">
+                                                Edit
+                                            </button>
+                                            <button id="updtUser" type="button" ng-click="updateUser()"
+                                                    class="btn btn-sm btn-success ">
+                                                Save
+                                            </button>
+                                            <button id="cancelEditBtn" ng-click="cancelEdit()" type="button" class="btn btn-sm">Cancel</button>
                                         </div>
                                     </div>
-                                    <div class="col-md-offset-2 col-md-6 center-align">
-                                        <button id="editBtn" type="button"
-                                                class="btn btn-sm btn-warning ">
-                                            Edit
-                                        </button>
-                                        <button id="updtUser" type="button" ng-click="updateUser()"
-                                                class="btn btn-sm btn-success ">
-                                            Save
-                                        </button>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
+                                </fieldset>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div ng-show="view_tab == 'changePassword'">
-                    <div class="tab-pane padding-20">
-                        <form class="form-horizontal text-center" id="changePasswordForm">
-                            <fieldset>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="password" class="col-md-2 control-label">New Password&nbsp;&nbsp;*</label>
-                                        <div class="col-md-6">
-                                            <input type="password" id="password" name="password" ng-change="change()"
-                                                   placeholder="Enter new password" required class="text form-control" ng-model="password">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="cnfPassword" class="col-md-2 control-label">Confirm Password&nbsp;&nbsp;*</label>
-                                        <div class="col-md-6">
-                                            <input type="password" id="cnfPassword" name="cnfPassword"
-                                                   placeholder="Confirm password" required class="text form-control" ng-model="cnfPassword" ng-change="change()">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-md-offset-2">
-                                            <div ng-password-strength="password" strength="passStrength" inner-class="progress-bar" inner-class-prefix="progress-bar-" ng-model-options="{ allowInvalid: true }"></div>
+                    <div ng-show="view_tab == 'changePassword'">
+                        <div class="tab-pane padding-20">
+                            <form class="form-horizontal text-center" id="changePasswordForm">
+                                <fieldset>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="col-md-6 col-md-offset-2">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon " id="basic-addon3">
+                                                        <span class="glyphicon glyphicon-lock"></span>
+                                                    </span>
+                                                    <input type="password" id="password" name="password" ng-change="change()"
+                                                           placeholder="Enter new password" required class="text form-control input-sm" ng-model="password">
+                                                </div>
 
-                                            Current password strength is <strong>{{passStrength}}</strong>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-md-6 col-md-offset-2">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon " id="basic-addon2">
+                                                        <span class="glyphicon glyphicon-lock"></span>
+                                                    </span>
+                                                    <input type="password" id="cnfPassword" name="cnfPassword"
+                                                           placeholder="Confirm password" required class="text form-control input-sm" ng-model="cnfPassword" ng-change="change()">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-6 col-md-offset-2">
+                                                <div ng-password-strength="password" strength="passStrength" inner-class="progress-bar" inner-class-prefix="progress-bar-" ng-model-options="{ allowInvalid: true }"></div>
+
+                                                Current password strength is <strong>{{passStrength}}</strong>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-offset-2 col-md-6 center-align">
+                                            <button id="saveBtn" ng-click="changePassword(password)" class="btn btn-sm btn-success">
+                                                Save
+                                            </button>
+                                            <button id="cancelBtn" ng-click="changeTab('updateProfile')" type="button" class="btn btn-sm">Cancel</button>
+                                        </div>
+                                        <div class="col-md-offset-2 col-md-6 center-align">
+                                            <p ng-show="showPasswordSavedMsg"><h3>{{showPasswordSavedMsg}}</h3></p>
                                         </div>
                                     </div>
-
-                                    <div class="col-md-offset-2 col-md-6 center-align">
-                                        <button id="saveBtn" ng-click="changePassword(password)" class="btn btn-sm btn-success">
-                                            Save
-                                        </button>
-                                        <button id="cancelBtn" ng-click="changeTab('updateProfile')" type="button" class="btn btn-sm">Cancel</button>
-                                    </div>
-                                    <div class="col-md-offset-2 col-md-6 center-align">
-                                        <p ng-show="showPasswordSavedMsg"><h3>{{showPasswordSavedMsg}}</h3></p>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
+                                </fieldset>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div ng-show="view_tab == 'updatePreferences'">
-                    <div class="tab-pane padding-20">
-                        <form class="form-horizontal text-center" id="updatePreferencesForm">
-                            <fieldset>
-                                <div class="row col-md-12">
-                                    <div class="col-md-2">
-                                        <h4>Food</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active">No</button>
+                    <div ng-show="view_tab == 'updatePreferences'">
+                        <div class="tab-pane padding-20">
+                            <form class="form-horizontal text-center" id="updatePreferencesForm">
+                                <fieldset>
+                                    <div class="row col-md-12">
+                                        <div class="col-md-2">
+                                            <h4>Food</h4>
+                                            <div class="btn-group btn-toggle">
+                                                <button type="button" class="btn btn-sm btn-default">Yes</button>
+                                                <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h4>Music</h4>
+                                            <div class="btn-group btn-toggle">
+                                                <button type="button" class="btn btn-sm btn-default">Yes</button>
+                                                <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h4>Festival</h4>
+                                            <div class="btn-group btn-toggle">
+                                                <button type="button" class="btn btn-sm btn-default">Yes</button>
+                                                <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h4>Concerts</h4>
+                                            <div class="btn-group btn-toggle">
+                                                <button type="button" class="btn btn-sm btn-default">Yes</button>
+                                                <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h4>Comedy</h4>
+                                            <div class="btn-group btn-toggle">
+                                                <button type="button" class="btn btn-sm btn-default">Yes</button>
+                                                <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h4>Family</h4>
+                                            <div class="btn-group btn-toggle">
+                                                <button type="button" class="btn btn-sm btn-default">Yes</button>
+                                                <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <h4>Music</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                    <div class="row col-md-12">
+                                        <br /> <br />
+                                        <div class="col-md-2">
+                                            <h4>NightLife</h4>
+                                            <div class="btn-group btn-toggle">
+                                                <button type="button" class="btn btn-sm btn-default">Yes</button>
+                                                <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h4>Sports</h4>
+                                            <div class="btn-group btn-toggle">
+                                                <button type="button" class="btn btn-sm btn-default">Yes</button>
+                                                <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h4>Networking</h4>
+                                            <div class="btn-group btn-toggle">
+                                                <button type="button" class="btn btn-sm btn-default">Yes</button>
+                                                <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h4>Technology</h4>
+                                            <div class="btn-group btn-toggle">
+                                                <button type="button" class="btn btn-sm btn-default">Yes</button>
+                                                <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h4>Literary</h4>
+                                            <div class="btn-group btn-toggle">
+                                                <button type="button" class="btn btn-sm btn-default">Yes</button>
+                                                <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h4>Health</h4>
+                                            <div class="btn-group btn-toggle">
+                                                <button type="button" class="btn btn-sm btn-default">Yes</button>
+                                                <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <h4>Festival</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                    <div class="row col-md-12">
+                                        <br /> <br />
+                                        <div class="col-md-2">
+                                            <h4>Spirituality</h4>
+                                            <div class="btn-group btn-toggle">
+                                                <button type="button" class="btn btn-sm btn-default">Yes</button>
+                                                <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h4>Pets</h4>
+                                            <div class="btn-group btn-toggle">
+                                                <button type="button" class="btn btn-sm btn-default">Yes</button>
+                                                <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <h4>Concerts</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active">No</button>
+                                    <div class="row col-md-12">
+                                        <br /> <br />
+                                        <div class="col-md-2 col-md-offset-5">
+                                            <button id="saveBtn" type="submit"
+                                                    class="btn btn-lg btn-success btn-block">
+                                                Save
+                                            </button>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <h4>Comedy</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active">No</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <h4>Family</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active">No</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row col-md-12">
-                                    <br /> <br />
-                                    <div class="col-md-2">
-                                        <h4>NightLife</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active">No</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <h4>Sports</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active">No</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <h4>Networking</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active">No</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <h4>Technology</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active">No</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <h4>Literary</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active">No</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <h4>Health</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active">No</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row col-md-12">
-                                    <br /> <br />
-                                    <div class="col-md-2">
-                                        <h4>Spirituality</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active">No</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <h4>Pets</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active">No</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row col-md-12">
-                                    <br /> <br />
-                                    <div class="col-md-2 col-md-offset-5">
-                                        <button id="saveBtn" type="submit"
-                                                class="btn btn-lg btn-success btn-block">
-                                            Save
-                                        </button>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
+                                </fieldset>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div ng-show="view_tab == 'deleteProfile'">
-                    <div class="tab-pane padding-20">
-                        <form class="form-horizontal text-center" id="deleteProfileForm">
-                            <fieldset>
-                                <div class="form-group col-md-12 center-align">
-                                    <label for="password" class="control-label">Are you sure,  you want to delete profile? It is a irreversible operation.</label>
-                                </div>
+                    <div ng-show="view_tab == 'deleteProfile'">
+                        <div class="tab-pane padding-20">
+                            <form class="form-horizontal text-center" id="deleteProfileForm">
+                                <fieldset>
+                                    <div class="form-group col-md-12 center-align">
+                                        <label for="password" class="control-label">Are you sure,  you want to delete profile? It is a irreversible operation.</label>
+                                    </div>
 
-                                <div class="col-md-12 center-align">
-                                    <button id="cnfBtn" ng-click="deleteProfile()" type="submit" class="btn btn-sm btn-danger ">Confirm</button>
-                                    <button id="cancelBtn" ng-click="changeTab('updateProfile')" type="button" class="btn btn-sm ">Cancel</button>
-                                </div>
-                            </fieldset>
-                        </form>
+                                    <div class="col-md-12 center-align">
+                                        <button id="cnfBtn" ng-click="deleteProfile()" type="submit" class="btn btn-sm btn-danger ">Confirm</button>
+                                        <button id="cancelBtn" ng-click="changeTab('updateProfile')" type="button" class="btn btn-sm ">Cancel</button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
+                </div>
         </div>
-            </div>
-    </div>
 
-</body>
-</html>
+    </body>
+    </html>

@@ -1,4 +1,4 @@
-﻿app.controller("LoginController", function ($scope, $http, $rootScope, $location) {
+﻿app.controller("LoginController", function ($scope, $http, $rootScope, $location, UserService) {
     $scope.currentUser = null;
     $rootScope.currentUser = null;
     $scope.invalid = false;
@@ -10,6 +10,15 @@
              $rootScope.currentUser = response;
              $scope.currentUser = response;
              $scope.invalid = false;
+
+             var username = response.username;
+             UserService.getUserDetails(username, function (response) {
+                 console.log(response);
+                 $scope.userDetails = response;
+                 $rootScope.userDetails = response;
+             })
+
+
              $location.url("/events/");
          })
          .error(function (response) {

@@ -10,8 +10,20 @@
         .success(callback);
     }
 
+    var getUserDetails = function (username, callback) {
+        $http.get("/api/findUserDetails/" + username)
+            .success(callback);
+    };
+
+    var updateUserDetails = function (username, userDetails, callback) {
+        $http.post("/api/updateUserDetails/" + username, userDetails)
+            .success(callback);
+    }
+
     return {
         updateUserLogin: updateUserLogin,
-        deleteUser: deleteUser
+        deleteUser: deleteUser,
+        getUserDetails: getUserDetails,
+        updateUserDetails: updateUserDetails
     }
 });

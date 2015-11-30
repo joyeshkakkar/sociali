@@ -7,18 +7,23 @@
         $scope.showPasswordSavedMsg = null;
     }
 
+    $scope.cancelEdit = function(){
+        $(".makeEditable").attr("disabled", "disabled");
+        $("#editBtn").show();
+        $("#updtUser").hide();
+        $("#cancelEditBtn").hide();
+    }
+
     $(document).ready(function () {
         $("#updtUser").hide();
+        $("#cancelEditBtn").hide();
 
         $("#editBtn").click(function () {
             $(".makeEditable").removeAttr("disabled");
             $("#editBtn").hide();
             $("#updtUser").show();
+            $("#cancelEditBtn").show();
         });
-
-        /*$("#saveBtn").click(function () {
-            $("#updateProfileForm").submit();
-        });*/
     });
 
     $scope.changePassword = function (newPassword) {
@@ -33,28 +38,20 @@
         })
     };
 
-    $scope.getDet = function () {
-        $http.get("/api/findUserDetails/" + $rootScope.currentUser.username)
-            .success(function (response) {
-                $scope.userDetails = response;
-            })
-    };
-
     $scope.change = function (response) {
         $scope.showPasswordSavedMsg = null;
     }
 
     $scope.updateUser = function () {
-        console.log($scope.userDetails);
-        console.log($scope.userLogin);
-        $http.post("/api/updateUserDetails/" + $rootScope.currentUser.username, $scope.userDetails)
-            .success(function (response) {
-                $scope.saved = true;
-                $(".makeEditable").attr("disabled", "disabled");
-                $("#editBtn").show();
-                $("#updtUser").hide();
-            });
-    }
+        var userDetails = $rootScope.userDetails;
+        UserService.updateUserDetails($rootScope.currentUser.username, userDetails, function (response) {
+            $scope.saved = true;
+            $(".makeEditable").attr("disabled", "disabled");
+            $("#editBtn").show();
+            $("#updtUser").hide();
+            $("#cancelEditBtn").hide();
+        })
+    };
 
     $scope.deleteProfile = function () {
         UserService.deleteUser($rootScope.currentUser._id, function (response) {
@@ -69,5 +66,4 @@
             });
         })
     };
-
 });

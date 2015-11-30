@@ -6,6 +6,8 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var nodemailer = require('nodemailer');
+var mg = require('nodemailer-mailgun-transport');
 
 var app = express();
 
@@ -30,6 +32,57 @@ app.use(passport.session());// do not ask everytime for user credentials, check 
 var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 app.listen(port, ip);
+
+
+/*Method to send mail*/
+app.post("/api/sendMail", function (req, res) {
+    var toMail = req.body.email;
+    var senderName = req.body.name;
+    console.log(toMail);
+    var auth = {
+        auth: {
+            api_key: 'key-f7eeef970cdedbdfd659aaa56e6cec27',
+            domain: 'sandbox428b7233e69d40cbba8b5eb6b9ed57fd.mailgun.org'
+        }
+    };
+    var transporter = nodemailer.createTransport(mg(auth));
+
+    var mailOptionsForSender = {
+        from: 'Sociali support <endeavorprj@gmail.com>',
+        to: senderName + '<' + toMail + '>',
+        subject: "Query submitted:" + req.body.subject,
+        text: "Your query is submitted.\n\nQuery submitted: " + req.body.message + "\n\nSender Details: \nName: " + senderName + "\nEmail: " + toMail + "\n", // plaintext body
+        //html: 'Hello&nbsp;<b>'+sender+'</b> <br/> Your query is submitted.<br/><br/> <b>Query submitted:</b> <br/> <p>' + req.body.message + '</p>' // html body
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptionsForSender, function (error, info) {
+        if (error) {
+            console.log(error, "Error in sending mail to sender");
+        } else {
+            console.log('Message sent to sender' + info);
+        }
+    });
+
+    var mailOptions = {
+        from: 'Sociali support <endeavorprj@gmail.com>',
+        to: 'Sociali support <endeavorprj@gmail.com>',
+        subject: req.body.subject,
+        text: "Query submitted: " + req.body.message + "\n\nSender Details: \nName: " + senderName + "\nEmail: " + toMail + "\n", // plaintext body
+        //html: '<b>Hello</b>' // html body
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error, "Error in sending mail to support");
+        } else {
+            console.log('Message sent: ');
+            res.send(200);
+        }
+    });
+
+});
 
 
 
