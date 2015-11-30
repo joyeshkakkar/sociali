@@ -1,13 +1,4 @@
-﻿var app = angular.module("SocialiApp", ['ngRoute', 'ui.bootstrap', 'uiGmapgoogle-maps', 'ngPasswordStrength']);
-
-app.config(['uiGmapGoogleMapApiProvider', function (uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
-        key: 'AIzaSyDyA2ZxKMduBRg3b3s4-ZgLgvHBzjWYtGk',
-        v: '3.20', //defaults to latest 3.X anyhow
-        libraries: 'weather,geometry,visualization'
-    });
-}]
-);
+﻿var app = angular.module("SocialiApp", ['ngRoute', 'ui.bootstrap', 'ngPasswordStrength']);
 
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
@@ -94,7 +85,7 @@ var checkUserLoggedin = function ($q, $timeout, $http, $location, $rootScope, Us
                 UserService.getUserDetails(username, function (response) {
                     console.log(response);
                     $rootScope.userDetails = response;
-                })
+                });
                 deferred.resolve();
             } else {
                 console.log("user not found");
@@ -105,5 +96,5 @@ var checkUserLoggedin = function ($q, $timeout, $http, $location, $rootScope, Us
         })
     .error(function (user) {
         console.log(user);
-    });;
-}
+    });
+};

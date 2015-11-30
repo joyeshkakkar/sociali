@@ -1,4 +1,4 @@
-﻿app.controller("LoginController", function ($scope, $http, $rootScope, $location, UserService, AuthenticationService) {
+﻿app.controller("LoginController", function ($scope, $http, $rootScope, $location, UserService) {
     $scope.currentUser = null;
     $rootScope.currentUser = null;
     $scope.invalid = false;

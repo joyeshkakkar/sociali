@@ -1,22 +1,29 @@
-describe('calculator', function () {
+describe("testing", function() {
 
-    beforeEach(module('calculatorApp'));
+    beforeEach(module("SocialiApp"));
 
-    var $controller;
+    var LoginController,scope;
 
-    beforeEach(inject(function(_$controller_){
-        $controller = _$controller_;
-    }));
-
-    describe('sum', function () {
-        it('1 + 1 should equal 2', function () {
-            var $scope = {};
-            var controller = $controller('CalculatorController', { $scope: $scope });
-            $scope.x = 1;
-            $scope.y = 2;
-            $scope.sum();
-            expect($scope.z).toBe(3);
+    beforeEach(inject(function ($rootScope, $controller) {
+        scope = $rootScope.$new();
+        LoginController = $controller('LoginController', {
+            $scope: scope
         });
+    }));
+        it('defined scope', function () {
+            expect(scope).toBeDefined();
+        });
+        it('Valid login credentials', function () {
+            var tempUserLogin = {username: "test", password: "test"};
+            scope.userLogin = tempUserLogin;
+            scope.login();
+            expect(scope.currentUser).toBeDefined();
+        });
+    it('Invalid login credentials', function () {
+        var tempUserLogin = {username: "test", password: "t"};
+        scope.userLogin = tempUserLogin;
+        scope.login();
+        expect(scope.currentUser).toBeNull();
     });
-
 });
+
