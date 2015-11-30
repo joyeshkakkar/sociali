@@ -14,7 +14,7 @@ var app = express();
 var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/sociali';
 mongoose.connect(connectionString);
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '../../public'));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(multer()); // for parsing multipart/form-data
