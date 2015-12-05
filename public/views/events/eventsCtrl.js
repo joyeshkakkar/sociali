@@ -4,6 +4,8 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
     var userMarker;
     var markers = [];
     var loadEvents = true;
+    var directionsService;
+    var directionsDisplay;
     //method to load events as soon as user logs in
     $scope.loadUserEvents = function(){
         //setting up the map]
@@ -88,7 +90,8 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         var url= 'https://www.eventbriteapi.com/v3//events/search/';
         var token = 'JJJKFTCUFVWB2HPKT2DS';
         var token2 = 'QC44X66MUP27NDX7MDZL';
-        var location = '&location.within=5mi&location.latitude='+$scope.latitude+'&location.longitude='+$scope.longitude;
+        var location = '&location.within=5mi&location.latitude='+$scope.latitude+'&location.longitude='
+            +$scope.longitude+'&popular=on';
 
         //setting category 103--music
         var searchQuery = url + '?categories=103' + location +
@@ -102,14 +105,23 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         then(function(response) {
             $scope.status = response.status;
             $scope.data = response.data;
-            if($scope.data != null)
+            if ($scope.data != null) {
+                processData();
                 resetMarkers();
+            }
         }, function(response) {
             $scope.data = response.data || "Request failed";
             $scope.status = response.status;
         });
     }
 
+    function processData(){
+        $scope.categories = [];
+        for (var i = 0; i < $scope.data.events.length; i++) {
+            if ($scope.categories.indexOf($scope.data.events[i].category_id) == -1)
+                $scope.categories.push($scope.data.events[i].category_id);
+        }
+    }
     $scope.fetchShowEvents = function(){
         //alert("In fetchShowEvents method with parameter-->"+$scope.query);
         //var returnValue= fetch();
@@ -126,7 +138,8 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         var url= 'https://www.eventbriteapi.com/v3//events/search/';
         var token = 'JJJKFTCUFVWB2HPKT2DS';
         var token2 = 'QC44X66MUP27NDX7MDZL';
-        var location = '&location.within=5mi&location.latitude='+$scope.latitude+'&location.longitude='+$scope.longitude;
+        var location = '&location.within=5mi&location.latitude='+$scope.latitude+
+            '&location.longitude='+$scope.longitude+'&popular=on';
         //*var batchurl = "https://www.eventbriteapi.com/v3/batch/" + '?token=' + token;
         //var venueURL = '{"method":"GET", "relative_url":"venues/';
 
@@ -200,10 +213,28 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                 map.setZoom(15);
                 map.setCenter(marker.getPosition());
                 hideOthers(event.id);
+                // Instantiate a directions service.
+                directionsService = new google.maps.DirectionsService;
+                directionsDisplay = new google.maps.DirectionsRenderer({map: map});
+                calculateAndDisplayRoute(marker.getPosition());
             }
         })(marker, num));
     }
 
+
+    function calculateAndDisplayRoute(destination) {
+        directionsService.route({
+            origin: userMarker.getPosition(),
+            destination: destination,
+            travelMode: google.maps.TravelMode.DRIVING
+        }, function(response, status) {
+            if (status === google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(response);
+            } else {
+                window.alert('Directions request failed due to ' + status);
+            }
+        });
+    }
 
     //reset any previous markers if available
     function resetMarkers(){
@@ -224,9 +255,16 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
     $scope.showall = function(){
         map.setZoom(12);
         map.setCenter(userMarker.getPosition());
+        directionsService = null;
+        directionsDisplay.setMap(null);
         $('.eventRow').show();
         $('#showAll').hide();
     };
+
+    $scope.getNumber = function(num){
+        alert(num);
+        return new Array(num);
+    }
 
 });
 
