@@ -6,6 +6,7 @@
         $scope.showPasswordSavedMsg = null;
         $scope.confirmPasswordMsg = null;
         $scope.updateProfileMsg = null;
+        $scope.updatePrefMsg = null;
     };
 
     $scope.cancelEdit = function(){
@@ -52,6 +53,7 @@
         $scope.showPasswordSavedMsg = null;
         $scope.confirmPasswordMsg = null;
         $scope.updateProfileMsg = null;
+        $scope.updatePrefMsg = null;
     };
 
     $scope.updateUser = function () {
@@ -87,4 +89,44 @@
             });
         })
     };
+
+    $scope.updatePref = function (id,val){
+        var pref = $('#preferences').val();
+        //alert("1 pref " + pref);
+
+        pref = pref.replace(',,',',');
+        if(pref.indexOf(id) < 0){
+            if(val == 'Y'){
+                pref = id + ',' + pref
+            }
+        }
+        else{
+            if(val == 'N'){
+                pref = pref.replace(id,'');
+                pref = pref.replace(',,',',');
+            }
+        }
+        //alert("2 pref " + pref);
+        $('#preferences').val(pref);
+        $rootScope.preferences = pref;
+    };
+
+    $scope.savePreferences = function(preferences){
+        var preferences = $('#preferences').val();
+        $rootScope.preferences = preferences;
+
+        var currentUser = $rootScope.currentUser;
+        var newPref = {username: currentUser.username, preferences : preferences};
+
+        //alert("pref " + newPref.preferences);
+        UserService.updateUserPreferences(currentUser._id, newPref, function (response) {
+            $scope.currentUser = response;
+            $scope.updatePrefMsg = "Preferences updated.";
+            $('#preferences').val(response.body.preferences);
+            $rootScope.preferences = response.body.preferences;
+        })
+        //alert("pref : " + $('#preferences').val());
+    };
+
+
 });

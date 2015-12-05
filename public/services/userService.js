@@ -20,10 +20,22 @@
             .success(callback);
     }
 
+    var getUserPreferences = function (username, callback) {
+        $http.get("/api/findUserPreferences/" + username)
+            .success(callback);
+    };
+
+    var updateUserPreferences = function (username, userDetails, callback) {
+        $http.post("/api/updateUserPreferences/" + username, userDetails)
+            .success(callback);
+    }
+
     return {
         updateUserLogin: updateUserLogin,
         deleteUser: deleteUser,
         getUserDetails: getUserDetails,
-        updateUserDetails: updateUserDetails
+        updateUserDetails: updateUserDetails,
+        getUserPreferences: getUserPreferences,
+        updateUserPreferences: updateUserPreferences
     }
 });

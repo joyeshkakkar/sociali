@@ -16,8 +16,7 @@
                  console.log(response);
                  $scope.userDetails = response;
                  $rootScope.userDetails = response;
-             })
-
+             });
 
              $location.url("/events/");
          })

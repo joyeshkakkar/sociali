@@ -33,7 +33,6 @@ var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 app.listen(port, ip);
 
-
 /*Method to send mail*/
 app.post("/api/sendMail", function (req, res) {
     var toMail = req.body.email;
@@ -83,8 +82,6 @@ app.post("/api/sendMail", function (req, res) {
     });
 
 });
-
-
 
 
 /**********DB data and functions START**********/
@@ -180,6 +177,24 @@ app.post("/api/updateUserDetails/:id", function (req, res) {
     });
 });
 
+//fetch user preferences
+app.get("/api/findUserPreferences/:id", function (req, res) {
+    PreferencesModel.findOne({ username: req.params.id},function (err, data) {
+        res.json(data);
+    });
+    console.log("service response : " + res.data);
+});
+
+//update user preferences
+app.post("/api/updateUserPreferences/:id", function (req, res) {
+    var preferences = new PreferencesModel(req.body);
+    preferences.username = req.params.id;
+    PreferencesModel.findOneAndUpdate({ username: req.body.username},req.body,{upsert: true},
+        function (err, data) {
+            res.send(data);
+        });
+});
+
 //Update a user login
 app.put("/api/userLogin/:id", function (req, res) {
     //console.log(req.params.id);
@@ -205,12 +220,13 @@ app.delete("/api/deleteUser/:id", function (req, res) {
                     if (docs.length > 0)
                         docs.remove();
                 }
-                console.log("removed from preferences");
                 res.json({msg: "deleted"});
             });
         });
     });
 });
+
+
 
 
 /*****************Passport related functions****************************/
