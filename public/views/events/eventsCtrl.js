@@ -60,6 +60,7 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                             map.setZoom(15);
                             map.setCenter(marker.getPosition());
                         });
+                    //fetch user events only if the user is logged in
                     if($scope.currentUser !=null)
                         fetchUserEvents();
                 }, function () {
@@ -189,7 +190,7 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
 
     //perform all search operations
     //searchQuery: query to be posted
-    //page: flag to tell if pagination has to rendered
+    //page: flag to tell if pagination has to be rendered
     function search(searchQuery, page) {
         $http({method: $scope.method, url: searchQuery, cache: $templateCache}).
         then(function (response) {
