@@ -1,18 +1,18 @@
 ﻿app.controller("ProfileController", function ($scope, $http, $rootScope, $scope, $location, UserService) {
     $scope.currentUser = $rootScope.currentUser;
-
     $scope.view_tab = 'updatePreferences';
     $scope.changeTab = function (tab) {
         $scope.view_tab = tab;
         $scope.showPasswordSavedMsg = null;
-    }
+        $scope.confirmPasswordMsg = null;
+    };
 
     $scope.cancelEdit = function(){
         $(".makeEditable").attr("disabled", "disabled");
         $("#editBtn").show();
         $("#updtUser").hide();
         $("#cancelEditBtn").hide();
-    }
+    };
 
     $(document).ready(function () {
         $("#updtUser").hide();
@@ -26,27 +26,31 @@
         });
     });
 
-    $scope.changePassword = function (newPassword) {
-        if($scope.password != $scope.cnfPassword)
-        {
-            $scope.showPasswordSavedMsg = "Passwords don't match";
-        }
-        else {
-            var currentUser = $rootScope.currentUser;
-            var newUser = {username: currentUser.username, password: newPassword};
-            UserService.updateUserLogin(currentUser._id, newUser, function (response) {
-                console.log(response);
-                $scope.currentUser = response;
-                $scope.showPasswordSavedMsg = "Your password is changed. Thanks!";
-                $scope.password = '';
-                $scope.cnfPassword = '';
-            })
+    $scope.changePassword = function (newPassword,cnfPassword) {
+        if((newPassword != undefined ) && (cnfPassword != undefined) ){
+            if(newPassword != cnfPassword) {
+                $scope.confirmPasswordMsg = "Passwords don't match.";
+                $scope.showPasswordSavedMsg = null;
+            }
+            else {
+                var currentUser = $rootScope.currentUser;
+                var newUser = {username: currentUser.username, password: newPassword};
+                UserService.updateUserLogin(currentUser._id, newUser, function (response) {
+                    console.log(response);
+                    $scope.currentUser = response;
+                    $scope.showPasswordSavedMsg = "Your password is changed. Thanks!";
+                    $scope.confirmPasswordMsg = null;
+                    $scope.password = '';
+                    $scope.cnfPassword = '';
+                })
+            }
         }
     };
 
     $scope.change = function (response) {
         $scope.showPasswordSavedMsg = null;
-    }
+        $scope.confirmPasswordMsg = null;
+    };
 
     $scope.updateUser = function () {
         var userDetails = $rootScope.userDetails;

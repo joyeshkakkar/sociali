@@ -152,13 +152,14 @@
                                         </div>
 
                                         <div class="col-md-offset-2 col-md-6 center-align">
-                                            <button id="saveBtn" ng-click="changePassword(password)" class="btn btn-sm btn-success">
+                                            <button id="saveBtn" ng-click="changePassword(password,cnfPassword)" class="btn btn-sm btn-success">
                                                 Save
                                             </button>
                                             <button id="cancelBtn" ng-click="changeTab('updateProfile')" type="button" class="btn btn-sm">Cancel</button>
                                         </div>
                                         <div class="col-md-offset-2 col-md-6 center-align">
                                             <p ng-show="showPasswordSavedMsg"><h3>{{showPasswordSavedMsg}}</h3></p>
+                                            <p ng-show="confirmPasswordMsg"><h3>{{confirmPasswordMsg}}</h3></p>
                                         </div>
                                     </div>
                                 </fieldset>
