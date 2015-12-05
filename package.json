@@ -8,6 +8,10 @@
     "application",
     "openshift"
   ],
+  "plugins": [
+    "karma-junit-reporter",
+    "karma-coverage"
+    ],
   "author": {
     "name": "OpenShift",
     "email": "ramr@example.org",
@@ -41,7 +45,9 @@
     "nodemailer-mailgun-transport": "^1.0.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "phantomjs": "^1.9.19"
+    "phantomjs": "^1.9.19",
+    "karma-junit-reporter": "~0.2.2",
+    "karma-coverage": "~0.2.6"
   },
   "devDependencies": {
     "karma-chrome-launcher": "^0.2.1"

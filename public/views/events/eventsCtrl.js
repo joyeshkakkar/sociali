@@ -95,7 +95,7 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
 
         //setting category 103--music
         var searchQuery = url + '?categories=103' + location +
-            '&token=' + token + '&expand=venue';
+            '&token=' + token + '&expand=venue,category';
         $scope.code = null;
         $scope.response = null;
         $scope.method = 'GET';
@@ -117,9 +117,13 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
 
     function processData(){
         $scope.categories = [];
+        $scope.pages = [];
         for (var i = 0; i < $scope.data.events.length; i++) {
-            if ($scope.categories.indexOf($scope.data.events[i].category_id) == -1)
-                $scope.categories.push($scope.data.events[i].category_id);
+            if ($scope.categories.indexOf($scope.data.events[i].category.name) == -1)
+                $scope.categories.push($scope.data.events[i].category.name);
+        }
+        for (var j = 1; j <= $scope.data.pagination.page_count; j++) {
+            $scope.pages.push(j);
         }
     }
     $scope.fetchShowEvents = function(){
@@ -144,7 +148,7 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         //var venueURL = '{"method":"GET", "relative_url":"venues/';
 
         var searchQuery = url + '?q=' + $scope.query + location +
-            '&token=' + token + '&expand=venue';
+            '&token=' + token + '&expand=venue,category';
         //var venues = [];
         //var batchRequest = '[' + venueURL;
         $scope.code = null;
@@ -156,8 +160,10 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         then(function(response) {
             $scope.status = response.status;
             $scope.data = response.data;
-            if($scope.data != null)
+            if ($scope.data != null){
                 resetMarkers();
+                processData();
+            }
         }, function(response) {
             $scope.data = response.data || "Request failed";
             $scope.status = response.status;
@@ -262,8 +268,9 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
     };
 
     $scope.getNumber = function(num){
-        alert(num);
-        return new Array(num);
+        //alert(num);
+        if(num !=undefined)
+            return new Array(+num);
     }
 
 });

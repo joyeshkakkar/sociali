@@ -1,10 +1,14 @@
-﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Events</title>
     <style>
         #map {
-            height: 400px;
+            height: 300px;
+        }
+        .img {
+            height: 110px;
+            width: 170px;
         }
 
     </style>
@@ -16,7 +20,7 @@
         <div class="column col-md-2" id="filter">
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button"
-                        id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        id="categoryMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     Category
                     <span class="caret"></span>
                 </button>
@@ -26,7 +30,7 @@
             </div>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button"
-                        id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        id="dateMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     Date
                     <span class="caret"></span>
                 </button>
@@ -40,13 +44,13 @@
             </div>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button"
-                        id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        id="priceMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     Price
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#">Free</a></li>
-                    <li><a href="#">Paid</a></li>
+                    <li><a href="" ng-click="filter('free')">Free</a></li>
+                    <li><a href="" ng-click="filter('paid')">Paid</a></li>
                 </ul>
             </div>
         </div>
@@ -55,7 +59,7 @@
             <div id="map" class="col-md-10"></div>
         </div>
 
-        <div class="input-group col-md-10 column">
+        <div class="input-group col-md-12 column">
             <input type="text" ng-model="query"
                    placeholder="Search for Events" required
                    class="text form-control">
@@ -65,7 +69,7 @@
                 </button>
             </span>
         </div>
-        <div class="col-md-10 column">
+        <div class="col-md-12 column">
         <input type="hidden" ng-model="latitude">
         <input type="hidden" ng-model="longitude">
         <nav>
@@ -75,7 +79,7 @@
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li ng-repeat="num in data.pagination.page_count">
+                <li ng-repeat="num in pages">
                 <a href="#">{{num}}</a></li>
                 <li>
                     <a href="#" aria-label="Next">
@@ -87,7 +91,10 @@
 
         <table class="table table-striped">
             <tr ng-repeat="event in data.events" id="{{event.id}}" class="eventRow">
-                <td><img src="{{event.logo.url}}"></td>
+               <div class="column col-md-2">
+                <td><img src="{{event.logo.url}}" class="img"></td>
+               </div>
+                <div class="column col-md-10">
                 <td>
                     <table>
                         <tr><td>Start Time: {{event.start.local}}</td></tr>
@@ -103,31 +110,29 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr><td><a href="{{event.url}}">Check event</a></td></tr>
+                        <tr><td><a href="{{event.url}}" target="_blank">Check event</a></td></tr>
                     </table>
                 </td>
+                    </div>
             </tr>
         </table>
         <button id="showAll" ng-click="showall()">Show All</button>
-        <nav>
-            <ul class="pagination">
-                <li>
-                    <a href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+            <nav>
+                <ul class="pagination">
+                    <li >
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li ng-repeat="num in pages">
+                        <a href="#">{{num}}</a></li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 
