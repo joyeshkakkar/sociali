@@ -60,7 +60,8 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                             map.setZoom(15);
                             map.setCenter(marker.getPosition());
                         });
-                    fetchUserEvents();
+                    if($scope.currentUser !=null)
+                        fetchUserEvents();
                 }, function () {
                     handleNoGeolocation(browserSupportFlag);
                 });
