@@ -114,17 +114,24 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         $scope.response = null;
         $scope.method = 'GET';
 
-        search(searchQuery,true);
+        search(searchQuery, true);
     }
 
     //method to pre-process the data retreived from the data api
     function processData(doPages) {
         $scope.categories = [];
-
+        $scope.events = [];
+        $scope.unfilteredEvents = [];
+        //$scope.dates = [];
+        var categoriesID = [];
         for (var i = 0; i < $scope.data.events.length; i++) {
+            $scope.unfilteredEvents[i] = $scope.data.events[i];
+            $scope.events[i] = $scope.data.events[i];
             if ($scope.data.events[i].category != null) {
-                if ($scope.categories.indexOf($scope.data.events[i].category.name) == -1)
-                    $scope.categories.push($scope.data.events[i].category.name);
+                if (categoriesID.indexOf($scope.data.events[i].category.id) == -1) {
+                    $scope.categories.push($scope.data.events[i].category);
+                    categoriesID.push($scope.data.events[i].category.id);
+                }
             }
         }
         if (doPages) {
@@ -161,7 +168,7 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         $scope.response = null;
         $scope.method = 'GET';
 
-        search(searchQuery,true);
+        search(searchQuery, true);
 
     };
 
@@ -175,21 +182,21 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
             $scope.response = null;
             $scope.method = 'GET';
 
-            search(searchQuery,false);
+            search(searchQuery, false);
         }
     };
 
     //perform all search operations
     //searchQuery: query to be posted
     //page: flag to tell if pagination has to rendered
-    function search(searchQuery,page){
+    function search(searchQuery, page) {
         $http({method: $scope.method, url: searchQuery, cache: $templateCache}).
         then(function (response) {
             $scope.status = response.status;
             $scope.data = response.data;
             if ($scope.data != null) {
-                resetMarkers();
                 processData(page);
+                resetMarkers();
             }
         }, function (response) {
             $scope.data = response.data || "Request failed";
@@ -199,9 +206,9 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
 
     //to set event markers
     function setMarkers() {
-        for (var i = 0; i < $scope.data.events.length; i++) {
+        for (var i = 0; i < $scope.events.length; i++) {
 
-            var event = $scope.data.events[i];
+            var event = $scope.events[i];
             if (event.venue != null) {
                 var infowindow = new google.maps.InfoWindow({
                     content: event.name.text
@@ -228,8 +235,8 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
     //add click listeners to all the markers
     function setMarkerListeners() {
 
-        for (var i = 0; i < markers.length; i++) {
-            var event = $scope.data.events[i];
+        for (var i = 0; i < $scope.events.length; i++) {
+            var event = $scope.events[i];
             var marker = markers[i];
             var infowindow = new google.maps.InfoWindow();
             bindInfoWindow(marker, infowindow, event, i);
@@ -241,8 +248,8 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         google.maps.event.addListener(marker, 'click', (function (marker, num) {
             return function () {
 
-                infowindow.setContent(event.name.text);
-                infowindow.open(map, marker);
+                //infowindow.setContent(event.name.text);
+                //infowindow.open(map, marker);
                 map.setZoom(15);
                 map.setCenter(marker.getPosition());
                 hideOthers(event.id);
@@ -295,6 +302,29 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         directionsDisplay.setMap(null);
         $('.eventRow').show();
         $('#showAll').hide();
+    };
+
+    //method to filter events shown
+    $scope.filterEvents = function (type) {
+        var j=0;
+        if(type == 'cat'){
+            if($scope.catFilter == ''){
+                $scope.events = [];
+                $scope.events = $scope.unfilteredEvents;
+            } else {
+                $scope.events = [];
+                for (i = 0; i < $scope.unfilteredEvents.length; i++) {
+                    if ($scope.unfilteredEvents[i].category != null &&
+                            $scope.unfilteredEvents[i].category.id == $scope.catFilter) {
+                        $scope.events[j] = $scope.unfilteredEvents[i];
+                        j++;
+                    }
+                }
+            }
+            //processData(false);
+            resetMarkers();
+        }
+
     };
 
 
