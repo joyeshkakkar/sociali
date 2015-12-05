@@ -27,15 +27,21 @@
     });
 
     $scope.changePassword = function (newPassword) {
-        var currentUser = $rootScope.currentUser;
-        var newUser = { username: currentUser.username, password: newPassword };
-        UserService.updateUserLogin(currentUser._id, newUser, function (response) {
-            console.log(response);
-            $scope.currentUser = response;
-            $scope.showPasswordSavedMsg = "Your password is changed. Thanks!";
-            $scope.password = '';
-            $scope.cnfPassword = '';
-        })
+        if($scope.password != $scope.cnfPassword)
+        {
+            $scope.showPasswordSavedMsg = "Passwords don't match";
+        }
+        else {
+            var currentUser = $rootScope.currentUser;
+            var newUser = {username: currentUser.username, password: newPassword};
+            UserService.updateUserLogin(currentUser._id, newUser, function (response) {
+                console.log(response);
+                $scope.currentUser = response;
+                $scope.showPasswordSavedMsg = "Your password is changed. Thanks!";
+                $scope.password = '';
+                $scope.cnfPassword = '';
+            })
+        }
     };
 
     $scope.change = function (response) {

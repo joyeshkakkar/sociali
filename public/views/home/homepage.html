@@ -86,8 +86,12 @@
                                 <input type="password" ng-model="userLogin.cnfPassword" id="password" placeholder="Confirm Password"
                                        required class="form-control input-sm">
                             </div>
+                        </div>
 
-
+                        <div>
+                            <span ng-show="confirmPasswordMsg === true" class="label label-danger pull-left">
+                                Passwords don't match.<br />
+                            </span>
                         </div>
 
                         <div class="form-group">
