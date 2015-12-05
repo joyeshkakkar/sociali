@@ -5,6 +5,7 @@
         $scope.view_tab = tab;
         $scope.showPasswordSavedMsg = null;
         $scope.confirmPasswordMsg = null;
+        $scope.updateProfileMsg = null;
     };
 
     $scope.cancelEdit = function(){
@@ -50,17 +51,25 @@
     $scope.change = function (response) {
         $scope.showPasswordSavedMsg = null;
         $scope.confirmPasswordMsg = null;
+        $scope.updateProfileMsg = null;
     };
 
     $scope.updateUser = function () {
         var userDetails = $rootScope.userDetails;
-        UserService.updateUserDetails($rootScope.currentUser.username, userDetails, function (response) {
-            $scope.saved = true;
-            $(".makeEditable").attr("disabled", "disabled");
-            $("#editBtn").show();
-            $("#updtUser").hide();
-            $("#cancelEditBtn").hide();
-        })
+        if((userDetails.firstName!= undefined) && (userDetails.lastName!= undefined) && (userDetails.email!= undefined))
+        {
+            UserService.updateUserDetails($rootScope.currentUser.username, userDetails, function (response) {
+                $scope.saved = true;
+                $(".makeEditable").attr("disabled", "disabled");
+                $("#editBtn").show();
+                $("#updtUser").hide();
+                $("#cancelEditBtn").hide();
+            })
+            $scope.updateProfileMsg = "Profile updated.";
+        }
+        else{
+            $scope.updateProfileMsg = "Values cannot be null.";
+        }
     };
 
     $scope.deleteProfile = function () {
