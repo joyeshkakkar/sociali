@@ -17,7 +17,7 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
             //function initialize() {
             var mapProp = {
                 center : myCenter,
-                zoom : 10,
+                zoom : 12,
                 mapTypeId : google.maps.MapTypeId.ROADMAP
             };
             map = new google.maps.Map(document.getElementById("map"),

@@ -1,7 +1,7 @@
 ﻿app.controller("ProfileController", function ($scope, $http, $rootScope, $scope, $location, UserService) {
     $scope.currentUser = $rootScope.currentUser;
 
-    $scope.view_tab = 'updateProfile';
+    $scope.view_tab = 'updatePreferences';
     $scope.changeTab = function (tab) {
         $scope.view_tab = tab;
         $scope.showPasswordSavedMsg = null;

@@ -6,10 +6,6 @@
         #map {
             height: 400px;
         }
-
-        .angular-google-map-container {
-            height: 400px;
-        }
     </style>
 
 </head>
@@ -52,7 +48,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr><td><a href="{{event.url}}">Check event</a></td></tr>
+                        <tr><td><a href="{{event.url}}" target="_blank">Check event</a></td></tr>
                         <tr><td>latitude:{{event.venue.address.latitude}}</td></tr>
                         <tr><td>longitude:{{event.venue.address.longitude}}</td></tr>
                     </table>
@@ -62,6 +58,5 @@
         <button id="showAll" ng-click="showall()">Show All</button>
     </div>
 
-    <!--<script src="map.js"></script>-->
 </body>
 </html>
