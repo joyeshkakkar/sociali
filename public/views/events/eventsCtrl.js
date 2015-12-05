@@ -1,13 +1,12 @@
 app.controller("EventsController", function ($scope, $http, $rootScope, $location,$templateCache) {
 
     var map;
+    var userMarker;
     var markers = [];
     var loadEvents = true;
     //method to load events as soon as user logs in
     $scope.loadUserEvents = function(){
         //setting up the map]
-        //alert("in load user events--">+loadEvents);
-
 
             var myCenter = new google.maps.LatLng(40.69847032728747,
                 -73.9514422416687);
@@ -40,13 +39,14 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                             //icon : 'images/blue.png'
                         });
                         marker.setMap(map);
+                        userMarker = marker;
                         //to zoom
                         google.maps.event.addListener(marker, 'click',
                             function() {
                                 map.setZoom(15);
                                 map.setCenter(marker.getPosition());
                             });
-
+                        fetchUserEvents();
                     }, function() {
                         handleNoGeolocation(browserSupportFlag);
                     });
@@ -70,41 +70,45 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                     position : initialLocation,
                     icon : 'images/green.png'
                 });
+                userMarker = marker;
                 marker.setMap(map);
                 //to zoom
                 google.maps.event.addListener(marker, 'click', function() {
                     map.setZoom(15);
                     map.setCenter(marker.getPosition());
                 });
+                fetchUserEvents();
             }
             //}
-            //google.maps.event.addDomListener(window, 'load', initialize);
-            var url= 'https://www.eventbriteapi.com/v3//events/search/';
-            var token = 'JJJKFTCUFVWB2HPKT2DS';
-            var token2 = 'QC44X66MUP27NDX7MDZL';
-            var location = '&location.within=5mi&location.latitude='+'42.3372703'+'&location.longitude='+'-71.0913595';
 
-            //setting category 103--music
-            var searchQuery = url + '?categories=103' + location +
-                '&token=' + token + '&expand=venue';
-            $scope.code = null;
-            $scope.response = null;
-            $scope.method = 'GET';
-
-            //to fetch all the events
-            $http({method: $scope.method, url: searchQuery, cache: $templateCache}).
-            then(function(response) {
-                $scope.status = response.status;
-                $scope.data = response.data;
-                if($scope.data != null)
-                    resetMarkers();
-            }, function(response) {
-                $scope.data = response.data || "Request failed";
-                $scope.status = response.status;
-            });
         };
 
+    function fetchUserEvents(){
+        //google.maps.event.addDomListener(window, 'load', initialize);
+        var url= 'https://www.eventbriteapi.com/v3//events/search/';
+        var token = 'JJJKFTCUFVWB2HPKT2DS';
+        var token2 = 'QC44X66MUP27NDX7MDZL';
+        var location = '&location.within=5mi&location.latitude='+$scope.latitude+'&location.longitude='+$scope.longitude;
 
+        //setting category 103--music
+        var searchQuery = url + '?categories=103' + location +
+            '&token=' + token + '&expand=venue';
+        $scope.code = null;
+        $scope.response = null;
+        $scope.method = 'GET';
+
+        //to fetch all the events
+        $http({method: $scope.method, url: searchQuery, cache: $templateCache}).
+        then(function(response) {
+            $scope.status = response.status;
+            $scope.data = response.data;
+            if($scope.data != null)
+                resetMarkers();
+        }, function(response) {
+            $scope.data = response.data || "Request failed";
+            $scope.status = response.status;
+        });
+    }
 
     $scope.fetchShowEvents = function(){
         //alert("In fetchShowEvents method with parameter-->"+$scope.query);
@@ -212,13 +216,14 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
     }
 
     function hideOthers(id){
-        //$('.eventRow').show();
         $('.eventRow').hide();
         $('#'+id).show();
         $('#showAll').show();
     }
 
     $scope.showall = function(){
+        map.setZoom(12);
+        map.setCenter(userMarker.getPosition());
         $('.eventRow').show();
         $('#showAll').hide();
     };
