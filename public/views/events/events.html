@@ -26,10 +26,10 @@
         </select>
         <select class="form-control" ng-model = "datFilter" ng-change="filterEvents('date')">
             <option value="">Select Date</option>
-            <option value="one">Today</option>
-            <option value="two">Tomorrow</option>
-            <option value="three">In a Week</option>
-            <option value="four">After 1 week</option>
+            <option value="1">Today</option>
+            <option value="2">Tomorrow</option>
+            <option value="3">After a Week</option>
+            <option value="4">After a month</option>
         </select>
         <select class="form-control">
             <option value="one">One</option>
@@ -47,11 +47,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="input-group" id="adv-search">
-                    <input type="text" class="form-control" placeholder="Search for snippets" />
+                    <input type="text" class="form-control" ng-model="query" placeholder="Search for Events" />
                     <div class="input-group-btn">
                         <div class="btn-group" role="group">
                             <div class="dropdown dropdown-lg">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                                <button type="button" class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                                 <div class="dropdown-menu dropdown-menu-right" role="menu">
                                     <form class="form-horizontal" role="form">
                                         <div class="form-group">
@@ -72,11 +73,12 @@
                                             <label for="contain">Contains the words</label>
                                             <input class="form-control" type="text" />
                                         </div>
-                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                        <button type="submit" class="btn btn-primary" >
+                                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                     </form>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            <button type="button" class="btn btn-primary" ng-click="fetch()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                         </div>
                     </div>
                 </div>

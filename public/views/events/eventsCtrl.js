@@ -324,10 +324,43 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                 }
             }
             //processData(false);
-            resetMarkers();
+            //resetMarkers();
         }
+        if(type == 'date'){
+            if($scope.datFilter == ''){
+                $scope.events = [];
+                $scope.events = $scope.unfilteredEvents;
+            } else {
+                var date = getDate($scope.datFilter);
+                alert(date.toISOString());
+                $scope.events = [];
+                for (i = 0; i < $scope.unfilteredEvents.length; i++) {
+                    if ($scope.unfilteredEvents[i].start.local.substring(0,9) == date.toISOString().substring(0,9)) {
+                        $scope.events[j] = $scope.unfilteredEvents[i];
+                        j++;
+                    }
+                }
+            }
+
+        }
+        resetMarkers();
 
     };
+    function getDate(type){
+        var dat = new Date();
+        if(type =='1'){
+            return dat;
+        } if(type == '2'){
+            dat.setDate(dat.getDate() + 1)
+            return dat;
+        }if(type == '3'){
+            dat.setDate(dat.getDate() + 7)
+            return dat;
+        }if(type == '4'){
+            dat.setDate(dat.getDate() + 31)
+            return dat;
+        }
+    }
 
 
 });
