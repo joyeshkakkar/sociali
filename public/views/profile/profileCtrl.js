@@ -1,4 +1,5 @@
-﻿app.controller("ProfileController", function ($scope, $http, $rootScope, $scope, $location, UserService) {
+﻿app.controller("ProfileController", function ($scope, $http, $rootScope, $location, UserService) {
+
     $scope.currentUser = $rootScope.currentUser;
     $scope.view_tab = 'updatePreferences';
     $scope.changeTab = function (tab) {
@@ -113,6 +114,7 @@
 
     $scope.savePreferences = function(preferences){
         var preferences = $('#preferences').val();
+        preferences = preferences.replace(/,\s*$/, "");
         $rootScope.preferences = preferences;
 
         var currentUser = $rootScope.currentUser;
@@ -130,3 +132,4 @@
 
 
 });
+
