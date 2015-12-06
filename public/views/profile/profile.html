@@ -136,6 +136,21 @@
                                     <div class="form-group">
                                         <div class="col-md-6 col-md-offset-2">
                                             <div class="input-group">
+                                                <span class="input-group-addon " id="basic-addon2">
+                                                    <span class="glyphicon glyphicon-lock"></span>
+                                                </span>
+                                                <input type="password" id="currPassword" name="currPassword"
+                                                       placeholder="Current password" required
+                                                       class="text form-control input-sm" ng-model="currPassword"
+                                                       ng-change="change()">
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-md-offset-2">
+                                            <div class="input-group">
                                                 <span class="input-group-addon " id="basic-addon3">
                                                     <span class="glyphicon glyphicon-lock"></span>
                                                 </span>
@@ -173,7 +188,7 @@
                                     </div>
 
                                     <div class="col-md-offset-2 col-md-6 center-align">
-                                        <button id="savepBtn" ng-click="changePassword(password,cnfPassword)"
+                                        <button id="savepBtn" ng-click="changePassword(password,cnfPassword,currPassword)"
                                                 class="btn btn-sm btn-success">
                                             Save
                                         </button>

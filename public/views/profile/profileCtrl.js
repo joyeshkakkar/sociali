@@ -20,41 +20,29 @@
         $("#cancelEditBtn").hide();
     };
 
-    $(document).ready(function () {
-        $('#preferences').val($scope.preferences);
-        $('#distanceRadius').val($scope.distance);
-
-        //alert($('#preferences').val());
-        //alert($('#distanceRadius').val());
-
-        $("#updtUser").hide();
-        $("#cancelEditBtn").hide();
-
-        $("#editBtn").click(function () {
-            $(".makeEditable").removeAttr("disabled");
-            $("#editBtn").hide();
-            $("#updtUser").show();
-            $("#cancelEditBtn").show();
-        });
-    });
-
-    $scope.changePassword = function (newPassword,cnfPassword) {
-        if((newPassword != undefined ) && (cnfPassword != undefined) ){
-            if(newPassword != cnfPassword) {
-                $scope.confirmPasswordMsg = "Passwords don't match.";
-                $scope.showPasswordSavedMsg = null;
-            }
-            else {
-                var currentUser = $rootScope.currentUser;
-                var newUser = {username: currentUser.username, password: newPassword};
-                UserService.updateUserLogin(currentUser._id, newUser, function (response) {
-                    console.log(response);
-                    $scope.currentUser = response;
-                    $scope.showPasswordSavedMsg = "Your password is changed. Thanks!";
-                    $scope.confirmPasswordMsg = null;
-                    $scope.password = '';
-                    $scope.cnfPassword = '';
-                })
+    $scope.changePassword = function (newPassword,cnfPassword,currPassword) {
+        var currentUser = $rootScope.currentUser;
+        if(currentUser.password != currPassword){
+            $scope.confirmPasswordMsg = 'Current password does not match.';
+        }
+        else{
+            if((newPassword != undefined ) && (cnfPassword != undefined) ){
+                if(newPassword != cnfPassword) {
+                    $scope.confirmPasswordMsg = "Passwords don't match.";
+                    $scope.showPasswordSavedMsg = null;
+                }
+                else {
+                    var newUser = {username: currentUser.username, password: newPassword};
+                    UserService.updateUserLogin(currentUser._id, newUser, function (response) {
+                        console.log(response);
+                        $scope.currentUser = response;
+                        $scope.showPasswordSavedMsg = "Your password is changed. Thanks!";
+                        $scope.confirmPasswordMsg = null;
+                        $scope.password = '';
+                        $scope.cnfPassword = '';
+                        $scope.currPassword = '';
+                    })
+                }
             }
         }
     };
@@ -142,6 +130,42 @@
             $scope.updatePrefMsg = "Preferences are updated.";
         })
     };
+
+    $(document).ready(function () {
+        $('#preferences').val($scope.preferences);
+        $('#distanceRadius').val($scope.distance);
+
+        //alert($('#preferences').val());
+        //alert($('#distanceRadius').val());
+
+        $("#updtUser").hide();
+        $("#cancelEditBtn").hide();
+
+        $("#editBtn").click(function () {
+            $(".makeEditable").removeAttr("disabled");
+            $("#editBtn").hide();
+            $("#updtUser").show();
+            $("#cancelEditBtn").show();
+        });
+
+        if($scope.preferences != null){
+            //alert("set button " +  savedPreferences);
+            var arrayOfPref = $scope.preferences.split(",");
+            var arrayLength = arrayOfPref.length;
+            for (var i = 0; i < arrayLength; i++) {
+                var cat = arrayOfPref[i];
+                var id = "#" + cat;
+                alert(document.getElementById(cat).id);
+
+                $("#Food").find('.btn').toggleClass('btn-default');
+                alert("done");
+                //.toggleClass('btn-default');
+                //document.getElementById(cat).classList.toggle('btn-default');
+                //.toggleClass('btn-default');
+            }
+        }
+
+    });
 
 
 });
