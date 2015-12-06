@@ -91,7 +91,7 @@
         })
     };
 
-    $scope.updatePref = function (id,val){
+    /*$scope.updatePref = function (id,val){
         var pref = $('#preferences').val();
         //alert("1 pref " + pref);
 
@@ -110,17 +110,34 @@
         //alert("2 pref " + pref);
         $('#preferences').val(pref);
         $rootScope.preferences = pref;
-    };
+    };*/
 
+    $scope.updatePref = function (id,val){
+        var pref = $('#preferences').val();
+
+        var arrayOfPref = pref.split(",");
+        var index = arrayOfPref.indexOf(id);
+        if(pref.indexOf(id) < 0) {
+            //add element
+            if(val == 'Y'){
+                arrayOfPref.push(id);
+            }
+        }
+        else{
+            //remove element
+            if(val == 'N'){
+                arrayOfPref.splice(index, 1);
+            }
+        }
+        pref = arrayOfPref.join();
+        pref = pref.indexOf(",") == 0 ? pref.substring(1) : pref;
+
+        $('#preferences').val(pref);
+        $rootScope.preferences = pref;
+    };
+    
     $scope.savePreferences = function(preferences){
         var preferences = $('#preferences').val();
-        var lastspace = preferences.lastIndexOf(",");
-        if (lastspace != -1) {
-            preferences = preferences.substr(0, lastspace);
-        }
-
-        alert(preferences);
-        //preferences = preferences.replace(/,\s*$/, "");
         $rootScope.preferences = preferences;
 
         var currentUser = $rootScope.currentUser;
