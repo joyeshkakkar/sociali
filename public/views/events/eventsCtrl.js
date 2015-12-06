@@ -332,12 +332,29 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                 $scope.events = $scope.unfilteredEvents;
             } else {
                 var date = getDate($scope.datFilter);
-                alert(date.toISOString());
                 $scope.events = [];
-                for (i = 0; i < $scope.unfilteredEvents.length; i++) {
-                    if ($scope.unfilteredEvents[i].start.local.substring(0,9) == date.toISOString().substring(0,9)) {
-                        $scope.events[j] = $scope.unfilteredEvents[i];
-                        j++;
+                if($scope.datFilter == '1' || $scope.datFilter == '2') {
+                    for (i = 0; i < $scope.unfilteredEvents.length; i++) {
+                        if ($scope.unfilteredEvents[i].start.local.substring(0, 10) == date.toISOString().substring(0, 10)) {
+                            $scope.events[j] = $scope.unfilteredEvents[i];
+                            j++;
+                        }
+                    }
+                } else if($scope.datFilter == '3') {
+                    for (i = 0; i < $scope.unfilteredEvents.length; i++) {
+                        var temp = new Date($scope.unfilteredEvents[i].start.local);
+                        if ( temp >= date.d1
+                            && temp <= date.d2) {
+                            $scope.events[j] = $scope.unfilteredEvents[i];
+                            j++;
+                        }
+                    }
+                } else{
+                    for (i = 0; i < $scope.unfilteredEvents.length; i++) {
+                        if (new Date($scope.unfilteredEvents[i].start.local) >= date) {
+                            $scope.events[j] = $scope.unfilteredEvents[i];
+                            j++;
+                        }
                     }
                 }
             }
@@ -348,15 +365,24 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
     };
     function getDate(type){
         var dat = new Date();
+        var dateRange;
+        var d1;
+        var d2;
         if(type =='1'){
             return dat;
         } if(type == '2'){
             dat.setDate(dat.getDate() + 1)
             return dat;
         }if(type == '3'){
+            d2 = new Date();
+            d2.setDate(dat.getDate() + 7);
+            dateRange = {"d1" :dat ,"d2": d2};
+            return dateRange;
+        }if(type == '4'){
             dat.setDate(dat.getDate() + 7)
             return dat;
-        }if(type == '4'){
+        }
+        if(type == '5'){
             dat.setDate(dat.getDate() + 31)
             return dat;
         }

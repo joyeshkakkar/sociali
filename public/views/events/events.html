@@ -24,12 +24,13 @@
             <option value="">Category</option>
             <option ng-repeat="cat in categories" value="{{cat.id}}">{{cat.name}}</option>
         </select>
-        <select class="form-control" ng-model="datFilter" ng-change="filterEvents('date')">
+        <select class="form-control" ng-model = "datFilter" ng-change="filterEvents('date')">
             <option value="">Select Date</option>
-            <option value="one">Today</option>
-            <option value="two">Tomorrow</option>
-            <option value="three">In a Week</option>
-            <option value="four">After 1 week</option>
+            <option value="1">Today</option>
+            <option value="2">Tomorrow</option>
+            <option value="3">This week</option>
+            <option value="4">After a Week</option>
+            <option value="5">After a month</option>
         </select>
         <select class="form-control">
             <option value="one">One</option>
