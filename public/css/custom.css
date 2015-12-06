@@ -10,7 +10,17 @@
 	padding-top:20px;
 }
 
-.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+.padding-30{
+    padding-top:30px;
+}
+
+.padding-25{
+    padding-top:25px;
+}
+
+.padding-10{
+    padding-top:10px;
+}
 
 /*.bb {
 	<!--background: url('../images/background.jpg');
