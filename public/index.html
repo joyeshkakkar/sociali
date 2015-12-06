@@ -53,7 +53,7 @@
                 </li>
             </ul>
             <div class="input-group pull-left padding-10" id="adv-search">
-                <input type="text" class="form-control" placeholder="Search for events" ng-model="query"/>
+                <input type="text" class="form-control" required placeholder="Search for events" ng-model="query"/>
 
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
@@ -69,6 +69,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-3 control-label pull-left"
                                                            for="category">Category</label>
+
                                                     <div class=" col-sm-9  ">
                                                         <select class="form-control"
                                                                 id="category" class="form-control">
@@ -81,17 +82,38 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group   padding-25">
+                                            <div class="form-group">
                                                 <div class="row">
-                                                    <label class="col-sm-3  control-label" for="distance">Distance within
-                                                        </label>
-                                                    <div class=" col-sm-9 ">
+                                                    <label class="col-sm-3 control-label pull-left"
+                                                           for="location">Location</label>
+
+                                                    <div class="col-sm-9">
+                                                        <div class="input-group input-group-sm">
+                                                            <input type="text" class="form-control"
+                                                                   required id="location"/>
+                                                            <span class="input-group-btn">
+                                                                <button class="btn" type="button" onclick="fetchCurrentLocation()">
+                                                                    <span class="glyphicon glyphicon-screenshot"></span>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group padding-25">
+                                                <div class="row">
+                                                    <label class="col-sm-3  control-label" for="distance">Distance
+                                                        within
+                                                    </label>
+
+                                                    <div class=" col-sm-6 ">
                                                         <input id="distance"
                                                                class="form-control" data-slider-id='ex1Slider'
-                                                               type="text" data-slider-min="0"
+                                                               type="text" data-slider-min="1"
                                                                data-slider-max="10" data-slider-step="1"
                                                                data-slider-value="5"/>
                                                     </div>
+                                                    <label class="col-sm-3 control-label">Miles</label>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -100,26 +122,9 @@
                                                         Date
                                                     </label>
 
-                                                        <div class='col-sm-7'>
-                                                            <div class="form-group">
-                                                                <div class='input-group date' id='startDate'>
-                                                                    <input type='text' class="form-control"/>
-                                                                    <span class="input-group-addon">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <label class="col-sm-3 pull-left control-label" for="endDate">End
-                                                            Date
-                                                        </label>
-
-                                                    <div class='col-sm-7'>
+                                                    <div class='col-sm-9'>
                                                         <div class="form-group">
-                                                            <div class='input-group date' id='endDate'>
+                                                            <div class='input-group date' id='startDate'>
                                                                 <input type='text' class="form-control"/>
                                                                     <span class="input-group-addon">
                                                                         <span class="glyphicon glyphicon-calendar"></span>
@@ -128,6 +133,23 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-3 pull-left control-label" for="endDate">End
+                                                            Date
+                                                        </label>
+
+                                                        <div class='col-sm-9'>
+                                                            <div class="form-group">
+                                                                <div class='input-group date' id='endDate'>
+                                                                    <input type='text' class="form-control"/>
+                                                                    <span class="input-group-addon">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -135,25 +157,12 @@
                                 </form>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-sm btn-warning" ng-click="fetch()"><span
-                                class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-sm btn-warning" ng-click="fetch()">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
                     </div>
                 </div>
             </div>
-            <!--<div class="pull-left" ng-controller="EventsController">
-                <form class="navbar-form navbar-right" name="searchform">
-                    <div class="input-group">
-                        <input type="text" ng-model="query"
-                               placeholder="Search for Events" required
-                               class="form-control input-sm">
-                        <span class="input-group-btn">
-                            <button class="btn btn-sm btn-warning" id="fetchbtn" ng-click="fetchShowEvents()">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
-                    </div>
-                </form>
-            </div>-->
             <div ng-hide="currentUser">
                 <div ng-controller="LoginController">
                     <form class="navbar-form navbar-right" ng-submit="login(userLogin)" name="myform">
@@ -228,14 +237,16 @@
 <script src="views/authentication/logoutCtrl.js"></script>
 <script src="views/authentication/signupCtrl.js"></script>
 <script>
+    //For slider component
     $("#distance").slider({
         tooltip: 'always'
     });
 
+    //For date picker component
     $(function () {
         $('#startDate').datetimepicker();
         $('#endDate').datetimepicker({
-            useCurrent: false //Important! See issue #1075
+            useCurrent: false
         });
         $("#startDate").on("dp.change", function (e) {
             $('#endDate').data("DateTimePicker").minDate(e.date);
@@ -244,6 +255,14 @@
             $('#startDate').data("DateTimePicker").maxDate(e.date);
         });
     });
+
+    //getting users current location
+     fetchCurrentLocation= function(){
+    navigator.geolocation.getCurrentPosition(
+        function (position) {
+            alert(position.coords.latitude);
+            alert(position.coords.longitude);
+    })};
 </script>
 <!--
     <script src="views/signup/signupCtrl.js"></script>

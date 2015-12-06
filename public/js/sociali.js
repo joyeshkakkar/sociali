@@ -36,37 +36,6 @@ app.config(['$routeProvider', function ($routeProvider) {
         redirectTo: '/home'
 
     });
-    /*   when('/about', {
-           templateUrl: 'upbeat/about.html'
-       }).
-      when('/signup', {
-          templateUrl: 'views/signup/signUp.html'
-          , controller: 'SignupController'
-      }).
-      when('/playlist', {
-          templateUrl: 'views/playlist/playlist.html'
-          , controller: 'PlaylistController'
-          , resolve: {
-              loggedin: checkUserLoggedin
-          }
-      }).
-      when('/logout', {
-          //templateUrl: 'views/home/home.html'
-          templateUrl: 'views/search/search.html'
-          , controller: 'LogoutController'
-      }).
-      when('/contact', {
-          templateUrl: 'views/contact/contact.html'
-          , controller: 'ContactController'
-      }).
-      when('/profile', {
-          templateUrl: 'views/profile/profile.html'
-          , controller: 'ProfileController'
-          , resolve: {
-              loggedin: checkUserLoggedin
-          }
-      }).*/
-
 }]);
 
 

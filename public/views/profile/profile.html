@@ -4,8 +4,8 @@
     <title>Profile</title>
 </head>
 <body>
-    <div ng-controller="ProfileController">
-        <div class="row">
+<div ng-controller="ProfileController">
+    <div class="row">
         <div class="col-md-2">
             <ul class="nav nav-tabs nav-stacked nav-pills" role="tablist">
                 <li ng-class="{'active': view_tab == 'updateProfile'}">
@@ -33,12 +33,14 @@
                                         <label for="firstName" class="col-md-2 control-label">
                                             First Name&nbsp;&nbsp;*
                                         </label>
+
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon " id="basic-addon6">
                                                     <span class="glyphicon glyphicon-user"></span>
                                                 </span>
-                                                <input type="text" ng-model="userDetails.firstName" id="firstName" name="firstName"
+                                                <input type="text" ng-model="userDetails.firstName" id="firstName"
+                                                       name="firstName"
                                                        value="" disabled="disabled"
                                                        placeholder="First Name" required
                                                        class="input-sm form-control makeEditable">
@@ -52,12 +54,14 @@
                                             Last
                                             Name&nbsp;&nbsp;*
                                         </label>
+
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon " id="basic-addon5">
                                                     <span class="glyphicon glyphicon-user"></span>
                                                 </span>
-                                                <input ng-model="userDetails.lastName" type="text" id="lastName" name="lastName"
+                                                <input ng-model="userDetails.lastName" type="text" id="lastName"
+                                                       name="lastName"
                                                        value="" disabled="disabled"
                                                        placeholder="Last Name" required
                                                        class="input-sm form-control makeEditable">
@@ -70,13 +74,16 @@
                                         <label for="email" class="col-md-2 control-label">
                                             Email&nbsp;&nbsp;*
                                         </label>
+
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon " id="basic-addon4">
                                                     <span class="glyphicon glyphicon-envelope"></span>
                                                 </span>
-                                                <input ng-model="userDetails.email" type="email" id="email" name="email" disabled="disabled"
-                                                       value="" placeholder="abc@domain.com" required class="input-sm form-control makeEditable">
+                                                <input ng-model="userDetails.email" type="email" id="email" name="email"
+                                                       disabled="disabled"
+                                                       value="" placeholder="abc@domain.com" required
+                                                       class="input-sm form-control makeEditable">
                                             </div>
 
                                         </div>
@@ -84,12 +91,14 @@
 
                                     <div class="form-group">
                                         <label for="phone" class=" col-md-2 control-label">Phone</label>
+
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon " id="basic-addon1">
                                                     <span class="glyphicon glyphicon-earphone"></span>
                                                 </span>
-                                                <input ng-model="userDetails.phone" type="number" id="phone" name="phone" disabled="disabled"
+                                                <input ng-model="userDetails.phone" type="number" id="phone"
+                                                       name="phone" disabled="disabled"
                                                        value="" placeholder="Enter your 10 digit mobile number"
                                                        class="text input-sm form-control makeEditable">
                                             </div>
@@ -105,10 +114,14 @@
                                                 class="btn btn-sm btn-success ">
                                             Save
                                         </button>
-                                        <button id="cancelEditBtn" ng-click="cancelEdit()" type="button" class="btn btn-sm">Cancel</button>
+                                        <button id="cancelEditBtn" ng-click="cancelEdit()" type="button"
+                                                class="btn btn-sm">Cancel
+                                        </button>
                                     </div>
                                     <div class="col-md-offset-2 col-md-6 center-align">
-                                        <p ng-show="updateProfileMsg"><h3>{{updateProfileMsg}}</h3></p>
+                                        <p ng-show="updateProfileMsg">
+
+                                        <h3>{{updateProfileMsg}}</h3></p>
                                     </div>
                                 </div>
                             </fieldset>
@@ -126,8 +139,10 @@
                                                 <span class="input-group-addon " id="basic-addon3">
                                                     <span class="glyphicon glyphicon-lock"></span>
                                                 </span>
-                                                <input type="password" id="password" name="password" ng-change="change()"
-                                                       placeholder="Enter new password" required class="text form-control input-sm" ng-model="password">
+                                                <input type="password" id="password" name="password"
+                                                       ng-change="change()"
+                                                       placeholder="Enter new password" required
+                                                       class="text form-control input-sm" ng-model="password">
                                             </div>
 
                                         </div>
@@ -140,28 +155,39 @@
                                                     <span class="glyphicon glyphicon-lock"></span>
                                                 </span>
                                                 <input type="password" id="cnfPassword" name="cnfPassword"
-                                                       placeholder="Confirm password" required class="text form-control input-sm" ng-model="cnfPassword" ng-change="change()">
+                                                       placeholder="Confirm password" required
+                                                       class="text form-control input-sm" ng-model="cnfPassword"
+                                                       ng-change="change()">
                                             </div>
 
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-md-offset-2">
-                                            <div ng-password-strength="password" strength="passStrength" inner-class="progress-bar" inner-class-prefix="progress-bar-" ng-model-options="{ allowInvalid: true }"></div>
+                                            <div ng-password-strength="password" strength="passStrength"
+                                                 inner-class="progress-bar" inner-class-prefix="progress-bar-"
+                                                 ng-model-options="{ allowInvalid: true }"></div>
 
                                             Current password strength is <strong>{{passStrength}}</strong>
                                         </div>
                                     </div>
 
                                     <div class="col-md-offset-2 col-md-6 center-align">
-                                        <button id="saveBtn" ng-click="changePassword(password,cnfPassword)" class="btn btn-sm btn-success">
+                                        <button id="saveBtn" ng-click="changePassword(password,cnfPassword)"
+                                                class="btn btn-sm btn-success">
                                             Save
                                         </button>
-                                        <button id="cancelBtn" ng-click="changeTab('updateProfile')" type="button" class="btn btn-sm">Cancel</button>
+                                        <button id="cancelBtn" ng-click="changeTab('updateProfile')" type="button"
+                                                class="btn btn-sm">Cancel
+                                        </button>
                                     </div>
                                     <div class="col-md-offset-2 col-md-6 center-align">
-                                        <p ng-show="showPasswordSavedMsg"><h3>{{showPasswordSavedMsg}}</h3></p>
-                                        <p ng-show="confirmPasswordMsg"><h3>{{confirmPasswordMsg}}</h3></p>
+                                        <p ng-show="showPasswordSavedMsg">
+
+                                        <h3>{{showPasswordSavedMsg}}</h3></p>
+                                        <p ng-show="confirmPasswordMsg">
+
+                                        <h3>{{confirmPasswordMsg}}</h3></p>
                                     </div>
                                 </div>
                             </fieldset>
@@ -175,111 +201,208 @@
                                 <div class="row col-md-12">
                                     <div class="col-md-2">
                                         <h4>Food</h4>
-                                        <div class="btn-group btn-toggle" id = "Food">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('Food','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('Food','N')">No</button>
+
+                                        <div class="btn-group btn-toggle" id="Food">
+                                            <button type="button" class="btn btn-sm btn-default"
+                                                    ng-click="updatePref('Food','Y')">Yes
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-primary active"
+                                                    ng-click="updatePref('Food','N')">No
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Music</h4>
-                                        <div class="btn-group btn-toggle" id = "Music">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('Music','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('Music','N')">No</button>
+
+                                        <div class="btn-group btn-toggle" id="Music">
+                                            <button type="button" class="btn btn-sm btn-default"
+                                                    ng-click="updatePref('Music','Y')">Yes
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-primary active"
+                                                    ng-click="updatePref('Music','N')">No
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Festival</h4>
+
                                         <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('Festival','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('Festival','N')">No</button>
+                                            <button type="button" class="btn btn-sm btn-default"
+                                                    ng-click="updatePref('Festival','Y')">Yes
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-primary active"
+                                                    ng-click="updatePref('Festival','N')">No
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Concerts</h4>
+
                                         <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('Concerts','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('Concerts','N')">No</button>
+                                            <button type="button" class="btn btn-sm btn-default"
+                                                    ng-click="updatePref('Concerts','Y')">Yes
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-primary active"
+                                                    ng-click="updatePref('Concerts','N')">No
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Comedy</h4>
+
                                         <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('Comedy','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('Comedy','N')">No</button>
+                                            <button type="button" class="btn btn-sm btn-default"
+                                                    ng-click="updatePref('Comedy','Y')">Yes
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-primary active"
+                                                    ng-click="updatePref('Comedy','N')">No
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Family</h4>
+
                                         <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('Family','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('Family','N')">No</button>
+                                            <button type="button" class="btn btn-sm btn-default"
+                                                    ng-click="updatePref('Family','Y')">Yes
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-primary active"
+                                                    ng-click="updatePref('Family','N')">No
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row col-md-12">
-                                    <br /> <br />
+                                    <br/> <br/>
+
                                     <div class="col-md-2">
                                         <h4>NightLife</h4>
+
                                         <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('NightLife','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('NightLife','N')">No</button>
+                                            <button type="button" class="btn btn-sm btn-default"
+                                                    ng-click="updatePref('NightLife','Y')">Yes
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-primary active"
+                                                    ng-click="updatePref('NightLife','N')">No
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Sports</h4>
+
                                         <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('Sports','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('Sports','N')">No</button>
+                                            <button type="button" class="btn btn-sm btn-default"
+                                                    ng-click="updatePref('Sports','Y')">Yes
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-primary active"
+                                                    ng-click="updatePref('Sports','N')">No
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Networking</h4>
+
                                         <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('Networking','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('Networking','N')">No</button>
+                                            <button type="button" class="btn btn-sm btn-default"
+                                                    ng-click="updatePref('Networking','Y')">Yes
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-primary active"
+                                                    ng-click="updatePref('Networking','N')">No
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Technology</h4>
+
                                         <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('Technology','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('Technology','N')">No</button>
+                                            <button type="button" class="btn btn-sm btn-default"
+                                                    ng-click="updatePref('Technology','Y')">Yes
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-primary active"
+                                                    ng-click="updatePref('Technology','N')">No
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Literary</h4>
+
                                         <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('Literary','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('Literary','N')">No</button>
+                                            <button type="button" class="btn btn-sm btn-default"
+                                                    ng-click="updatePref('Literary','Y')">Yes
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-primary active"
+                                                    ng-click="updatePref('Literary','N')">No
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Health</h4>
+
                                         <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('Health','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('Health','N')">No</button>
+                                            <button type="button" class="btn btn-sm btn-default"
+                                                    ng-click="updatePref('Health','Y')">Yes
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-primary active"
+                                                    ng-click="updatePref('Health','N')">No
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row col-md-12">
-                                    <br /> <br />
+                                    <br/> <br/>
+
                                     <div class="col-md-2">
                                         <h4>Spirituality</h4>
+
                                         <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('Spirituality','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('Spirituality','N')">No</button>
+                                            <button type="button" class="btn btn-sm btn-default"
+                                                    ng-click="updatePref('Spirituality','Y')">Yes
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-primary active"
+                                                    ng-click="updatePref('Spirituality','N')">No
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Pets</h4>
+
                                         <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('Pets','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('Pets','N')">No</button>
+                                            <button type="button" class="btn btn-sm btn-default"
+                                                    ng-click="updatePref('Pets','Y')">Yes
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-primary active"
+                                                    ng-click="updatePref('Pets','N')">No
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row col-md-12 padding-30">
+                                    <form class="form-horizontal" role="form">
+                                        <fieldset>
+                                            <div class="col-sm-12">
+                                                <div class="form-group padding-25">
+                                                    <div class="row">
+                                                        <label class="col-sm-2 control-label" for="distanceRadius">Search
+                                                            Radius (Miles)
+                                                            <span tooltip-placement="bottom" tooltip="Events page will display the events within this radius."
+                                                                  class="glyphicon glyphicon-question-sign"></span>
+                                                        </label>
+                                                        <div class=" col-sm-1">
+                                                            <input id="distanceRadius"
+                                                                   class="form-control" data-slider-id='ex1Slider'
+                                                                   type="text" data-slider-min="1"
+                                                                   data-slider-max="10" data-slider-step="1"
+                                                                   data-slider-value="5" class="col-sm-6"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
                                 <div class="row col-md-12">
-                                    <br /> <br />
+                                    <br/> <br/>
+
                                     <div class="col-md-2 col-md-offset-5">
                                         <button id="saveBtn" type="submit" ng-click="savePreferences(preferences)"
                                                 class="btn btn-sm btn-success btn-block">
@@ -288,13 +411,12 @@
                                     </div>
                                 </div>
                                 <div class="col-md-offset-3 col-md-6 center-align text-center">
-                                    <p ng-show="updatePrefMsg"><h3>{{updatePrefMsg}}</h3></p>
+                                    <p ng-show="updatePrefMsg">
+
+                                    <h3>{{updatePrefMsg}}</h3></p>
                                 </div>
                                 <div>
                                     <input type="hidden" name="preferences" id="preferences">
-                                </div>
-                                <div>
-
                                 </div>
                             </fieldset>
                         </form>
@@ -305,12 +427,17 @@
                         <form class="form-horizontal text-center" id="deleteProfileForm">
                             <fieldset>
                                 <div class="form-group col-md-12 center-align">
-                                    <label for="password" class="control-label">Are you sure,  you want to delete profile? It is a irreversible operation.</label>
+                                    <label for="password" class="control-label">Are you sure, you want to delete
+                                        profile? It is a irreversible operation.</label>
                                 </div>
 
                                 <div class="col-md-12 center-align">
-                                    <button id="cnfBtn" ng-click="deleteProfile()" type="submit" class="btn btn-sm btn-danger ">Confirm</button>
-                                    <button id="cancelBtn" ng-click="changeTab('updateProfile')" type="button" class="btn btn-sm ">Cancel</button>
+                                    <button id="cnfBtn" ng-click="deleteProfile()" type="submit"
+                                            class="btn btn-sm btn-danger ">Confirm
+                                    </button>
+                                    <button id="cancelBtn" ng-click="changeTab('updateProfile')" type="button"
+                                            class="btn btn-sm ">Cancel
+                                    </button>
                                 </div>
                             </fieldset>
                         </form>
@@ -318,24 +445,24 @@
                 </div>
             </div>
         </div>
-            </div>
     </div>
+</div>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
 
-        $(".btn-toggle").click(function() {
+        $(".btn-toggle").click(function () {
             $(this).find('.btn').toggleClass('active');
 
-            if ($(this).find('.btn-primary').size()>0) {
+            if ($(this).find('.btn-primary').size() > 0) {
                 $(this).find('.btn').toggleClass('btn-primary');
             }
-            if ($(this).find('.btn-danger').size()>0) {
+            if ($(this).find('.btn-danger').size() > 0) {
                 $(this).find('.btn').toggleClass('btn-danger');
             }
-            if ($(this).find('.btn-success').size()>0) {
+            if ($(this).find('.btn-success').size() > 0) {
                 $(this).find('.btn').toggleClass('btn-success');
             }
-            if ($(this).find('.btn-info').size()>0) {
+            if ($(this).find('.btn-info').size() > 0) {
                 $(this).find('.btn').toggleClass('btn-info');
             }
 
@@ -343,6 +470,10 @@
         });
     });
 
+    //For slider component
+    $("#distanceRadius").slider({
+        tooltip: 'always'
+    });
 
 </script>
 </body>
