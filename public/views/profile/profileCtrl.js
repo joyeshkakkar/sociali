@@ -114,7 +114,13 @@
 
     $scope.savePreferences = function(preferences){
         var preferences = $('#preferences').val();
-        preferences = preferences.replace(/,\s*$/, "");
+        var lastspace = preferences.lastIndexOf(",");
+        if (lastspace != -1) {
+            preferences = preferences.substr(0, lastspace);
+        }
+
+        alert(preferences);
+        //preferences = preferences.replace(/,\s*$/, "");
         $rootScope.preferences = preferences;
 
         var currentUser = $rootScope.currentUser;
@@ -123,7 +129,7 @@
         //alert("pref " + newPref.preferences);
         UserService.updateUserPreferences(currentUser._id, newPref, function (response) {
             $scope.currentUser = response;
-            $scope.updatePrefMsg = "Preferences updated.";
+            $scope.updatePrefMsg = "Preferences are updated.";
             $('#preferences').val(response.body.preferences);
             $rootScope.preferences = response.body.preferences;
         })
