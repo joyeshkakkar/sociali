@@ -23,6 +23,7 @@
              UserService.getUserPreferences(username, function (response) {
                  $scope.preferences = response.preferences;
                  $rootScope.preferences = response.preferences;
+                 $rootScope.distance = response.distance;
              });
 
              $location.url("/events/");

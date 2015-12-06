@@ -2,6 +2,8 @@
 
     $scope.currentUser = $rootScope.currentUser;
     $scope.preferences = $rootScope.preferences;
+    $scope.distance = $rootScope.distance;
+
     $scope.view_tab = 'updatePreferences';
     $scope.changeTab = function (tab) {
         $scope.view_tab = tab;
@@ -20,6 +22,10 @@
 
     $(document).ready(function () {
         $('#preferences').val($scope.preferences);
+        $('#distanceRadius').val($scope.distance);
+
+        //alert($('#preferences').val());
+        //alert($('#distanceRadius').val());
 
         $("#updtUser").hide();
         $("#cancelEditBtn").hide();
@@ -95,6 +101,7 @@
     };
 
     $scope.updatePref = function (id,val){
+        $scope.updatePrefMsg = null;
         var pref = $('#preferences').val();
         var arrayOfPref = pref.split(",");
         var index = arrayOfPref.indexOf(id);
@@ -123,8 +130,12 @@
         $rootScope.preferences = preferences;
         $scope.preferences = preferences;
 
+        var distance = $('#distanceRadius').val();
+        $rootScope.distance = distance;
+        $scope.distance = distance;
+
         var currentUser = $rootScope.currentUser;
-        var newPref = {username: currentUser.username, preferences : preferences};
+        var newPref = {username: currentUser.username, preferences : preferences, distance:distance};
 
         UserService.updateUserPreferences(currentUser._id, newPref, function (response) {
             $scope.currentUser = response;

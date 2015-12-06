@@ -102,7 +102,8 @@ var UserDetailsSchema = new mongoose.Schema({
 
 var PreferenceSchema = new mongoose.Schema({
     username: {type:String,index:{unique:true}},
-    preferences: String
+    preferences: String,
+    distance: String
 }, { collection: "preferences"});
 
 
