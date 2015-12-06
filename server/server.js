@@ -182,7 +182,6 @@ app.get("/api/findUserPreferences/:id", function (req, res) {
     PreferencesModel.findOne({ username: req.params.id},function (err, data) {
         res.json(data);
     });
-    console.log("service response : " + res.data);
 });
 
 //update user preferences

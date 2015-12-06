@@ -175,14 +175,14 @@
                                 <div class="row col-md-12">
                                     <div class="col-md-2">
                                         <h4>Food</h4>
-                                        <div class="btn-group btn-toggle">
+                                        <div class="btn-group btn-toggle" id = "Food">
                                             <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('Food','Y')">Yes</button>
                                             <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('Food','N')">No</button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Music</h4>
-                                        <div class="btn-group btn-toggle">
+                                        <div class="btn-group btn-toggle" id = "Music">
                                             <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('Music','Y')">Yes</button>
                                             <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('Music','N')">No</button>
                                         </div>
@@ -322,6 +322,7 @@
     </div>
 <script>
     $(document).ready(function(){
+
         $(".btn-toggle").click(function() {
             $(this).find('.btn').toggleClass('active');
 

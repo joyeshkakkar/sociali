@@ -1,6 +1,7 @@
 ﻿app.controller("ProfileController", function ($scope, $http, $rootScope, $location, UserService) {
 
     $scope.currentUser = $rootScope.currentUser;
+    $scope.preferences = $rootScope.preferences;
     $scope.view_tab = 'updatePreferences';
     $scope.changeTab = function (tab) {
         $scope.view_tab = tab;
@@ -18,6 +19,8 @@
     };
 
     $(document).ready(function () {
+        $('#preferences').val($scope.preferences);
+
         $("#updtUser").hide();
         $("#cancelEditBtn").hide();
 
@@ -67,7 +70,7 @@
                 $("#editBtn").show();
                 $("#updtUser").hide();
                 $("#cancelEditBtn").hide();
-            })
+            });
             $scope.updateProfileMsg = "Profile updated.";
         }
         else{
@@ -93,7 +96,6 @@
 
     $scope.updatePref = function (id,val){
         var pref = $('#preferences').val();
-
         var arrayOfPref = pref.split(",");
         var index = arrayOfPref.indexOf(id);
         if(pref.indexOf(id) < 0) {
@@ -113,23 +115,21 @@
 
         $('#preferences').val(pref);
         $rootScope.preferences = pref;
+        $scope.preferences = pref;
     };
 
     $scope.savePreferences = function(preferences){
         var preferences = $('#preferences').val();
         $rootScope.preferences = preferences;
+        $scope.preferences = preferences;
 
         var currentUser = $rootScope.currentUser;
         var newPref = {username: currentUser.username, preferences : preferences};
 
-        //alert("pref " + newPref.preferences);
         UserService.updateUserPreferences(currentUser._id, newPref, function (response) {
             $scope.currentUser = response;
             $scope.updatePrefMsg = "Preferences are updated.";
-            $('#preferences').val(response.body.preferences);
-            $rootScope.preferences = response.body.preferences;
         })
-        //alert("pref : " + $('#preferences').val());
     };
 
 

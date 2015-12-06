@@ -1,6 +1,8 @@
 ﻿app.controller("LoginController", function ($scope, $http, $rootScope, $location, UserService) {
     $scope.currentUser = null;
     $rootScope.currentUser = null;
+    $scope.preferences = null;
+    $rootScope.preferences = null;
     $scope.invalid = false;
 
     $scope.login = function (user) {
@@ -16,6 +18,11 @@
                  console.log(response);
                  $scope.userDetails = response;
                  $rootScope.userDetails = response;
+             });
+
+             UserService.getUserPreferences(username, function (response) {
+                 $scope.preferences = response.preferences;
+                 $rootScope.preferences = response.preferences;
              });
 
              $location.url("/events/");
