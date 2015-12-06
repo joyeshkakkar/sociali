@@ -114,7 +114,7 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
             + $scope.longitude + '&popular=on';
 
         //setting category 103--music
-        var searchQuery = url + '?categories=103' + location +
+        var searchQuery = url + '?categories='+ $rootScope.preferences + location +
             '&token=' + token + '&expand=venue,category';
         $scope.currentQuery = searchQuery;
         $scope.code = null;
