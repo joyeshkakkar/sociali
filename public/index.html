@@ -52,8 +52,8 @@
                     </a>
                 </li>
             </ul>
-            <div class="input-group pull-left padding-10" id="adv-search">
-                <input type="text" class="form-control" required placeholder="Search for events" ng-model="query"/>
+            <div class="input-group pull-left padding-10" id="adv-search" ng-controller="SearchController">
+                <input type="text" class="form-control" required placeholder="Search for events" value="" ng-model="key"/>
 
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
@@ -72,10 +72,11 @@
 
                                                     <div class=" col-sm-9  ">
                                                         <select class="form-control"
-                                                                id="category" class="form-control">
-                                                            <option value="0" selected>Food</option>
-                                                            <option value="1">Music</option>
-                                                            <option value="2">Technology</option>
+                                                                id="category" class="form-control" ng-model="category">
+                                                            <option value="0" selected></option>
+                                                            <option value="110">Food & Drink</option>
+                                                            <option value="103">Music</option>
+                                                            <option value="102">Technology</option>
                                                             <option value="3">Festivals</option>
                                                             <option value="4">Concerts</option>
                                                         </select>
@@ -90,11 +91,11 @@
                                                     <div class="col-sm-9">
                                                         <div class="input-group input-group-sm">
                                                             <input type="text" class="form-control"
-                                                                    id="location"/>
+                                                                   id="location"/>
                                                             <span class="input-group-btn">
                                                                 <button class="btn" type="button" onclick="fetchCurrentLocation()" tooltip-placement="bottom" tooltip="Click here to fetch current city!!">
                                                                     <span class="glyphicon glyphicon-screenshot"
-                                                                          ></span>
+                                                                    ></span>
                                                                 </button>
                                                             </span>
                                                         </div>
@@ -126,7 +127,7 @@
                                                     <div class='col-sm-9'>
                                                         <div class="form-group">
                                                             <div class='input-group date' id='startDate'>
-                                                                <input type='text' class="form-control"/>
+                                                                <input type='text' id = "strtD" class="form-control" ng-model="startDate"/>
                                                                     <span class="input-group-addon">
                                                                         <span class="glyphicon glyphicon-calendar"></span>
                                                                     </span>
@@ -143,7 +144,7 @@
                                                         <div class='col-sm-9'>
                                                             <div class="form-group">
                                                                 <div class='input-group date' id='endDate'>
-                                                                    <input type='text' class="form-control"/>
+                                                                    <input type='text' class="form-control" id="endD" ng-model="endDate"/>
                                                                     <span class="input-group-addon">
                                                                         <span class="glyphicon glyphicon-calendar"></span>
                                                                     </span>
@@ -158,9 +159,8 @@
                                 </form>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-sm btn-warning" ng-click="fetch()">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                        </button>
+                        <button type="button" class="btn btn-sm btn-warning" ng-click="searchEvents()"><span
+                                class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                     </div>
                 </div>
             </div>
@@ -230,6 +230,7 @@
     -->
 <!--Controllers-->
 <script src="views/home/homeCtrl.js"></script>
+<script src="views/authentication/searchCtrl.js"></script>
 <script src="views/events/eventsCtrl.js"></script>
 <script src="views/myEvents/myEventsCtrl.js"></script>
 <script src="views/profile/profileCtrl.js"></script>

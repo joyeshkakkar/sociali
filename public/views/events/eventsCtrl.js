@@ -63,6 +63,11 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                     //fetch user events only if the user is logged in
                     if($scope.currentUser !=null)
                         fetchUserEvents();
+                    if($rootScope.query!= null){
+                        $scope.query = $rootScope.query;
+                        $rootScope.query = null;
+                        fetch();
+                    }
                 }, function () {
                     handleNoGeolocation(browserSupportFlag);
                 });
@@ -155,16 +160,38 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
 
     };
 
+    $scope.$on('fetchEvent', function (event, args) {
+        $scope.query = $rootScope.query;
+        $rootScope.query = null;
+        fetch();
+    });
+
     //method to fetch the events searced for
-    $scope.fetch = function () {
+    function fetch() {
+        var radius = $scope.query.radius;
+        var category = $scope.query.category;
+        var startDate = $scope.query.startDate;
+        var endDate = $scope.query.endDate;
         var url = 'https://www.eventbriteapi.com/v3//events/search/';
         var token = 'JJJKFTCUFVWB2HPKT2DS';
         var token2 = 'QC44X66MUP27NDX7MDZL';
-        var location = '&location.within=5mi&location.latitude=' + $scope.latitude +
+        var start ='';
+        var end='';
+        var cat ='';
+        if(startDate !=null && startDate !=''){
+            start = '&start_date.range_start=' + startDate.substring(0, 19);
+        }
+        if(endDate !=null && endDate !=''){
+            end = '&start_date.range_end=' + endDate.substring(0, 19);
+        }
+        if(category !=null && category !=''){
+            cat = '&categories=' + category;
+        }
+        var location = '&location.within='+radius+'mi&location.latitude=' + $scope.latitude +
             '&location.longitude=' + $scope.longitude + '&popular=on';
 
-        var searchQuery = url + '?q=' + $scope.query + location +
-            '&token=' + token + '&expand=venue,category';
+        var searchQuery = url + '?q=' + $scope.query.key + location +
+            '&token=' + token + cat + start + end + '&expand=venue,category';
         $scope.currentQuery = searchQuery;
         $scope.code = null;
         $scope.response = null;
@@ -317,7 +344,7 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                 $scope.events = [];
                 for (i = 0; i < $scope.unfilteredEvents.length; i++) {
                     if ($scope.unfilteredEvents[i].category != null &&
-                            $scope.unfilteredEvents[i].category.id == $scope.catFilter) {
+                        $scope.unfilteredEvents[i].category.id == $scope.catFilter) {
                         $scope.events[j] = $scope.unfilteredEvents[i];
                         j++;
                     }
@@ -387,7 +414,21 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
             return dat;
         }
     }
+    function calcDist(){
+        var R = 6371000; // metres
+        var φ1 = lat1.toRadians();
+        var φ2 = lat2.toRadians();
+        var Δφ = (lat2-lat1).toRadians();
+        var Δλ = (lon2-lon1).toRadians();
 
+        var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+            Math.cos(φ1) * Math.cos(φ2) *
+            Math.sin(Δλ/2) * Math.sin(Δλ/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+        var d = R * c;
+        return d;
+    }
 
 });
 
