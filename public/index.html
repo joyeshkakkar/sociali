@@ -34,12 +34,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="#/events">Events</a></li>
+                <li ng-show="currentUser"><a href="#/events">Events</a></li>
                 <li ng-show="currentUser">
-                    <!--<a href="#/profile">
-                        <p ng-show="!currentUser">Profile</p>
-                        <p ng-show="currentUser">{{currentUser.username}}'s Profile</p>
-                    </a>-->
                     <a href="#/profile">Profile</a>
                 </li>
                 <li ng-show="currentUser"><a href="#/myEvents">My Events</a></li>
@@ -70,7 +66,7 @@
                                                     <label class="col-sm-3 control-label pull-left"
                                                            for="category">Category</label>
 
-                                                    <div class=" col-sm-9  ">
+                                                    <div class=" col-sm-9">
                                                         <select class="form-control"
                                                                 id="category" class="form-control" ng-model="category">
                                                             <option value="0" selected></option>

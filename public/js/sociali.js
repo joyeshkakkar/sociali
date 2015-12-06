@@ -9,6 +9,9 @@ app.config(['$routeProvider', function ($routeProvider) {
     when('/events', {
         templateUrl: 'views/events/events.html'
         , controller: 'EventsController'
+        , resolve: {
+            loggedin: checkUserLoggedin
+        }
     }).
     when('/myEvents', {
         templateUrl: 'views/myEvents/myEvents.html'

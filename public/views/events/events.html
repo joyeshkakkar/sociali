@@ -4,7 +4,7 @@
     <title>Events</title>
     <style>
         #map {
-            height: 300px;
+            height: 400px;
         }
 
         .img {
@@ -16,34 +16,48 @@
 
 </head>
 <body>
-<div ng-controller="EventsController" ng-init="loadUserEvents()">
+<div ng-controller="EventsController" ng-init="loadUserEvents()"> <!--ng-init="loadUserEvents()"-->
+    <div id="map"></div>
+    <form class="form-horizontal padding-20" id="filter">
+        <fieldset>
+            <div class="row">
+                <label class="col-sm-1 control-label">Filters
+                </label>
 
-    <div class="column col-md-2" id="filter">
-
-        <select class="form-control" ng-model="catFilter" ng-change="filterEvents('cat')">
-            <option value="">Category</option>
-            <option ng-repeat="cat in categories" value="{{cat.id}}">{{cat.name}}</option>
-        </select>
-        <select class="form-control" ng-model = "datFilter" ng-change="filterEvents('date')">
-            <option value="">Select Date</option>
-            <option value="1">Today</option>
-            <option value="2">Tomorrow</option>
-            <option value="3">This week</option>
-            <option value="4">After a Week</option>
-            <option value="5">After a month</option>
-        </select>
-        <select class="form-control">
-            <option value="one">One</option>
-            <option value="two">Two</option>
-            <option value="three">Three</option>
-            <option value="four">Four</option>
-            <option value="five">Five</option>
-        </select>
-    </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control" ng-model="catFilter" ng-change="filterEvents('cat')">
+                        <option value="">Category</option>
+                        <option ng-repeat="cat in categories" value="{{cat.id}}">{{cat.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control" ng-model="datFilter" ng-change="filterEvents('date')">
+                        <option value="">Select Date</option>
+                        <option value="1">Today</option>
+                        <option value="2">Tomorrow</option>
+                        <option value="3">This week</option>
+                        <option value="4">After a Week</option>
+                        <option value="5">After a month</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-3">
+                    <select class="form-control" ng-model="pricingFilter" ng-change="filterEvents('pricing')">
+                        <option value="">Pricing</option>
+                        <option value="true">Free</option>
+                        <option value="false">Paid</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-1">
+                    <button id="showAll" ng-click="showall()"
+                            class="btn btn-sm btn-success">
+                        Show All Events
+                    </button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
     <!-- place holder for map-->
-    <div class="column">
-        <div id="map" class="col-md-10"></div>
-    </div>
+
     <div class="col-md-12 column">
         <input type="hidden" ng-model="latitude">
         <input type="hidden" ng-model="longitude">
@@ -66,40 +80,82 @@
                 </ul>
             </nav>
         </div>
-        <table class="table table-striped">
-            <tr ng-repeat="event in events" id="{{event.id}}" class="eventRow">
-                <div class="column col-md-2">
-                    <td><img src="{{event.logo.url}}" class="img"></td>
-                </div>
-                <div class="column col-md-10">
-                    <td>
-                        <table>
-                            <tr>
-                                <td>Start Time: {{event.start.local}}</td>
-                            </tr>
-                            <tr>
-                                <td>{{event.name.text}}</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <button type="button" class="btn btn-info" data-toggle="collapse"
-                                            data-target="#{{$index + 1}}det">
-                                        Details
-                                    </button>
-                                    <div id="{{$index + 1}}det" class="collapse">
-                                        {{event.description.text}}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <tr ng-repeat="event in events" id="{{event.id}}" class="eventRow">
+                    <div class="column col-sm-2">
+                        <td><img src="{{event.logo.url}}" class="img"></td>
+                    </div>
+                    <div class="column col-sm-10">
+                        <td>
+                            <!--<table>
+                                <tr>
+                                    <td>Start Time: {{event.start.local}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{event.name.text}}</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn btn-info" data-toggle="collapse"
+                                                data-target="#{{$index + 1}}det">
+                                            Details
+                                        </button>
+                                        <div id="{{$index + 1}}det" class="collapse">
+                                            {{event.description.text}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a href="{{event.url}}" target="_blank">Check event</a></td>
+                                </tr>
+                            </table>-->
+                            <div class="col-sm-12">
+                                <div class="row col-sm-12">
+                                    <h3>{{event.name.text}}</h3>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label class="col-sm-4 control-label">Start Time</label>
+                                    {{event.start.local}}
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="col-sm-4 control-label">End Time</label>
+                                    {{event.end.local}}
+                                </div>
+                            </div>
+                            <!--<div class="col-sm-12">
+                                <label class="col-sm-1   control-label">Capacity</label>
+                                {{event.capacity}}
+                            </div>-->
+                            <!--<div class="col-sm-12">
+                                <label class="col-sm-1   control-label">Category</label>
+                                {{event.category.name}}
+                            </div>-->
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <label class="col-sm-1   control-label">Venue</label>
+                                        {{event.venue.name}}
+                                    <div class="row col-sm-11">
+                                        {{event.venue.address.address_1}},
+                                        {{event.venue.address.city}}
                                     </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="{{event.url}}" target="_blank">Check event</a></td>
-                            </tr>
-                        </table>
-                    </td>
-                </div>
-            </tr>
-        </table>
-        <button id="showAll" ng-click="showall()">Show All</button>
+                                    <div class="row col-sm-offset-1 col-sm-11">
+                                    {{event.venue.address.region}} -
+                                    {{event.venue.address.postal_code}},
+                                    {{event.venue.address.country}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+                    </div>
+                </tr>
+            </table>
+        </div>
+
         <div ng-if="pages.length > 1">
             <nav>
                 <ul class="pagination">

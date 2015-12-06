@@ -134,6 +134,12 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         for (var i = 0; i < $scope.data.events.length; i++) {
             $scope.unfilteredEvents[i] = $scope.data.events[i];
             $scope.events[i] = $scope.data.events[i];
+
+            var start = (new Date($scope.events[i].start.local)).toString().substring(0,25);
+            var end = (new Date($scope.events[i].end.local)).toString().substring(0,25);
+
+            $scope.events[i].start.local=start;
+            $scope.events[i].end.local=end;
             if ($scope.data.events[i].category != null) {
                 if (categoriesID.indexOf($scope.data.events[i].category.id) == -1) {
                     $scope.categories.push($scope.data.events[i].category);
@@ -323,6 +329,8 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         $('#showAll').show();
     }
 
+    $('#showAll').hide();
+
     //method to show all the events
     $scope.showall = function () {
         map.setZoom(12);
@@ -335,7 +343,28 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
 
     //method to filter events shown
     $scope.filterEvents = function (type) {
+        $('#showAll').show();
         var j=0;
+
+        if(type == 'pricing'){
+            if($scope.pricingFilter == ''){
+                $scope.events = [];
+                $scope.events = $scope.unfilteredEvents;
+            } else {
+                $scope.events = [];
+                for (i = 0; i < $scope.unfilteredEvents.length; i++) {
+                    alert($scope.unfilteredEvents[i].is_free);
+                    if ($scope.unfilteredEvents[i].is_free != null &&
+                        $scope.unfilteredEvents[i].is_free == $scope.pricingFilter) {
+                        $scope.events[j] = $scope.unfilteredEvents[i];
+                        j++;
+                    }
+                }
+            }
+            //processData(false);
+            //resetMarkers();
+        }
+
         if(type == 'cat'){
             if($scope.catFilter == ''){
                 $scope.events = [];
