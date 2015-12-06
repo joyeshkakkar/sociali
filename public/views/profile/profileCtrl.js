@@ -91,27 +91,6 @@
         })
     };
 
-    /*$scope.updatePref = function (id,val){
-        var pref = $('#preferences').val();
-        //alert("1 pref " + pref);
-
-        pref = pref.replace(',,',',');
-        if(pref.indexOf(id) < 0){
-            if(val == 'Y'){
-                pref = id + ',' + pref
-            }
-        }
-        else{
-            if(val == 'N'){
-                pref = pref.replace(id,'');
-                pref = pref.replace(',,',',');
-            }
-        }
-        //alert("2 pref " + pref);
-        $('#preferences').val(pref);
-        $rootScope.preferences = pref;
-    };*/
-
     $scope.updatePref = function (id,val){
         var pref = $('#preferences').val();
 
@@ -135,7 +114,7 @@
         $('#preferences').val(pref);
         $rootScope.preferences = pref;
     };
-    
+
     $scope.savePreferences = function(preferences){
         var preferences = $('#preferences').val();
         $rootScope.preferences = preferences;
