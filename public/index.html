@@ -5,187 +5,231 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/custom.css" />
     <link rel="stylesheet" href="css/search.css" />
-    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/jquery-ui.css"/>
+    <link rel="stylesheet" href="css/bootstrap-slider.min.css"/>
 </head>
 <body style="padding-top:50px" ng-app="SocialiApp">
-    <div class="container-fluid">
-        <div>
-            <nav class="navbar navbar-inverse navbar-fixed-top">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <div ng-show="currentUser">
-                            <a class="navbar-brand" href="#/events">
-                                Social-i
-                            </a>
-                        </div>
-                        <div ng-hide="currentUser">
-                            <a class="navbar-brand" href="#/home">
-                                Social-i
-                            </a>
-                        </div>
+<div class="container-fluid">
+    <div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div ng-show="currentUser">
+                        <a class="navbar-brand" href="#/events">
+                            Social-i
+                        </a>
                     </div>
-                    <div id="navbar" class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
-                            <li><a href="#/events">Events</a></li>
-                            <li ng-show="currentUser">
-                                <!--<a href="#/profile">
-                                    <p ng-show="!currentUser">Profile</p>
-                                    <p ng-show="currentUser">{{currentUser.username}}'s Profile</p>
-                                </a>-->
-                                <a href="#/profile">Profile</a>
-                            </li>
-                            <li ng-show="currentUser"><a href="#/myEvents">My Events</a></li>
-                            <li><a href="#/contact">Contact Us</a></li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li ng-show="currentUser">
-                                <a href="#/logout" tooltip-placement="bottom" tooltip="Log out">
-                                    <span style="color:red;" class="glyphicon glyphicon-log-out"></span>
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="input-group" id="adv-search">
-                                        <input type="text" class="form-control" placeholder="Search for snippets" />
-                                        <div class="input-group-btn">
-                                            <div class="btn-group" role="group">
-                                                <div class="dropdown dropdown-lg">
-                                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
-                                                    <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                                        <form class="form-horizontal" role="form">
-                                                            <div class="form-group">
-                                                                <label for="filter">Filter by</label>
-                                                                <select class="form-control">
-                                                                    <option value="0" selected>All Snippets</option>
-                                                                    <option value="1">Featured</option>
-                                                                    <option value="2">Most popular</option>
-                                                                    <option value="3">Top rated</option>
-                                                                    <option value="4">Most commented</option>
-                                                                </select>
+                    <div ng-hide="currentUser">
+                        <a class="navbar-brand" href="#/home">
+                            Social-i
+                        </a>
+                    </div>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#/events">Events</a></li>
+                        <li ng-show="currentUser">
+                            <!--<a href="#/profile">
+                                <p ng-show="!currentUser">Profile</p>
+                                <p ng-show="currentUser">{{currentUser.username}}'s Profile</p>
+                            </a>-->
+                            <a href="#/profile">Profile</a>
+                        </li>
+                        <li ng-show="currentUser"><a href="#/myEvents">My Events</a></li>
+                        <li><a href="#/contact">Contact Us</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li ng-show="currentUser">
+                            <a href="#/logout" tooltip-placement="bottom" tooltip="Log out">
+                                <span style="color:red;" class="glyphicon glyphicon-log-out"></span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="input-group" id="adv-search">
+                                    <input type="text" class="form-control" placeholder="Search for snippets" ng-model="query"/>
+
+                                    <div class="input-group-btn">
+                                        <div class="btn-group" role="group">
+                                            <div class="dropdown dropdown-lg">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                                        aria-expanded="false"><span class="caret"></span></button>
+                                                <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                                    <form class="form-horizontal" role="form">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2" for="category">Category</label>
+                                                            <select class="col-sm-offset-1 col-sm-4 text-center center-align"
+                                                                    id="category" class="form-control">
+                                                                <option value="0" selected>Food</option>
+                                                                <option value="1">Music</option>
+                                                                <option value="2">Technology</option>
+                                                                <option value="3">Festivals</option>
+                                                                <option value="4">Concerts</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group padding-20">
+                                                            <label class="col-sm-2" for="distance">Distance within</label>
+                                                            <input id="distance" class=" col-sm-offset-1 col-sm-4"
+                                                                   class="form-control" data-slider-id='ex1Slider'
+                                                                   type="text" data-slider-min="0"
+                                                                   data-slider-max="10" data-slider-step="1" data-slider-value="5"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="dateRange">Date Range</label>
+
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <p class="input-group">
+                                                                        <input type="text" class="form-control"
+                                                                               uib-datepicker-popup="{{format}}" ng-model="dt"
+                                                                               is-open="status.opened" min-date="minDate"
+                                                                               max-date="maxDate" datepicker-options="dateOptions"
+                                                                               date-disabled="disabled(date, mode)" ng-required="true"
+                                                                               close-text="Close"/>
+                                                              <span class="input-group-btn">
+                                                                <button type="button" class="btn btn-default" ng-click="open($event)"><i
+                                                                        class="glyphicon glyphicon-calendar"></i></button>
+                                                              </span>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <p class="input-group">
+                                                                        <input type="text" class="form-control"
+                                                                               uib-datepicker-popup="{{format}}" ng-model="dt"
+                                                                               is-open="status.opened" min-date="minDate"
+                                                                               max-date="maxDate" datepicker-options="dateOptions"
+                                                                               date-disabled="disabled(date, mode)" ng-required="true"
+                                                                               close-text="Close"/>
+                                                              <span class="input-group-btn">
+                                                                <button type="button" class="btn btn-default" ng-click="open($event)"><i
+                                                                        class="glyphicon glyphicon-calendar"></i></button>
+                                                              </span>
+                                                                    </p>
+                                                                </div>
+
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label for="contain">Author</label>
-                                                                <input class="form-control" type="text" />
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="contain">Contains the words</label>
-                                                                <input class="form-control" type="text" />
-                                                            </div>
-                                                            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                                        </form>
-                                                    </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                                <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                             </div>
+                                            <button type="button" class="btn btn-primary" ng-click="fetch()"><span
+                                                    class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="pull-left" ng-controller="EventsController">
-                            <form class="navbar-form navbar-right" name="searchform">
-                                <div class="input-group">
-                                    <input type="text" ng-model="query"
-                                           placeholder="Search for Events" required
-                                           class="form-control input-sm">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-sm btn-warning" id="fetchbtn" ng-click="fetchShowEvents()">
-                                            <span class="glyphicon glyphicon-search"></span>
-                                        </button>
-                                    </span>
-                                </div>
-                            </form>
-                        </div>-->
-                        <div ng-hide="currentUser">
-                            <div ng-controller="LoginController">
-                                <form class="navbar-form navbar-right" ng-submit="login(userLogin)" name="myform">
-                                    <div class="form-group" ng-class="{'has-error': myform.username.$invalid}">
-                                        <div class="input-group">
+                    </div>
+                    <!--<div class="pull-left" ng-controller="EventsController">
+                        <form class="navbar-form navbar-right" name="searchform">
+                            <div class="input-group">
+                                <input type="text" ng-model="query"
+                                       placeholder="Search for Events" required
+                                       class="form-control input-sm">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-sm btn-warning" id="fetchbtn" ng-click="fetchShowEvents()">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>-->
+                    <div ng-hide="currentUser">
+                        <div ng-controller="LoginController">
+                            <form class="navbar-form navbar-right" ng-submit="login(userLogin)" name="myform">
+                                <div class="form-group" ng-class="{'has-error': myform.username.$invalid}">
+                                    <div class="input-group">
                                             <span class="input-group-addon alert-info" id="addon1">
                                                 <span class="glyphicon glyphicon-user"></span>
                                             </span>
-                                            <input type="text" ng-model="userLogin.username" id="username" placeholder="Username"
-                                                   required class="form-control input-sm" ng-change="change()">
-                                        </div>
+                                        <input type="text" ng-model="userLogin.username" id="username" placeholder="Username"
+                                               required class="form-control input-sm" ng-change="change()">
                                     </div>
-                                    <div class="form-group" ng-class="{'has-error': myform.password.$invalid}">
-                                        <div class="input-group">
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': myform.password.$invalid}">
+                                    <div class="input-group">
                                             <span class="input-group-addon alert-info" id="addon2">
                                                 <span class="glyphicon glyphicon-lock"></span>
                                             </span>
-                                            <input type="password" ng-model="userLogin.password" id="password" placeholder="Password"
-                                                   required class="form-control input-sm" ng-change="change()">
-                                        </div>
+                                        <input type="password" ng-model="userLogin.password" id="password" placeholder="Password"
+                                               required class="form-control input-sm" ng-change="change()">
                                     </div>
+                                </div>
 
-                                    <a href="" tooltip-placement="bottom" tooltip="Login" ng-disabled="myform.$invalid"
-                                       ng-click="login(userLogin)">
-                                        <span style="color:limegreen;" class="glyphicon glyphicon-log-in"></span>
-                                    </a>
+                                <a href="" tooltip-placement="bottom" tooltip="Login" ng-disabled="myform.$invalid"
+                                   ng-click="login(userLogin)">
+                                    <span style="color:limegreen;" class="glyphicon glyphicon-log-in"></span>
+                                </a>
 
                                     <span ng-show="invalid === true" class="label label-danger pull-left">
                                         Invalid credentials provided. please try again.<br />
                                     </span>
-                                </form>
-                            </div>
+                            </form>
                         </div>
-                    </div><!--/.navbar-collapse -->
-                </div>
-            </nav>
-        </div>
+                    </div>
+                </div><!--/.navbar-collapse -->
+            </div>
+        </nav>
     </div>
-    <div ng-view>
-    </div>
-    <!--Main div ends-->
+</div>
+<div ng-view>
+</div>
+<!--Main div ends-->
 
-    <script src='//maps.googleapis.com/maps/api/js?key=AIzaSyDyA2ZxKMduBRg3b3s4-ZgLgvHBzjWYtGk'></script>
-    <script src="js/jquery-2.1.4.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap-switch.min.js"></script>
-    <script src="js/angular.js"></script>
-    <script src="js/angular-route.js"></script>
-    <script src='js/lodash.js'></script>
-    <script src="js/ng-password-strength.min.js"></script>
-    <script src="js/ui-bootstrap-tpls-0.12.1.js"></script>
+<script src='//maps.googleapis.com/maps/api/js?key=AIzaSyDyA2ZxKMduBRg3b3s4-ZgLgvHBzjWYtGk'></script>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-switch.min.js"></script>
+<script src="js/angular.js"></script>
+<script src="js/angular-route.js"></script>
+<script src='js/lodash.js'></script>
+<script src="js/bootstrap-slider.min.js"></script>
+<script src="js/ng-password-strength.min.js"></script>
+<script src="js/ui-bootstrap-tpls-0.12.1.js"></script>
 
-    <!--Services-->
-    <script src="js/sociali.js"></script>
-    <script src="services/userService.js"></script>
-    <script src="services/authenticationService.js"></script>
-    <!--
-    <script src="service/searchService.js"></script>
-    <script src="service/playlistService.js"></script>
-    <script src="service/userService.js"></script>
-    <script src="service/followerService.js"></script>
-        -->
-    <!--Controllers-->
-    <script src="views/home/homeCtrl.js"></script>
-    <script src="views/events/eventsCtrl.js"></script>
-    <script src="views/myEvents/myEventsCtrl.js"></script>
+<!--Services-->
+<script src="js/sociali.js"></script>
+<script src="services/userService.js"></script>
+<script src="services/authenticationService.js"></script>
+<!--
+<script src="service/searchService.js"></script>
+<script src="service/playlistService.js"></script>
+<script src="service/userService.js"></script>
+<script src="service/followerService.js"></script>
+    -->
+<!--Controllers-->
+<script src="views/home/homeCtrl.js"></script>
+<script src="views/events/eventsCtrl.js"></script>
+<script src="views/myEvents/myEventsCtrl.js"></script>
+<script src="views/profile/profileCtrl.js"></script>
+<script src="views/contact/contactCtrl.js"></script>
+<script src="views/authentication/loginCtrl.js"></script>
+<script src="views/authentication/logoutCtrl.js"></script>
+<script src="views/authentication/signupCtrl.js"></script>
+<script>
+    $("#distance").slider({
+        tooltip: 'always'
+    });
+
+</script>
+<!--
+    <script src="views/signup/signupCtrl.js"></script>
+
     <script src="views/profile/profileCtrl.js"></script>
+
+    <script src="views/search/searchCtrl.js"></script>
     <script src="views/contact/contactCtrl.js"></script>
-    <script src="views/authentication/loginCtrl.js"></script>
-    <script src="views/authentication/logoutCtrl.js"></script>
-    <script src="views/authentication/signupCtrl.js"></script>
+    <script src="views/playlist/playlistCtrl.js"></script>
 
-    <!--
-        <script src="views/signup/signupCtrl.js"></script>
-
-        <script src="views/profile/profileCtrl.js"></script>
-
-        <script src="views/search/searchCtrl.js"></script>
-        <script src="views/contact/contactCtrl.js"></script>
-        <script src="views/playlist/playlistCtrl.js"></script>
-
-        -->
+    -->
 
 </body>
 </html>

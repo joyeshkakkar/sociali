@@ -20,16 +20,16 @@
 
     <div class="column col-md-2" id="filter">
 
-        <select class="form-control" ng-model = "catFilter" ng-change="filterEvents('cat')">
+        <select class="form-control" ng-model="catFilter" ng-change="filterEvents('cat')">
             <option value="">Category</option>
             <option ng-repeat="cat in categories" value="{{cat.id}}">{{cat.name}}</option>
         </select>
-        <select class="form-control" ng-model = "datFilter" ng-change="filterEvents('date')">
+        <select class="form-control" ng-model="datFilter" ng-change="filterEvents('date')">
             <option value="">Select Date</option>
-            <option value="1">Today</option>
-            <option value="2">Tomorrow</option>
-            <option value="3">After a Week</option>
-            <option value="4">After a month</option>
+            <option value="one">Today</option>
+            <option value="two">Tomorrow</option>
+            <option value="three">In a Week</option>
+            <option value="four">After 1 week</option>
         </select>
         <select class="form-control">
             <option value="one">One</option>
@@ -43,58 +43,93 @@
     <div class="column">
         <div id="map" class="col-md-10"></div>
     </div>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-sm-12">
                 <div class="input-group" id="adv-search">
-                    <input type="text" class="form-control" ng-model="query" placeholder="Search for Events" />
+                    <input type="text" class="form-control" placeholder="Search for snippets" ng-model="query"/>
+
                     <div class="input-group-btn">
                         <div class="btn-group" role="group">
                             <div class="dropdown dropdown-lg">
-                                <button type="button" class="btn btn-default dropdown-toggle"
-                                        data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                        aria-expanded="false"><span class="caret"></span></button>
                                 <div class="dropdown-menu dropdown-menu-right" role="menu">
                                     <form class="form-horizontal" role="form">
                                         <div class="form-group">
-                                            <label for="filter">Filter by</label>
-                                            <select class="form-control">
-                                                <option value="0" selected>All Snippets</option>
-                                                <option value="1">Featured</option>
-                                                <option value="2">Most popular</option>
-                                                <option value="3">Top rated</option>
-                                                <option value="4">Most commented</option>
+                                            <label class="col-sm-2" for="category">Category</label>
+                                            <select class="col-sm-offset-1 col-sm-4 text-center center-align"
+                                                    id="category" class="form-control">
+                                                <option value="0" selected>Food</option>
+                                                <option value="1">Music</option>
+                                                <option value="2">Technology</option>
+                                                <option value="3">Festivals</option>
+                                                <option value="4">Concerts</option>
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="contain">Author</label>
-                                            <input class="form-control" type="text" />
+                                        <div class="form-group padding-20">
+                                            <label class="col-sm-2" for="distance">Distance within</label>
+                                            <input id="distance" class=" col-sm-offset-1 col-sm-4 "
+                                                   class="form-control" data-slider-id='ex1Slider'
+                                                   type="text" data-slider-min="0"
+                                                   data-slider-max="10" data-slider-step="1" data-slider-value="5"/>
                                         </div>
                                         <div class="form-group">
-                                            <label for="contain">Contains the words</label>
-                                            <input class="form-control" type="text" />
+                                            <label for="dateRange">Date Range</label>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p class="input-group">
+                                                        <input type="text" class="form-control"
+                                                               uib-datepicker-popup="{{format}}" ng-model="dt"
+                                                               is-open="status.opened" min-date="minDate"
+                                                               max-date="maxDate" datepicker-options="dateOptions"
+                                                               date-disabled="disabled(date, mode)" ng-required="true"
+                                                               close-text="Close"/>
+                                                              <span class="input-group-btn">
+                                                                <button type="button" class="btn btn-default" ng-click="open($event)"><i
+                                                                        class="glyphicon glyphicon-calendar"></i></button>
+                                                              </span>
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p class="input-group">
+                                                        <input type="text" class="form-control"
+                                                               uib-datepicker-popup="{{format}}" ng-model="dt"
+                                                               is-open="status.opened" min-date="minDate"
+                                                               max-date="maxDate" datepicker-options="dateOptions"
+                                                               date-disabled="disabled(date, mode)" ng-required="true"
+                                                               close-text="Close"/>
+                                                              <span class="input-group-btn">
+                                                                <button type="button" class="btn btn-default" ng-click="open($event)"><i
+                                                                        class="glyphicon glyphicon-calendar"></i></button>
+                                                              </span>
+                                                    </p>
+                                                </div>
+
+                                            </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary" >
-                                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                     </form>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-primary" ng-click="fetch()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            <button type="button" class="btn btn-primary" ng-click="fetch()"><span
+                                    class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!--<div class="input-group col-md-12 column">
-        <input type="text" ng-model="query"
-               placeholder="Search for Events" required
-               class="text form-control">
-            <span class="input-group-btn">
-                <button class="btn btn-md btn-warning btn-block" id="fetchbtn" ng-click="fetch()">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </span>
-    </div>-->
+    <!--  <div class="input-group col-md-12 column">
+          <input type="text" ng-model="query"
+                 placeholder="Search for Events" required
+                 class="text form-control">
+              <span class="input-group-btn">
+                  <button class="btn btn-md btn-warning btn-block" id="fetchbtn" ng-click="fetch()">
+                      <span class="glyphicon glyphicon-search"></span>
+                  </button>
+              </span>
+      </div>-->
     <div class="col-md-12 column">
         <input type="hidden" ng-model="latitude">
         <input type="hidden" ng-model="longitude">
@@ -171,7 +206,12 @@
         </div>
     </div>
 </div>
+<script>
+    $("#distance").slider({
+        tooltip: 'always'
+    });
 
-<!--<script src="map.js"></script>-->
+
+</script>
 </body>
 </html>
