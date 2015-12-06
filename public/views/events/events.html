@@ -63,22 +63,24 @@
         <input type="hidden" ng-model="longitude">
 
         <div ng-if="pages.length > 1">
-            <nav>
-                <ul class="pagination">
-                    <li>
-                        <a href="" aria-label="Previous" ng-click="fetchNextPage(currentPage-1)">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li ng-repeat="num in pages">
-                        <a href="" ng-click="fetchNextPage(num)">{{num}}</a></li>
-                    <li>
-                        <a href="" aria-label="Next" ng-click="fetchNextPage(currentPage+1)">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="text-center">
+                <nav>
+                    <ul class="pagination">
+                        <li>
+                            <a href="" aria-label="Previous" ng-click="fetchNextPage(currentPage-1)">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li ng-repeat="num in pages">
+                            <a href="" ng-click="fetchNextPage(num)">{{num}}</a></li>
+                        <li>
+                            <a href="" aria-label="Next" ng-click="fetchNextPage(currentPage+1)">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
         <div class="table-responsive">
             <table class="table table-striped">
@@ -89,12 +91,7 @@
                     <div class="column col-sm-10">
                         <td>
                             <!--<table>
-                                <tr>
-                                    <td>Start Time: {{event.start.local}}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{event.name.text}}</td>
-                                </tr>
+
                                 <tr>
                                     <td>
                                         <button type="button" class="btn btn-info" data-toggle="collapse"
@@ -113,8 +110,46 @@
                             <div class="col-sm-12">
                                 <div class="row col-sm-12">
                                     <h3>{{event.name.text}}</h3>
+                                    <a href="{{event.url}}" tooltip-placement="bottom" tooltip="Check Event"
+                                       target="_blank">
+                                        <span style="color:darkorange;" class="glyphicon glyphicon-link"></span>
+                                    </a>
+                                    &nbsp;
+                                    <a href="" tooltip-placement="bottom" tooltip="Remove from this list."
+                                       ng-click="removeEvent(event)">
+                                        <span style="color:red;" class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                    &nbsp;
+                                    <a href="" tooltip-placement="bottom" tooltip="Show Description."
+                                       data-toggle="collapse"
+                                       data-target="#{{$index + 1}}det">
+                                        <span style="color:blue;" class="glyphicon glyphicon-zoom-in"></span>
+                                    </a>
+                                    &nbsp;
+                                    <a href="" tooltip-placement="bottom" tooltip="Add to favorites."
+                                       ng-click="addEventToFavorites(event)"
+                                       ng-show="currentUser && !eventInFav(event)">
+                                        <span style="color:blue;" class="glyphicon glyphicon-heart-empty"></span>
+                                    </a>
+                                    <a href="" tooltip-placement="bottom" tooltip="Remove from favorites."
+                                       ng-click="removeEventFromFavorites(event)"
+                                       ng-show="currentUser && eventInFav(event)">
+                                        <span style="color:blue;" class="glyphicon glyphicon-heart"></span>
+                                    </a>
+                                    &nbsp;
+                                    <a href="" tooltip-placement="bottom" tooltip="Mail Event."
+                                       ng-click="mailEvent(event)" ng-show="currentUser">
+                                        <span style="color:forestgreen;" class="glyphicon glyphicon-envelope"></span>
+                                    </a>
                                 </div>
 
+                            </div>
+                            <div class="row col-sm-12">
+                                <div class="col-sm-12">
+                                    <div id="{{$index + 1}}det" class="collapse">
+                                        {{event.description.text}}
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-3">
@@ -126,29 +161,19 @@
                                     {{event.end.local}}
                                 </div>
                             </div>
-                            <!--<div class="col-sm-12">
-                                <label class="col-sm-1   control-label">Capacity</label>
-                                {{event.capacity}}
-                            </div>-->
-                            <!--<div class="col-sm-12">
-                                <label class="col-sm-1   control-label">Category</label>
-                                {{event.category.name}}
-                            </div>-->
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <label class="col-sm-1   control-label">Venue</label>
-                                        {{event.venue.name}}
-                                    <div class="row col-sm-11">
-                                        {{event.venue.address.address_1}},
-                                        {{event.venue.address.city}}
-                                    </div>
-                                    <div class="row col-sm-offset-1 col-sm-11">
+                            <div class="row col-sm-12">
+                                <div class="col-sm-12">
+                                    <span style="font-weight: bolder;">{{event.venue.name}}
+                                    {{event.venue.address.address_1}}</span>
+                                </div>
+                            </div>
+                            <div class="row col-sm-12">
+                                <div class="col-sm-12">
+                                    <span style="font-weight: bolder;">{{event.venue.address.city}},
                                     {{event.venue.address.region}} -
                                     {{event.venue.address.postal_code}},
-                                    {{event.venue.address.country}}
-                                    </div>
+                                    {{event.venue.address.country}}</span>
                                 </div>
-
                             </div>
                         </td>
                     </div>
@@ -157,22 +182,24 @@
         </div>
 
         <div ng-if="pages.length > 1">
-            <nav>
-                <ul class="pagination">
-                    <li>
-                        <a href="" aria-label="Previous" ng-click="fetchNextPage(currentPage-1)">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li ng-repeat="num in pages">
-                        <a href="" ng-click="fetchNextPage(num)">{{num}}</a></li>
-                    <li>
-                        <a href="" ng-click="fetchNextPage(currentPage+1)" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="text-center">
+                <nav>
+                    <ul class="pagination">
+                        <li>
+                            <a href="" aria-label="Previous" ng-click="fetchNextPage(currentPage-1)">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li ng-repeat="num in pages">
+                            <a href="" ng-click="fetchNextPage(num)">{{num}}</a></li>
+                        <li>
+                            <a href="" ng-click="fetchNextPage(currentPage+1)" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 </div>

@@ -127,6 +127,12 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         search(searchQuery, true);
     }
 
+
+    $scope.removeEvent = function (event) {
+        var index = $scope.events.indexOf(event);
+        $scope.events.splice(index, 1);
+    }
+
     //method to pre-process the data retreived from the data api
     function processData(doPages) {
         $scope.categories = [];

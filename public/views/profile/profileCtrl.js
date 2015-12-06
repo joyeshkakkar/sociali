@@ -27,6 +27,7 @@
         }
         else{
             if((newPassword != undefined ) && (cnfPassword != undefined) ){
+
                 if(newPassword != cnfPassword) {
                     $scope.confirmPasswordMsg = "Passwords don't match.";
                     $scope.showPasswordSavedMsg = null;
