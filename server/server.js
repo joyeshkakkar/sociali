@@ -213,11 +213,10 @@ app.delete("/api/deleteUser/:id", function (req, res) {
         doc.remove();
         UserDetailsModel.findOne({ username: currentUsername }, function (err, doc) {
             doc.remove();
-            PreferencesModel.find({ username: currentUsername }, function (err, docs) {
+            PreferencesModel.findOne({ username: currentUsername }, function (err, docs) {
                 if (docs) {
-                    console.log(docs.length);
-                    if (docs.length > 0)
-                        docs.remove();
+                    console.log("removing doc");
+                    docs.remove();
                 }
                 res.json({msg: "deleted"});
             });
