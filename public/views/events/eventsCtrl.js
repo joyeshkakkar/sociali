@@ -292,8 +292,13 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                 map.setCenter(marker.getPosition());
                 hideOthers(event.id);
                 // Instantiate a directions service.
+                if(directionsDisplay)
+                    directionsDisplay.setMap(null);
+                directionsService = null;
+                directionsDisplay = null;
                 directionsService = new google.maps.DirectionsService;
                 directionsDisplay = new google.maps.DirectionsRenderer({map: map});
+                removeMarkers(marker);
                 calculateAndDisplayRoute(marker.getPosition());
             }
         })(marker, num));
@@ -332,14 +337,26 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         $('#showAll').show();
     }
 
+    function removeMarkers(marker) {
+        for (var i = 0; i < markers.length; i++) {
+
+            markers[i].setMap(null);
+        }
+        markers = [];
+        marker.setMap(map);
+        //setMarkers();
+    }
+
     $('#showAll').hide();
 
     //method to show all the events
     $scope.showall = function () {
+        $scope.filterEvents('');
         map.setZoom(12);
         map.setCenter(userMarker.getPosition());
         directionsService = null;
-        directionsDisplay.setMap(null);
+        if(directionsDisplay)
+            directionsDisplay.setMap(null);
         $('.eventRow').show();
         $('#showAll').hide();
     };
@@ -348,7 +365,10 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
     $scope.filterEvents = function (type) {
         $('#showAll').show();
         var j=0;
-
+        if(type == ''){
+            $scope.events = [];
+            $scope.events = $scope.unfilteredEvents;
+        }
         if(type == 'pricing'){
             if($scope.pricingFilter == ''){
                 $scope.events = [];
