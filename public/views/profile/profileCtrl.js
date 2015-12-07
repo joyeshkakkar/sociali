@@ -1,4 +1,4 @@
-﻿app.controller("ProfileController", function ($scope, $http, $rootScope, $location, UserService) {
+﻿app.controller("ProfileController", function ($scope, $http, $rootScope, $location, UserService, PreferenceService) {
 
     $scope.currentUser = $rootScope.currentUser;
     $scope.preferences = $rootScope.preferences;
@@ -126,7 +126,7 @@
         var currentUser = $rootScope.currentUser;
         var newPref = {username: currentUser.username, preferences : preferences, distance:distance};
 
-        UserService.updateUserPreferences(currentUser._id, newPref, function (response) {
+        PreferenceService.updateUserPreferences(currentUser._id, newPref, function (response) {
             $scope.currentUser = response;
             $scope.updatePrefMsg = "Preferences are updated.";
         })

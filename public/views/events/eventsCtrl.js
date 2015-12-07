@@ -1,5 +1,8 @@
-app.controller("EventsController", function ($scope, $http, $rootScope, $location, $templateCache) {
-
+app.controller("EventsController", function ($scope, $http, $rootScope, $location, $templateCache, MyEventsService) {
+    $scope.currentUser = $rootScope.currentUser;
+    var currentUser=$rootScope.currentUser;
+    //will hold the myEvents of the user
+    var myEvents;
     //will hold the map instance for the page
     var map;
     //will hold the user location marker
@@ -493,6 +496,75 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         var d = R * c;
         return d;
     }
+
+    $scope.addEventToFavorites = function (event) {
+        var currentUser = $rootScope.currentUser;
+        var username= currentUser.username;
+        if(!myEvents)
+            myEvents=[];
+        var eventToBeUpdated = { eventId: event.id, eventName: event.name.text, eventUrl: event.url ,imageUrl: event.logo.url,
+            startDate: event.start.local, endDate: event.end.local, description: event.description.text,
+            venueName: event.venue.name, venueAddress: event.venue.address.address_1, venueCity: event.venue.address.city,
+            venueRegion: event.venue.address.region, venuePostalCode: event.venue.address.postal_code,
+            venueCountry: event.venue.address.country};
+
+        console.log(eventToBeUpdated);
+        myEvents.push(eventToBeUpdated);
+        console.log(myEvents);
+        var myEventObj= {username: username, events: myEvents};
+        MyEventsService.updateUserEvents(username, myEventObj, function (response) {
+            myEvents=response.events;
+            console.log(myEvents);
+            $("#removeFromFavLink"+event.id).show();
+            $("#addToFavLink"+event.id).hide();
+
+        });
+    };
+
+    $scope.removeEventFromFavorites = function (event) {
+        var username= $rootScope.currentUser.username;
+        for (var me in myEvents) {
+            if (event.id == myEvents[me].eventId) {
+                console.log("Removing event with eventId-->"+event.id);
+                myEvents.splice(me, 1);
+            }
+        }
+        var myEventObj= {username: username, events: myEvents};
+        MyEventsService.updateUserEvents(currentUser.username, myEventObj, function (response) {
+            console.log(response);
+            $("#removeFromFavLink"+event.id).hide();
+            $("#addToFavLink"+event.id).show();
+        });
+    };
+
+    $scope.eventInFav = function (event) {
+        //var myEvents= $rootScope.myEvents;
+        //console.log("myEvents--->"+myEvents);
+        for (var me in myEvents) {
+            console.log(myEvents[me].eventId);
+            if (event.id == myEvents[me].eventId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    $(document).ready(function () {
+        var username= currentUser.username;
+        console.log(username);
+        MyEventsService.getUserEvents(username, function(response){
+            if(response){
+                $scope.myEvents = response.events;
+                console.log(response);
+                console.log(response.events);
+                myEvents=response.events;
+            }
+        });
+
+
+    });
+
 
 });
 

@@ -1,4 +1,4 @@
-﻿app.controller("LoginController", function ($scope, $http, $rootScope, $location, UserService) {
+﻿app.controller("LoginController", function ($scope, $http, $rootScope, $location, UserService, MyEventsService, PreferenceService) {
     $scope.currentUser = null;
     $rootScope.currentUser = null;
     $scope.preferences = null;
@@ -8,8 +8,6 @@
     $scope.login = function (user) {
         $http.post("/api/login", user)
          .success(function (response) {
-             $rootScope = $rootScope.$new(true);
-             $scope = $scope.$new(true);
              console.log(response);
              $rootScope.currentUser = response;
              $scope.currentUser = response;
@@ -22,12 +20,20 @@
                  $rootScope.userDetails = response;
              });
 
-             UserService.getUserPreferences(username, function (response) {
+             PreferenceService.getUserPreferences(username, function (response) {
                  if(response) {
                      console.log(response);
                      $scope.preferences = response.preferences;
                      $rootScope.preferences = response.preferences;
                      $rootScope.distance = response.distance;
+                 }
+             });
+
+             MyEventsService.getUserEvents(username, function(response){
+                 if(response){
+                     $scope.myEvents = response;
+                     $rootScope.myEvents = response;
+                     console.log($rootScope.myEvents);
                  }
              });
 

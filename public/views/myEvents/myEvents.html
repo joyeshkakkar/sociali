@@ -4,6 +4,77 @@
     <title>My Events</title>
 </head>
 <body>
-    My Events
+<div class="container-fluid">
+    <div class="col-sm-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <tr ng-repeat="event in events" id="{{event.eventId}}" class="eventRow">
+                    <div class="column col-sm-2">
+                        <td><img src="{{event.imageUrl}}" class="img"></td>
+                    </div>
+                    <div class="column col-sm-10">
+                        <td>
+                            <div class="col-sm-12">
+                                <div class="row col-sm-12">
+                                    <h3>{{event.eventName}}</h3>
+                                    <a href="{{event.eventUrl}}" tooltip-placement="bottom" tooltip="Check Event"
+                                       target="_blank">
+                                        <span style="color:darkorange;" class="glyphicon glyphicon-link"></span>
+                                    </a>
+                                    &nbsp;
+                                    <a href="" tooltip-placement="bottom" tooltip="Show Description."
+                                       data-toggle="collapse"
+                                       data-target="#{{$index + 1}}det">
+                                        <span style="color:blue;" class="glyphicon glyphicon-zoom-in"></span>
+                                    </a>
+                                    <a href="" tooltip-placement="bottom" tooltip="Remove from favorites."
+                                       ng-show="currentUser && eventInFav(event)">
+                                        <span style="color:blue;" class="glyphicon glyphicon-heart"></span>
+                                    </a>
+                                    &nbsp;
+                                    <a href="" tooltip-placement="bottom" tooltip="Mail Event."
+                                       ng-show="currentUser">
+                                        <span style="color:forestgreen;" class="glyphicon glyphicon-envelope"></span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row col-sm-12">
+                                <div class="col-sm-12">
+                                    <div id="{{$index + 1}}det" class="collapse">
+                                        {{event.description}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label class="col-sm-4 control-label">Start Time</label>
+                                    {{event.startDate}}
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="col-sm-4 control-label">End Time</label>
+                                    {{event.endDate}}
+                                </div>
+                            </div>
+                            <div class="row col-sm-12">
+                                <div class="col-sm-12">
+                                    <span style="font-weight: bolder;">{{event.venueName}}
+                                    {{event.venueAddress}}</span>
+                                </div>
+                            </div>
+                            <div class="row col-sm-12">
+                                <div class="col-sm-12">
+                                    <span style="font-weight: bolder;">{{event.venueCity}},
+                                    {{event.venueRegion}} -
+                                    {{event.venuePostalCode}},
+                                    {{event.venueCountry}}</span>
+                                </div>
+                            </div>
+                        </td>
+                    </div>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 </body>
 </html>

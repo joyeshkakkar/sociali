@@ -106,10 +106,43 @@ var PreferenceSchema = new mongoose.Schema({
     distance: String
 }, { collection: "preferences"});
 
+var VenueSchema = new mongoose.Schema({
+    name: String,
+    address: String,
+    region: String,
+    postalCode: String,
+    country: String
+}, { collection: "venue" });
+
+var EventSchema = new mongoose.Schema({
+    eventId: String,
+    eventName: String,
+    eventUrl: String,
+    imageUrl: String,
+    startDate: String,
+    endDate: String,
+    description: String,
+    //venue: [VenueSchema],
+    venueName: String,
+    venueAddress: String,
+    venueCity: String,
+    venueRegion: String,
+    venuePostalCode: String,
+    venueCountry: String,
+    addedOn: { type: Date, default: Date.now }
+}, { collection: "event" });
+
+var MyEventsSchema = new mongoose.Schema({
+    username: {type:String,index:{unique:true}},
+    events: [EventSchema],
+    addedOn: { type: Date, default: Date.now }
+}, { collection: "myEvents" });
+
 
 var UserLoginModel = mongoose.model("UserLogin", UserLoginSchema);
 var UserDetailsModel = mongoose.model("UserDetails", UserDetailsSchema);
 var PreferencesModel = mongoose.model("Preferences", PreferenceSchema);
+var MyEventsModel = mongoose.model("MyEvents", MyEventsSchema);
 
 var initialUserLogin = new UserLoginModel({
     username: "admin",
@@ -193,6 +226,35 @@ app.post("/api/updateUserPreferences/:id", function (req, res) {
         function (err, data) {
             res.send(data);
         });
+});
+
+//fetch user events
+app.get("/api/findUserEvents/:id", function (req, res) {
+    MyEventsModel.findOne({ username: req.params.id},function (err, data) {
+        res.json(data);
+    });
+});
+
+app.put("/api/updateUserEvents/:id",  function (req, res){
+   // var myEvents = new MyEventsModel(req.body);
+    var username = req.params.id;
+    MyEventsModel.findOneAndUpdate({ username: req.params.id},req.body,{upsert: true},
+        function (err, data) {
+            console.log(err);
+            console.log(data);
+            MyEventsModel.findOne({ username: username},function (err, data) {
+                console.log(data);
+                res.json(data);
+            });
+        });
+    /*MyEventsModel.update({ username: req.params.id}, { $set: { events: req.body } }, function (err, doc) {
+        console.log(err);
+        console.log(doc.nModified);
+        MyEventsModel.findOne({ username: username},function (err, data) {
+            console.log(data);
+            res.json(data);
+        });
+    });*/
 });
 
 //Update a user login
