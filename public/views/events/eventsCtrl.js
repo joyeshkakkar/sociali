@@ -49,7 +49,7 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                     var marker = new google.maps.Marker({
                         animation: google.maps.Animation.DROP,
                         position: initialLocation,
-                        title: 'lat:' + position.coords.latitude + ' long:' + position.coords.longitude,
+                        title: 'You are here',
                         //icon : 'images/blue.png'
                     });
                     marker.setMap(map);
