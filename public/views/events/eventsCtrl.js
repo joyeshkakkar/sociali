@@ -537,33 +537,32 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         MyEventsService.updateUserEvents(username, myEventObj, function (response) {
             myEvents = response.events;
             console.log(myEvents);
-            $("#removeFromFavLink" + event.id).show();
-            $("#addToFavLink" + event.id).hide();
+            /*$("#removeFromFavLink"+event.id).show();
+            $("#addToFavLink"+event.id).hide();*/
 
         });
     };
 
     $scope.removeEventFromFavorites = function (event) {
-        var username = $rootScope.currentUser.username;
+        var username= $rootScope.currentUser.username;
         for (var me in myEvents) {
             if (event.id == myEvents[me].eventId) {
-                console.log("Removing event with eventId-->" + event.id);
+                console.log("Removing event with eventId-->"+event.id);
                 myEvents.splice(me, 1);
             }
         }
-        var myEventObj = {username: username, events: myEvents};
+        var myEventObj= {username: username, events: myEvents};
         MyEventsService.updateUserEvents(currentUser.username, myEventObj, function (response) {
-            console.log(response);
-            $("#removeFromFavLink" + event.id).hide();
-            $("#addToFavLink" + event.id).show();
+            myEvents=response.events;
+            console.log(myEvents);
+            /*$("#removeFromFavLink"+event.id).hide();
+            $("#addToFavLink"+event.id).show();*/
         });
     };
 
-    $scope.eventInFav = function (event) {
-        //var myEvents= $rootScope.myEvents;
-        //console.log("myEvents--->"+myEvents);
+    $scope.isEventAFav = function (event) {
         for (var me in myEvents) {
-            console.log(myEvents[me].eventId);
+            //console.log(myEvents[me].eventId);
             if (event.id == myEvents[me].eventId) {
                 return true;
             }
@@ -615,8 +614,6 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                 myEvents = response.events;
             }
         });
-
-
     });
 
 

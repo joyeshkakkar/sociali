@@ -51,14 +51,30 @@ body {
     display: inline-table;
 }*/
 
-table{
+.table-small{
     height:325px;
 }
 
-tbody{
+.table-small tbody{
     overflow-y: scroll;
     overflow-x: hidden;
     height: 75%;
     width: 100%;
     position: absolute;
+}
+
+/*table{
+    height: 750px;
+}
+tbody{
+    height: 90%;
+    width: 1100px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+        !*position: absolute;*!
+}*/
+
+.img {
+    height: 110px;
+    width: 170px;
 }
