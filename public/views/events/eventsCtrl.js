@@ -140,21 +140,27 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         $scope.unfilteredEvents = [];
         //$scope.dates = [];
         var categoriesID = [];
+        var j=0;
         for (var i = 0; i < $scope.data.events.length; i++) {
-            $scope.unfilteredEvents[i] = $scope.data.events[i];
-            $scope.events[i] = $scope.data.events[i];
+            if($scope.data.events[i].category != null && $scope.data.events[i].logo != null
+                && $scope.data.events[i].venue != null) {
+                $scope.unfilteredEvents[j] = $scope.data.events[i];
+                $scope.events[j] = $scope.data.events[i];
+                var start = (new Date($scope.events[j].start.local)).toString().substring(0,25);
+                var end = (new Date($scope.events[j].end.local)).toString().substring(0,25);
 
-            var start = (new Date($scope.events[i].start.local)).toString().substring(0,25);
-            var end = (new Date($scope.events[i].end.local)).toString().substring(0,25);
-
-            $scope.events[i].start.local=start;
-            $scope.events[i].end.local=end;
-            if ($scope.data.events[i].category != null) {
-                if (categoriesID.indexOf($scope.data.events[i].category.id) == -1) {
-                    $scope.categories.push($scope.data.events[i].category);
-                    categoriesID.push($scope.data.events[i].category.id);
+                $scope.events[j].start.local=start;
+                $scope.events[j].end.local=end;
+                if ($scope.data.events[i].category != null) {
+                    if (categoriesID.indexOf($scope.data.events[i].category.id) == -1) {
+                        $scope.categories.push($scope.data.events[i].category);
+                        categoriesID.push($scope.data.events[i].category.id);
+                    }
                 }
+                j++;
             }
+
+
         }
         if (doPages) {
             $scope.currentPage = 1;
