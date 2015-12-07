@@ -48,7 +48,8 @@
                 </li>
             </ul>
             <div class="input-group pull-left padding-10" id="adv-search" ng-controller="SearchController">
-                <input type="text" class="form-control" required placeholder="Search for events" value="" ng-model="key"/>
+
+                <input id="searchBox" type="text" class="form-control" required placeholder="Search for events" value="" ng-model="key"/>
 
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
@@ -68,7 +69,7 @@
                                                     <div class=" col-sm-9">
                                                         <select class="form-control"
                                                                 id="category" class="form-control" ng-model="category">
-                                                            <option value="0" selected></option>
+                                                            <option value="" selected></option>
                                                             <option value="110">Food & Drink</option>
                                                             <option value="103">Music</option>
                                                             <option value="102">Technology</option>
@@ -154,7 +155,7 @@
                                 </form>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-sm btn-warning" ng-click="searchEvents()"><span
+                        <button id="searchButton" type="submit" class="btn btn-sm btn-warning" ng-click="searchEvents()"><span
                                 class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                     </div>
                 </div>
@@ -182,10 +183,9 @@
                             </div>
                         </div>
 
-                        <a href="" tooltip-placement="bottom" tooltip="Login" ng-disabled="myform.$invalid"
-                           ng-click="login(userLogin)">
-                            <span style="color:limegreen;" class="glyphicon glyphicon-log-in"></span>
-                        </a>
+                        <button type="submit"  tooltip-placement="bottom" tooltip="Login" ng-disabled="myform.$invalid"
+                           ng-click="login(userLogin)" class="btn-link glyphicon glyphicon-log-in" style="color:limegreen;">
+                        </button>
 
                                     <span ng-show="invalid === true" class="label label-danger pull-left">
                                         Invalid credentials provided. please try again.<br/>
@@ -248,7 +248,11 @@
     $("#distance").slider({
         tooltip: 'always'
     });
-
+    $("#searchBox").keyup(function(event){
+        if(event.keyCode == 13){
+            $("#searchButton").click();
+        }
+    });
     //For date picker component
     $(function () {
         $('#startDate').datetimepicker();
