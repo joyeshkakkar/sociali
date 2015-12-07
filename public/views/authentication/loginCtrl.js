@@ -8,6 +8,8 @@
     $scope.login = function (user) {
         $http.post("/api/login", user)
          .success(function (response) {
+             $rootScope = $rootScope.$new(true);
+             $scope = $scope.$new(true);
              console.log(response);
              $rootScope.currentUser = response;
              $scope.currentUser = response;
@@ -22,6 +24,7 @@
 
              UserService.getUserPreferences(username, function (response) {
                  if(response) {
+                     console.log(response);
                      $scope.preferences = response.preferences;
                      $rootScope.preferences = response.preferences;
                      $rootScope.distance = response.distance;

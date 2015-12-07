@@ -134,10 +134,10 @@
 
     $(document).ready(function () {
         $('#preferences').val($scope.preferences);
-        $('#distanceRadius').val($scope.distance);
-
-        //alert($('#preferences').val());
-        //alert($('#distanceRadius').val());
+        var savedDistance= $scope.distance;
+        if(!savedDistance)
+            savedDistance=5;
+        $('#distanceRadius').slider('setValue', Number(savedDistance));
 
         $("#updtUser").hide();
         $("#cancelEditBtn").hide();
@@ -156,10 +156,10 @@
             for (var i = 0; i < arrayLength; i++) {
                 var cat = arrayOfPref[i];
                 var id = "#" + cat;
-                alert(document.getElementById(cat).id);
+                //alert(document.getElementById(cat).id);
 
                 $("#Food").find('.btn').toggleClass('btn-default');
-                alert("done");
+                //alert("done");
                 //.toggleClass('btn-default');
                 //document.getElementById(cat).classList.toggle('btn-default');
                 //.toggleClass('btn-default');

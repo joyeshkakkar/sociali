@@ -4,7 +4,7 @@
     <title>Events</title>
     <style>
         #map {
-            height: 400px;
+            height: 350px;
         }
 
         .img {
@@ -61,27 +61,6 @@
     <div class="col-md-12 column">
         <input type="hidden" ng-model="latitude">
         <input type="hidden" ng-model="longitude">
-
-        <div ng-if="pages.length > 1">
-            <div class="text-center">
-                <nav>
-                    <ul class="pagination">
-                        <li>
-                            <a href="" aria-label="Previous" ng-click="fetchNextPage(currentPage-1)">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li ng-repeat="num in pages">
-                            <a href="" ng-click="fetchNextPage(num)">{{num}}</a></li>
-                        <li>
-                            <a href="" aria-label="Next" ng-click="fetchNextPage(currentPage+1)">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
         <div class="table-responsive">
             <table class="table table-striped">
                 <tr ng-repeat="event in events" id="{{event.id}}" class="eventRow">
@@ -90,23 +69,6 @@
                     </div>
                     <div class="column col-sm-10">
                         <td>
-                            <!--<table>
-
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn btn-info" data-toggle="collapse"
-                                                data-target="#{{$index + 1}}det">
-                                            Details
-                                        </button>
-                                        <div id="{{$index + 1}}det" class="collapse">
-                                            {{event.description.text}}
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><a href="{{event.url}}" target="_blank">Check event</a></td>
-                                </tr>
-                            </table>-->
                             <div class="col-sm-12">
                                 <div class="row col-sm-12">
                                     <h3>{{event.name.text}}</h3>
