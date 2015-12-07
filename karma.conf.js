@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Mon Nov 30 2015 01:37:26 GMT-0500 (Eastern Standard Time)
+// Generated on Sun Dec 06 2015 21:52:57 GMT-0500 (Eastern Standard Time)
 
 module.exports = function(config) {
   config.set({
@@ -22,6 +22,9 @@ module.exports = function(config) {
       'public/js/ng-password-strength.min.js',
         'public/js/sociali.js',
       'public/services/userService.js',
+      'public/services/myEventsService.js',
+      'public/services/preferenceService.js',
+        'public/js/jquery-2.1.4.min.js',
           'public/views/**/*.js',
           'public/test/**/*.js'
     ],
