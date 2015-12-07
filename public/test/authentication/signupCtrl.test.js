@@ -10,37 +10,21 @@ describe("testing", function() {
             $scope: scope
         });
     }));
-    var tempUserLogin = {username: "test", password: "test"};
-    var tempUserDetails = {firstName: "test", lastName: "test", username: "test", email: "test@test.com", password: "test", phone: "1234567890"};
+    var tempUserLogin = {username: "aa", password: "aa"};
+    var tempUserDetails = {firstName: "test", lastName: "test", username: "aa", email: "test@test.com", password: "aa", phone: "1234567890"};
 
     it('Scope should be defined', function () {
         expect(scope).toBeDefined();
     });
-    it('Valid login credentials', function () {
+    it('new user signup', function () {
 
         scope.userLogin = tempUserLogin;
+        scope.userDetails = tempUserDetails;
         scope.signup();
-        scope.login();
+        //scope.login();
         expect(scope.currentUser).toBeDefined();
     });
-    it('Invalid login credentials', function () {
-        var tempUserLogin = {username: "test", password: "t"};
-        scope.userLogin = tempUserLogin;
-        scope.login();
-        expect(scope.currentUser).toBeNull();
-    });
-    /!*it('Valid login credentials and user details are fetched', function () {
-     var tempUserLogin = {username: "test", password: "test"};
-     scope.userLogin = tempUserLogin;
-     scope.login();
-     expect(scope.userDetails).toBeDefined();
-     });*!/
-    it('Invalid login credentials and user details are not fetched', function () {
-        var tempUserLogin = {username: "test", password: "t"};
-        scope.userLogin = tempUserLogin;
-        scope.login();
-        expect(scope.userDetails).toBeUndefined();
-    });
+
     it('Invalid should be false', function () {
         expect(scope.invalid).toEqual(false);
     });
@@ -51,7 +35,6 @@ describe("testing", function() {
         scope.change();
         expect(scope.invalid).toEqual(false);
     });
-*/
 
 });
 
