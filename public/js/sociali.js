@@ -9,7 +9,9 @@ app.config(['$routeProvider', function ($routeProvider) {
     when('/events', {
         templateUrl: 'views/events/events.html'
         , controller: 'EventsController'
-
+        , resolve: {
+            loggedin: checkUserLoggedin
+        }
     }).
     when('/myEvents', {
         templateUrl: 'views/myEvents/myEvents.html'
@@ -46,19 +48,19 @@ var checkUserLoggedin = function ($q, $timeout, $http, $location, $rootScope, Us
         .success(function (user) {
             $rootScope.errorMessage = null;
             //user is Authenticated
-            console.log(user);
+            //console.log(user);
             if (user != '0') {
-                console.log(user);
-                console.log("user found");
+                //console.log(user);
+                //console.log("user found");
                 $rootScope.currentUser = user;
                 var username = user.username;
                 UserService.getUserDetails(username, function (response) {
-                    console.log(response);
+                    //console.log(response);
                     $rootScope.userDetails = response;
                 });
                 deferred.resolve();
             } else {
-                console.log("user not found");
+                //console.log("user not found");
                 $rootScope.errorMessage = "you need to login";
                 deferred.reject();
                 $location.url("/login");

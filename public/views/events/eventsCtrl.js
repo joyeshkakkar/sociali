@@ -1,6 +1,6 @@
 app.controller("EventsController", function ($scope, $http, $rootScope, $location, $templateCache, MyEventsService) {
     $scope.currentUser = $rootScope.currentUser;
-    var currentUser=$rootScope.currentUser;
+    var currentUser = $rootScope.currentUser;
     //will hold the myEvents of the user
     var myEvents;
     //will hold the map instance for the page
@@ -64,9 +64,9 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                             map.setCenter(marker.getPosition());
                         });
                     //fetch user events only if the user is logged in
-                    if($scope.currentUser !=null)
+                    if ($scope.currentUser != null)
                         fetchUserEvents();
-                    if($rootScope.query!= null){
+                    if ($rootScope.query != null) {
                         $scope.query = $rootScope.query;
                         $rootScope.query = null;
                         fetch();
@@ -117,10 +117,10 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
             + $scope.longitude + '&popular=on';
 
         //setting category 103--music
-        var userPreferences= $rootScope.preferences;
-        if(userPreferences==null)
-            userPreferences='';
-        var searchQuery = url + '?categories='+ userPreferences + location +
+        var userPreferences = $rootScope.preferences;
+        if (userPreferences == null)
+            userPreferences = '';
+        var searchQuery = url + '?categories=' + userPreferences + location +
             '&token=' + token + '&expand=venue,category';
         $scope.currentQuery = searchQuery;
         $scope.code = null;
@@ -143,17 +143,17 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         $scope.unfilteredEvents = [];
         //$scope.dates = [];
         var categoriesID = [];
-        var j=0;
+        var j = 0;
         for (var i = 0; i < $scope.data.events.length; i++) {
-            if($scope.data.events[i].category != null && $scope.data.events[i].logo != null
+            if ($scope.data.events[i].category != null && $scope.data.events[i].logo != null
                 && $scope.data.events[i].venue != null) {
                 $scope.unfilteredEvents[j] = $scope.data.events[i];
                 $scope.events[j] = $scope.data.events[i];
-                var start = (new Date($scope.events[j].start.local)).toString().substring(0,25);
-                var end = (new Date($scope.events[j].end.local)).toString().substring(0,25);
+                var start = (new Date($scope.events[j].start.local)).toString().substring(0, 25);
+                var end = (new Date($scope.events[j].end.local)).toString().substring(0, 25);
 
-                $scope.events[j].start.local=start;
-                $scope.events[j].end.local=end;
+                $scope.events[j].start.local = start;
+                $scope.events[j].end.local = end;
                 if ($scope.data.events[i].category != null) {
                     if (categoriesID.indexOf($scope.data.events[i].category.id) == -1) {
                         $scope.categories.push($scope.data.events[i].category);
@@ -184,12 +184,6 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
 
     };
 
-    $scope.$on('fetchEvent', function (event, args) {
-        $scope.query = $rootScope.query;
-        $rootScope.query = null;
-        fetch();
-    });
-
     //method to fetch the events searced for
     function fetch() {
         var radius = $scope.query.radius;
@@ -199,19 +193,19 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         var url = 'https://www.eventbriteapi.com/v3//events/search/';
         var token = 'JJJKFTCUFVWB2HPKT2DS';
         var token2 = 'QC44X66MUP27NDX7MDZL';
-        var start ='';
-        var end='';
-        var cat ='';
-        if(startDate !=null && startDate !=''){
+        var start = '';
+        var end = '';
+        var cat = '';
+        if (startDate != null && startDate != '') {
             start = '&start_date.range_start=' + startDate.substring(0, 19);
         }
-        if(endDate !=null && endDate !=''){
+        if (endDate != null && endDate != '') {
             end = '&start_date.range_end=' + endDate.substring(0, 19);
         }
-        if(category !=null && category !=''){
+        if (category != null && category != '') {
             cat = '&categories=' + category;
         }
-        var location = '&location.within='+radius+'mi&location.latitude=' + $scope.latitude +
+        var location = '&location.within=' + radius + 'mi&location.latitude=' + $scope.latitude +
             '&location.longitude=' + $scope.longitude + '&popular=on';
 
         var searchQuery = url + '?q=' + $scope.query.key + location +
@@ -307,7 +301,7 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                 map.setCenter(marker.getPosition());
                 hideOthers(event.id);
                 // Instantiate a directions service.
-                if(directionsDisplay)
+                if (directionsDisplay)
                     directionsDisplay.setMap(null);
                 directionsService = null;
                 directionsDisplay = null;
@@ -370,7 +364,7 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         map.setZoom(12);
         map.setCenter(userMarker.getPosition());
         directionsService = null;
-        if(directionsDisplay)
+        if (directionsDisplay)
             directionsDisplay.setMap(null);
         $('.eventRow').show();
         $('#showAll').hide();
@@ -379,13 +373,13 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
     //method to filter events shown
     $scope.filterEvents = function (type) {
         $('#showAll').show();
-        var j=0;
-        if(type == ''){
+        var j = 0;
+        if (type == '') {
             $scope.events = [];
             $scope.events = $scope.unfilteredEvents;
         }
-        if(type == 'pricing'){
-            if($scope.pricingFilter == ''){
+        if (type == 'pricing') {
+            if ($scope.pricingFilter == '') {
                 $scope.events = [];
                 $scope.events = $scope.unfilteredEvents;
             } else {
@@ -403,8 +397,8 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
             //resetMarkers();
         }
 
-        if(type == 'cat'){
-            if($scope.catFilter == ''){
+        if (type == 'cat') {
+            if ($scope.catFilter == '') {
                 $scope.events = [];
                 $scope.events = $scope.unfilteredEvents;
             } else {
@@ -420,30 +414,30 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
             //processData(false);
             //resetMarkers();
         }
-        if(type == 'date'){
-            if($scope.datFilter == ''){
+        if (type == 'date') {
+            if ($scope.datFilter == '') {
                 $scope.events = [];
                 $scope.events = $scope.unfilteredEvents;
             } else {
                 var date = getDate($scope.datFilter);
                 $scope.events = [];
-                if($scope.datFilter == '1' || $scope.datFilter == '2') {
+                if ($scope.datFilter == '1' || $scope.datFilter == '2') {
                     for (i = 0; i < $scope.unfilteredEvents.length; i++) {
                         if ($scope.unfilteredEvents[i].start.local.substring(0, 10) == date.toISOString().substring(0, 10)) {
                             $scope.events[j] = $scope.unfilteredEvents[i];
                             j++;
                         }
                     }
-                } else if($scope.datFilter == '3') {
+                } else if ($scope.datFilter == '3') {
                     for (i = 0; i < $scope.unfilteredEvents.length; i++) {
                         var temp = new Date($scope.unfilteredEvents[i].start.local);
-                        if ( temp >= date.d1
+                        if (temp >= date.d1
                             && temp <= date.d2) {
                             $scope.events[j] = $scope.unfilteredEvents[i];
                             j++;
                         }
                     }
-                } else{
+                } else {
                     for (i = 0; i < $scope.unfilteredEvents.length; i++) {
                         if (new Date($scope.unfilteredEvents[i].start.local) >= date) {
                             $scope.events[j] = $scope.unfilteredEvents[i];
@@ -457,83 +451,111 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         resetMarkers();
 
     };
-    function getDate(type){
+    function getDate(type) {
         var dat = new Date();
         var dateRange;
         var d1;
         var d2;
-        if(type =='1'){
+        if (type == '1') {
             return dat;
-        } if(type == '2'){
+        }
+        if (type == '2') {
             dat.setDate(dat.getDate() + 1)
             return dat;
-        }if(type == '3'){
+        }
+        if (type == '3') {
             d2 = new Date();
             d2.setDate(dat.getDate() + 7);
-            dateRange = {"d1" :dat ,"d2": d2};
+            dateRange = {"d1": dat, "d2": d2};
             return dateRange;
-        }if(type == '4'){
+        }
+        if (type == '4') {
             dat.setDate(dat.getDate() + 7)
             return dat;
         }
-        if(type == '5'){
+        if (type == '5') {
             dat.setDate(dat.getDate() + 31)
             return dat;
         }
     }
-    function calcDist(){
+
+    function calcDist(lat1, lat2, lon1, lon2) {
+        //alert(lat1);
         var R = 6371000; // metres
-        var φ1 = lat1.toRadians();
-        var φ2 = lat2.toRadians();
-        var Δφ = (lat2-lat1).toRadians();
-        var Δλ = (lon2-lon1).toRadians();
-
-        var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+        var φ1 = toRad(lat1);
+        //alert(φ1);
+        var φ2 = toRad(lat2);
+        var Δφ = toRad(lat2 - lat1);
+        var Δλ = toRad(lon2 - lon1);
+        //alert(lat2);
+        var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
             Math.cos(φ1) * Math.cos(φ2) *
-            Math.sin(Δλ/2) * Math.sin(Δλ/2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
 
-        var d = R * c;
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        var d = ((R * c)/1000) * 0.62137;
+        //alert(d);
         return d;
+    }
+
+    function toRad(num){
+        return num * Math.PI / 180;
+    }
+    /** Converts numeric degrees to radians */
+    if (typeof(Number.prototype.toRadians) === "undefined") {
+        Number.prototype.toRadians = function() {
+            return this * Math.PI / 180;
+        }
     }
 
     $scope.addEventToFavorites = function (event) {
         var currentUser = $rootScope.currentUser;
-        var username= currentUser.username;
-        if(!myEvents)
-            myEvents=[];
-        var eventToBeUpdated = { eventId: event.id, eventName: event.name.text, eventUrl: event.url ,imageUrl: event.logo.url,
-            startDate: event.start.local, endDate: event.end.local, description: event.description.text,
-            venueName: event.venue.name, venueAddress: event.venue.address.address_1, venueCity: event.venue.address.city,
-            venueRegion: event.venue.address.region, venuePostalCode: event.venue.address.postal_code,
-            venueCountry: event.venue.address.country};
+        var username = currentUser.username;
+        if (!myEvents)
+            myEvents = [];
+        var eventToBeUpdated = {
+            eventId: event.id,
+            eventName: event.name.text,
+            eventUrl: event.url,
+            imageUrl: event.logo.url,
+            startDate: event.start.local,
+            endDate: event.end.local,
+            description: event.description.text,
+            venueName: event.venue.name,
+            venueAddress: event.venue.address.address_1,
+            venueCity: event.venue.address.city,
+            venueRegion: event.venue.address.region,
+            venuePostalCode: event.venue.address.postal_code,
+            venueCountry: event.venue.address.country
+        };
 
         console.log(eventToBeUpdated);
         myEvents.push(eventToBeUpdated);
         console.log(myEvents);
-        var myEventObj= {username: username, events: myEvents};
+        var myEventObj = {username: username, events: myEvents};
         MyEventsService.updateUserEvents(username, myEventObj, function (response) {
-            myEvents=response.events;
+            myEvents = response.events;
             console.log(myEvents);
-            $("#removeFromFavLink"+event.id).show();
-            $("#addToFavLink"+event.id).hide();
+            $("#removeFromFavLink" + event.id).show();
+            $("#addToFavLink" + event.id).hide();
 
         });
     };
 
     $scope.removeEventFromFavorites = function (event) {
-        var username= $rootScope.currentUser.username;
+        var username = $rootScope.currentUser.username;
         for (var me in myEvents) {
             if (event.id == myEvents[me].eventId) {
-                console.log("Removing event with eventId-->"+event.id);
+                console.log("Removing event with eventId-->" + event.id);
                 myEvents.splice(me, 1);
             }
         }
-        var myEventObj= {username: username, events: myEvents};
+        var myEventObj = {username: username, events: myEvents};
         MyEventsService.updateUserEvents(currentUser.username, myEventObj, function (response) {
             console.log(response);
-            $("#removeFromFavLink"+event.id).hide();
-            $("#addToFavLink"+event.id).show();
+            $("#removeFromFavLink" + event.id).hide();
+            $("#addToFavLink" + event.id).show();
         });
     };
 
@@ -549,16 +571,48 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         return false;
     }
 
+    $scope.distanceFilter = function distanceFilter() {
+        //console.log('onslide:' + $scope.unfilteredEvents);
+
+        var rad = $("#radius").val();
+        $('#showAll').show();
+        $scope.events = [];
+        var j = 0;
+        alert(rad);
+        for (i = 0; i < $scope.unfilteredEvents.length; i++) {
+            //alert('in loop'+$scope.unfilteredEvents[i].venue);
+            if ($scope.unfilteredEvents[i].venue != undefined) {
+                var lat1 = $scope.unfilteredEvents[i].venue.address.latitude;
+                var lon1 = $scope.unfilteredEvents[i].venue.address.longitude;
+                var lat2 = userMarker.getPosition().lat();
+                var lon2 = userMarker.getPosition().lng();
+                var calDist = calcDist(Number(lat1), Number(lat2), Number(lon1), Number(lon2));
+                //alert(calDist);
+                if (calDist <= rad) {
+                    $scope.events[j] = $scope.unfilteredEvents[i];
+                    j++;
+                }
+            }
+        }
+        resetMarkers();
+    }
+
 
     $(document).ready(function () {
-        var username= currentUser.username;
+        $('#preferences').val($scope.preferences);
+        var savedDistance = $scope.distance;
+        if (!savedDistance)
+            savedDistance = 5;
+        $('#radius').slider('setValue', Number(savedDistance));
+
+        var username = currentUser.username;
         console.log(username);
-        MyEventsService.getUserEvents(username, function(response){
-            if(response){
+        MyEventsService.getUserEvents(username, function (response) {
+            if (response) {
                 $scope.myEvents = response.events;
                 console.log(response);
                 console.log(response.events);
-                myEvents=response.events;
+                myEvents = response.events;
             }
         });
 

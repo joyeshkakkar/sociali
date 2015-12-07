@@ -8,14 +8,15 @@
     $scope.login = function (user) {
         $http.post("/api/login", user)
          .success(function (response) {
-             console.log(response);
+
+             //console.log(response);
              $rootScope.currentUser = response;
              $scope.currentUser = response;
              $scope.invalid = false;
 
              var username = response.username;
              UserService.getUserDetails(username, function (response) {
-                 console.log(response);
+                 //console.log(response);
                  $scope.userDetails = response;
                  $rootScope.userDetails = response;
              });

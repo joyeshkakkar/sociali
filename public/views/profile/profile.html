@@ -4,7 +4,7 @@
     <title>Profile</title>
 </head>
 <body>
-<div ng-controller="ProfileController">
+<div ng-controller="ProfileController" ng-init="init()">
     <div class="row">
         <div class="col-md-2">
             <ul class="nav nav-tabs nav-stacked nav-pills" role="tablist">
@@ -97,7 +97,7 @@
                                                 <span class="input-group-addon " id="basic-addon1">
                                                     <span class="glyphicon glyphicon-earphone"></span>
                                                 </span>
-                                                <input ng-model="userDetails.phone" type="number" id="phone"
+                                                <input ng-model="userDetails.phone"  id="phone"
                                                        name="phone" disabled="disabled"
                                                        value="" placeholder="Enter your 10 digit mobile number"
                                                        class="text input-sm form-control makeEditable">
@@ -216,44 +216,44 @@
                                 <div class="row col-md-12">
                                     <div class="col-md-2">
                                         <h4>Food & Drink</h4>
-                                        <div class="btn-group btn-toggle" id = "Food">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('110','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('110','N')">No</button>
+                                        <div class="btn-group btn-toggle" id = "110div">
+                                            <button type="button" class="cYes btn btn-sm btn-default" ng-click="updatePref('110','Y')">Yes</button>
+                                            <button type="button" class="cNo btn btn-sm btn-primary active" ng-click="updatePref('110','N')">No</button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Music</h4>
-                                        <div class="btn-group btn-toggle" id = "Music">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('103','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('103','N')">No</button>
+                                        <div class="btn-group btn-toggle" id = "103div">
+                                            <button type="button" class="cYes btn btn-sm btn-default" ng-click="updatePref('103','Y')">Yes</button>
+                                            <button type="button" class="cNo btn btn-sm btn-primary active" ng-click="updatePref('103','N')">No</button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Science & Technology</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('102','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('102','N')">No</button>
+                                        <div class="btn-group btn-toggle" id ="102div">
+                                            <button type="button" class="cYes btn btn-sm btn-default" ng-click="updatePref('102','Y')">Yes</button>
+                                            <button type="button" class="cNo btn btn-sm btn-primary active" ng-click="updatePref('102','N')">No</button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Film</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('104','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('104','N')">No</button>
+                                        <div class="btn-group btn-toggle" id="104div">
+                                            <button type="button" class="cYes btn btn-sm btn-default" ng-click="updatePref('104','Y')">Yes</button>
+                                            <button type="button" class="cNo btn btn-sm btn-primary active" ng-click="updatePref('104','N')">No</button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Travel & Outdoor</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('109','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('109','N')">No</button>
+                                        <div class="btn-group btn-toggle" id="109div">
+                                            <button type="button" class="cYes btn btn-sm btn-default" ng-click="updatePref('109','Y')">Yes</button>
+                                            <button type="button" class="cNo btn btn-sm btn-primary active" ng-click="updatePref('109','N')">No</button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Sports & Fitness</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('108','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('108','N')">No</button>
+                                        <div class="btn-group btn-toggle" id="108div">
+                                            <button type="button" class="cYes btn btn-sm btn-default" ng-click="updatePref('108','Y')">Yes</button>
+                                            <button type="button" class="cNo btn btn-sm btn-primary active" ng-click="updatePref('108','N')">No</button>
                                         </div>
                                     </div>
                                 </div>
@@ -261,44 +261,44 @@
                                     <br /> <br />
                                     <div class="col-md-2">
                                         <h4>Business & Professional</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('101','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('101','N')">No</button>
+                                        <div class="btn-group btn-toggle" id="101div">
+                                            <button type="button" class="cYes btn btn-sm btn-default" ng-click="updatePref('101','Y')">Yes</button>
+                                            <button type="button" class="cNo btn btn-sm btn-primary active" ng-click="updatePref('101','N')">No</button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Family & Education</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('115','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('115','N')">No</button>
+                                        <div class="btn-group btn-toggle" id="115div">
+                                            <button type="button" class="cYes btn btn-sm btn-default" ng-click="updatePref('115','Y')">Yes</button>
+                                            <button type="button" class="cNo btn btn-sm btn-primary active" ng-click="updatePref('115','N')">No</button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Health & Wellness</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('107','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('107','N')">No</button>
+                                        <div class="btn-group btn-toggle" id="107div">
+                                            <button type="button" class="cYes btn btn-sm btn-default" ng-click="updatePref('107','Y')">Yes</button>
+                                            <button type="button" class="cNo btn btn-sm btn-primary active" ng-click="updatePref('107','N')">No</button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Fashion & Beauty</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('106','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('106','N')">No</button>
+                                        <div class="btn-group btn-toggle" id="106div">
+                                            <button type="button" class="cYes btn btn-sm btn-default" ng-click="updatePref('106','Y')">Yes</button>
+                                            <button type="button" class="cNo btn btn-sm btn-primary active" ng-click="updatePref('106','N')">No</button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Auto, Boat & Air</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('118','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('118','N')">No</button>
+                                        <div class="btn-group btn-toggle" id="118div">
+                                            <button type="button" class="cYes btn btn-sm btn-default" ng-click="updatePref('118','Y')">Yes</button>
+                                            <button type="button" class="cNo btn btn-sm btn-primary active" ng-click="updatePref('118','N')">No</button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Performing & Visual Arts</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('105','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('105','N')">No</button>
+                                        <div class="btn-group btn-toggle" id="105div">
+                                            <button type="button" class="cYes btn btn-sm btn-default" ng-click="updatePref('105','Y')">Yes</button>
+                                            <button type="button" class="cNo btn btn-sm btn-primary active" ng-click="updatePref('105','N')">No</button>
                                         </div>
                                     </div>
                                 </div>
@@ -306,16 +306,16 @@
                                     <br /> <br />
                                     <div class="col-md-2">
                                         <h4>Religion & Spirituality</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('105','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('105','N')">No</button>
+                                        <div class="btn-group btn-toggle" id="114div">
+                                            <button type="button" class="cYes btn btn-sm btn-default" ng-click="updatePref('114','Y')">Yes</button>
+                                            <button type="button" class="cNo btn btn-sm btn-primary active" ng-click="updatePref('114','N')">No</button>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <h4>Holiday</h4>
-                                        <div class="btn-group btn-toggle">
-                                            <button type="button" class="btn btn-sm btn-default" ng-click="updatePref('116','Y')">Yes</button>
-                                            <button type="button" class="btn btn-sm btn-primary active" ng-click="updatePref('116','N')">No</button>
+                                        <div class="btn-group btn-toggle" id="116div">
+                                            <button type="button" class="cYes btn btn-sm btn-default" ng-click="updatePref('116','Y')">Yes</button>
+                                            <button type="button" class="cNo btn btn-sm btn-primary active" ng-click="updatePref('116','N')">No</button>
                                         </div>
                                     </div>
                                 </div>

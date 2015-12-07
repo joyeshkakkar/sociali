@@ -6,6 +6,7 @@
             $scope.userLogin = null;
             $scope.userDetails = null;
             $rootScope.userDetails = null;
+            $rootScope.preferences = null;
             $location.url('/');
             //window.location.reload();
         }

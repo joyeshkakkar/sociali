@@ -41,11 +41,17 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-3">
-                    <select class="form-control" ng-model="pricingFilter" ng-change="filterEvents('pricing')">
-                        <option value="">Pricing</option>
-                        <option value="true">Free</option>
-                        <option value="false">Paid</option>
-                    </select>
+                    <label class="col-sm-4  control-label" for="radius">Radius(Km):
+                    </label>
+
+                    <div class=" col-sm-6 padding-10">
+                        <input id="radius"
+                               class="form-control" data-slider-id='ex1Slider'
+                               type="text" data-slider-min="1"
+                               data-slider-max="10" data-slider-step="1"
+                               data-slider-value="5"/>
+                    </div>
+                    <button ng-click="distanceFilter()">Go</button>
                 </div>
                 <div class="form-group col-sm-1">
                     <button id="showAll" ng-click="showall()"
@@ -168,7 +174,9 @@
     </div>
 </div>
 <script>
-    $("#distance").slider({
+
+
+    $("#radius").slider({
         tooltip: 'always'
     });
 

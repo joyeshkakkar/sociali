@@ -1,4 +1,4 @@
-﻿app.controller("ProfileController", function ($scope, $http, $rootScope, $location, UserService, PreferenceService) {
+app.controller("ProfileController", function ($scope, $http, $rootScope, $location, UserService, PreferenceService) {
 
     $scope.currentUser = $rootScope.currentUser;
     $scope.preferences = $rootScope.preferences;
@@ -150,19 +150,17 @@
         });
 
         if($scope.preferences != null){
-            //alert("set button " +  savedPreferences);
             var arrayOfPref = $scope.preferences.split(",");
             var arrayLength = arrayOfPref.length;
             for (var i = 0; i < arrayLength; i++) {
                 var cat = arrayOfPref[i];
-                var id = "#" + cat;
-                //alert(document.getElementById(cat).id);
-
-                $("#Food").find('.btn').toggleClass('btn-default');
-                //alert("done");
-                //.toggleClass('btn-default');
-                //document.getElementById(cat).classList.toggle('btn-default');
-                //.toggleClass('btn-default');
+                var id = cat+'div';
+                $("#"+id).find('.cYes').removeClass('btn-default');
+                $("#"+id).find('.cYes').addClass('btn-primary');
+                $("#"+id).find('.cYes').addClass('active');
+                $("#"+id).find('.cNo').removeClass('btn-primary');
+                $("#"+id).find('.cNo').addClass('btn-default');
+                $("#"+id).find('.cNo').removeClass('active');
             }
         }
 
