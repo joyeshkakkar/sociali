@@ -1,4 +1,4 @@
-app.factory('MyEventsService', function UserService($http) {
+app.factory('MyEventsService', function MyEventsService($http) {
 
     var getUserEvents = function (username, callback) {
         $http.get("/api/findUserEvents/" + username)

@@ -11,7 +11,7 @@
   "plugins": [
     "karma-junit-reporter",
     "karma-coverage"
-    ],
+  ],
   "author": {
     "name": "OpenShift",
     "email": "ramr@example.org",
@@ -34,7 +34,9 @@
     "express-session": "^1.12.1",
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.15",
+    "karma-coverage": "~0.2.6",
     "karma-jasmine": "^0.3.6",
+    "karma-junit-reporter": "~0.2.2",
     "karma-phantomjs-launcher": "^0.2.1",
     "mailgun-js": "^0.7.7",
     "modal": "^1.2.0",
@@ -46,8 +48,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "phantomjs": "^1.9.19",
-    "karma-junit-reporter": "~0.2.2",
-    "karma-coverage": "~0.2.6"
+    "selenium-webdriver": "^2.48.2"
   },
   "devDependencies": {
     "karma-chrome-launcher": "^0.2.1"

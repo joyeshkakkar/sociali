@@ -1,4 +1,4 @@
-app.factory('PreferenceService', function UserService($http) {
+app.factory('PreferenceService', function PreferenceService($http) {
 
     var getUserPreferences = function (username, callback) {
         $http.get("/api/findUserPreferences/" + username)
