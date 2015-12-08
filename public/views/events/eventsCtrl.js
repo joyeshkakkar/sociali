@@ -1,6 +1,9 @@
 app.controller("EventsController", function ($scope, $http, $rootScope, $location, $templateCache, MyEventsService) {
     $scope.currentUser = $rootScope.currentUser;
     var currentUser = $rootScope.currentUser;
+    var userDetails= $rootScope.currentUser;
+
+
     //will hold the myEvents of the user
     var myEvents;
     //will hold the map instance for the page
@@ -368,6 +371,13 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
             directionsDisplay.setMap(null);
         $('.eventRow').show();
         $('#showAll').hide();
+
+        var savedDistance= $scope.distance;
+        //alert(savedDistance);
+        if(!savedDistance)
+            savedDistance=5;
+        $('#radius').slider('setValue', Number(savedDistance));
+
     };
 
     //method to filter events shown
@@ -377,24 +387,6 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         if (type == '') {
             $scope.events = [];
             $scope.events = $scope.unfilteredEvents;
-        }
-        if (type == 'pricing') {
-            if ($scope.pricingFilter == '') {
-                $scope.events = [];
-                $scope.events = $scope.unfilteredEvents;
-            } else {
-                $scope.events = [];
-                for (i = 0; i < $scope.unfilteredEvents.length; i++) {
-                    alert($scope.unfilteredEvents[i].is_free);
-                    if ($scope.unfilteredEvents[i].is_free != null &&
-                        $scope.unfilteredEvents[i].is_free == $scope.pricingFilter) {
-                        $scope.events[j] = $scope.unfilteredEvents[i];
-                        j++;
-                    }
-                }
-            }
-            //processData(false);
-            //resetMarkers();
         }
 
         if (type == 'cat') {
@@ -577,7 +569,7 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         $('#showAll').show();
         $scope.events = [];
         var j = 0;
-        alert(rad);
+        //alert(rad);
         for (i = 0; i < $scope.unfilteredEvents.length; i++) {
             //alert('in loop'+$scope.unfilteredEvents[i].venue);
             if ($scope.unfilteredEvents[i].venue != undefined) {
@@ -596,8 +588,40 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         resetMarkers();
     }
 
+    $scope.mailEvent = function (event) {
+        var userDetails= $rootScope.userDetails;
+        console.log(userDetails);
+        var toMail = userDetails.email;
+        var payload = { name: userDetails.firstName + " " + userDetails.lastName,
+            email: userDetails.email,
+            username: userDetails.username,
+            eventName: event.name.text,
+            eventUrl: event.url,
+            imageUrl: event.logo.url,
+            startDate: event.start.local,
+            endDate: event.end.local,
+            description: event.description.text,
+            venueName: event.venue.name,
+            venueAddress: event.venue.address.address_1,
+            venueCity: event.venue.address.city,
+            venueRegion: event.venue.address.region,
+            venuePostalCode: event.venue.address.postal_code,
+            venueCountry: event.venue.address.country
+        };
+        console.log(toMail);
+        $('#alertMessage').show();
+        $http.post("/api/mailEvent", payload)
+            .success(function (response) {
+                console.log("mail sent");
+            })
+            .error(function (response) {
+                console.log("mail not sent");
+            });
+    }
+
 
     $(document).ready(function () {
+        $('#alertMessage').hide();
         $('#preferences').val($scope.preferences);
         var savedDistance = $scope.distance;
         if (!savedDistance)

@@ -16,9 +16,9 @@ mongoose.connect(connectionString);
 
 app.use(express.static(__dirname + '../../public'));
 app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
 app.use(multer()); // for parsing multipart/form-data
-app.use(session({ secret: 'secret string' }));
+app.use(session({secret: 'secret string'}));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());// do not ask everytime for user credentials, check in session for username and password
@@ -47,7 +47,7 @@ app.post("/api/sendMail", function (req, res) {
     var transporter = nodemailer.createTransport(mg(auth));
 
     var mailOptionsForSender = {
-        from: 'Sociali support <endeavorprj@gmail.com>',
+        from: 'Sociali support <endeavorproj@gmail.com>',
         to: senderName + '<' + toMail + '>',
         subject: "Query submitted:" + req.body.subject,
         text: "Your query is submitted.\n\nQuery submitted: " + req.body.message + "\n\nSender Details: \nName: " + senderName + "\nEmail: " + toMail + "\n", // plaintext body
@@ -64,8 +64,8 @@ app.post("/api/sendMail", function (req, res) {
     });
 
     var mailOptions = {
-        from: 'Sociali support <endeavorprj@gmail.com>',
-        to: 'Sociali support <endeavorprj@gmail.com>',
+        from: 'Sociali support <endeavorproj@gmail.com>',
+        to: 'Sociali support <endeavorproj@gmail.com>',
         subject: req.body.subject,
         text: "Query submitted: " + req.body.message + "\n\nSender Details: \nName: " + senderName + "\nEmail: " + toMail + "\n", // plaintext body
         //html: '<b>Hello</b>' // html body
@@ -80,31 +80,66 @@ app.post("/api/sendMail", function (req, res) {
             res.send(200);
         }
     });
+});
+
+
+app.post("/api/mailEvent", function (req, res) {
+    var toMail = req.body.email;
+    var senderName = req.body.name;
+    var auth = {
+        auth: {
+            api_key: 'key-f7eeef970cdedbdfd659aaa56e6cec27',
+            domain: 'sandbox428b7233e69d40cbba8b5eb6b9ed57fd.mailgun.org'
+        }
+    };
+    var transporter = nodemailer.createTransport(mg(auth));
+
+    var mailOptionsForSender = {
+        from: 'Sociali support <endeavorproj@gmail.com>',
+        to: senderName + '<' + toMail + '>',
+        subject: req.body.eventName,
+        //text: "Your query is submitted.\n\nQuery submitted: " + req.body.message + "\n\nSender Details: \nName: " + senderName + "\nEmail: " + toMail + "\n", // plaintext body
+        html: 'Hello&nbsp;<b>' + senderName + ',</b> <br/><br/> Below are the event details<br/><br/> ' +'<b>Event Name: </b> '
+        + req.body.eventName + '<p> <a href="'+req.body.eventUrl+'" target="_blank">Check Event</a></p> <p> <b>Start Date: </b>' + req.body.startDate + '</p> <p> <b>End Date: ' +
+        '</b>' + req.body.endDate + '</p> <b>Event Description: </b> <br/>' + req.body.description + ' <br/> ' +
+        '<br/><b>Venue: </b> ' + req.body.venueName + '<br/>' +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ req.body.venueAddress+ ', ' +req.body.venueCity +', '
+        + req.body.venueRegion+' - '+ req.body.venuePostalCode+', '+ req.body.venueCountry+ ' <br/><br/> Thanks, <br> Social Support'
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptionsForSender, function (error, info) {
+        if (error) {
+            console.log(error, "Error in sending mail to sender");
+        } else {
+            console.log('Message sent');
+        }
+    });
+
 
 });
 
 
 /**********DB data and functions START**********/
 var UserLoginSchema = new mongoose.Schema({
-    username: {type:String,index:{unique:true}},
+    username: {type: String, index: {unique: true}},
     password: String,
-    role: { type: String, default: 'Member' },
-}, { collection: "userLogin" });
+    role: {type: String, default: 'Member'},
+}, {collection: "userLogin"});
 
 var UserDetailsSchema = new mongoose.Schema({
-    username: {type:String,index:{unique:true}},
+    username: {type: String, index: {unique: true}},
     firstName: String,
-    lastName: String,    
+    lastName: String,
     email: String,
     phone: String,
-    dob: { type: Date, default: Date.now }
-}, { collection: "userDetails" });
+    dob: {type: Date, default: Date.now}
+}, {collection: "userDetails"});
 
 var PreferenceSchema = new mongoose.Schema({
-    username: {type:String,index:{unique:true}},
+    username: {type: String, index: {unique: true}},
     preferences: String,
     distance: String
-}, { collection: "preferences"});
+}, {collection: "preferences"});
 
 var VenueSchema = new mongoose.Schema({
     name: String,
@@ -112,7 +147,7 @@ var VenueSchema = new mongoose.Schema({
     region: String,
     postalCode: String,
     country: String
-}, { collection: "venue" });
+}, {collection: "venue"});
 
 var EventSchema = new mongoose.Schema({
     eventId: String,
@@ -129,14 +164,14 @@ var EventSchema = new mongoose.Schema({
     venueRegion: String,
     venuePostalCode: String,
     venueCountry: String,
-    addedOn: { type: Date, default: Date.now }
-}, { collection: "event" });
+    addedOn: {type: Date, default: Date.now}
+}, {collection: "event"});
 
 var MyEventsSchema = new mongoose.Schema({
-    username: {type:String,index:{unique:true}},
+    username: {type: String, index: {unique: true}},
     events: [EventSchema],
-    addedOn: { type: Date, default: Date.now }
-}, { collection: "myEvents" });
+    addedOn: {type: Date, default: Date.now}
+}, {collection: "myEvents"});
 
 
 var UserLoginModel = mongoose.model("UserLogin", UserLoginSchema);
@@ -160,7 +195,6 @@ var initialUserDetails = new UserDetailsModel({
 
 //initialUserLogin.save();
 //initialUserDetails.save();
-
 
 
 /*********User related functions**********/
@@ -196,7 +230,7 @@ app.post("/api/userLogin", function (req, res) {
 
 //fetch user details
 app.get("/api/findUserDetails/:id", function (req, res) {
-    UserDetailsModel.findOne({ username: req.params.id},function (err, data) {
+    UserDetailsModel.findOne({username: req.params.id}, function (err, data) {
         res.json(data);
     });
 });
@@ -205,15 +239,15 @@ app.get("/api/findUserDetails/:id", function (req, res) {
 app.post("/api/updateUserDetails/:id", function (req, res) {
     var userDetails = new UserDetailsModel(req.body);
     userDetails.username = req.params.id;
-    UserDetailsModel.findOneAndUpdate({ username: req.params.id},req.body,
+    UserDetailsModel.findOneAndUpdate({username: req.params.id}, req.body,
         function (err, data) {
-        res.send(data);
-    });
+            res.send(data);
+        });
 });
 
 //fetch user preferences
 app.get("/api/findUserPreferences/:id", function (req, res) {
-    PreferencesModel.findOne({ username: req.params.id},function (err, data) {
+    PreferencesModel.findOne({username: req.params.id}, function (err, data) {
         res.json(data);
     });
 });
@@ -222,7 +256,7 @@ app.get("/api/findUserPreferences/:id", function (req, res) {
 app.post("/api/updateUserPreferences/:id", function (req, res) {
     var preferences = new PreferencesModel(req.body);
     preferences.username = req.params.id;
-    PreferencesModel.findOneAndUpdate({ username: req.body.username},req.body,{upsert: true},
+    PreferencesModel.findOneAndUpdate({username: req.body.username}, req.body, {upsert: true},
         function (err, data) {
             res.send(data);
         });
@@ -230,39 +264,31 @@ app.post("/api/updateUserPreferences/:id", function (req, res) {
 
 //fetch user events
 app.get("/api/findUserEvents/:id", function (req, res) {
-    MyEventsModel.findOne({ username: req.params.id},function (err, data) {
+    MyEventsModel.findOne({username: req.params.id}, function (err, data) {
         res.json(data);
     });
 });
 
-app.put("/api/updateUserEvents/:id",  function (req, res){
-   // var myEvents = new MyEventsModel(req.body);
+app.put("/api/updateUserEvents/:id", function (req, res) {
+    // var myEvents = new MyEventsModel(req.body);
     var username = req.params.id;
-    MyEventsModel.findOneAndUpdate({ username: req.params.id},req.body,{upsert: true},
+    MyEventsModel.findOneAndUpdate({username: req.params.id}, req.body, {upsert: true},
         function (err, data) {
-            console.log(err);
-            console.log(data);
-            MyEventsModel.findOne({ username: username},function (err, data) {
+            MyEventsModel.findOne({username: username}, function (err, data) {
                 console.log(data);
                 res.json(data);
             });
         });
-    /*MyEventsModel.update({ username: req.params.id}, { $set: { events: req.body } }, function (err, doc) {
-        console.log(err);
-        console.log(doc.nModified);
-        MyEventsModel.findOne({ username: username},function (err, data) {
-            console.log(data);
-            res.json(data);
-        });
-    });*/
 });
 
 //Update a user login
 app.put("/api/userLogin/:id", function (req, res) {
-    //console.log(req.params.id);
-    //console.log(req.body.username);
-    //console.log(req.body.password);
-    UserLoginModel.update({ _id: req.params.id }, { $set: { username: req.body.username, password: req.body.password } }, function (err, doc) {
+    UserLoginModel.update({_id: req.params.id}, {
+        $set: {
+            username: req.body.username,
+            password: req.body.password
+        }
+    }, function (err, doc) {
         UserLoginModel.find(function (err, data) {
             res.json(data);
         });
@@ -274,9 +300,9 @@ app.delete("/api/deleteUser/:id", function (req, res) {
     UserLoginModel.findById(req.params.id, function (err, doc) {
         var currentUsername = doc.username;
         doc.remove();
-        UserDetailsModel.findOne({ username: currentUsername }, function (err, doc) {
+        UserDetailsModel.findOne({username: currentUsername}, function (err, doc) {
             doc.remove();
-            PreferencesModel.findOne({ username: currentUsername }, function (err, docs) {
+            PreferencesModel.findOne({username: currentUsername}, function (err, docs) {
                 if (docs) {
                     console.log("removing doc");
                     docs.remove();
@@ -288,12 +314,10 @@ app.delete("/api/deleteUser/:id", function (req, res) {
 });
 
 
-
-
 /*****************Passport related functions****************************/
 passport.use(new LocalStrategy(
     function (username, password, done) {
-        UserLoginModel.findOne({ username: username, password: password }, function (err, user) {
+        UserLoginModel.findOne({username: username, password: password}, function (err, user) {
             if (user) {
                 return done(null, user);
             }
@@ -325,72 +349,72 @@ app.get("/api/loggedin", function (req, res) {
 });
 
 /*var TrackSchema = new mongoose.Schema({
-    name: String,
-    id: String,
-    preview_url: String,
-    external_url: String,
-    addedOn: { type: Date, default: Date.now }
-}, { collection: "track" });
+ name: String,
+ id: String,
+ preview_url: String,
+ external_url: String,
+ addedOn: { type: Date, default: Date.now }
+ }, { collection: "track" });
 
-var AlbumSchema = new mongoose.Schema({
-    name: String,
-    id: String,
-    addedOn: { type: Date, default: Date.now }
-}, { collection: "album" });
+ var AlbumSchema = new mongoose.Schema({
+ name: String,
+ id: String,
+ addedOn: { type: Date, default: Date.now }
+ }, { collection: "album" });
 
-var ArtistSchema = new mongoose.Schema({
-    name: String,
-    id: String,
-    addedOn: { type: Date, default: Date.now }
-}, { collection: "artist" });
+ var ArtistSchema = new mongoose.Schema({
+ name: String,
+ id: String,
+ addedOn: { type: Date, default: Date.now }
+ }, { collection: "artist" });
 
-var CommentSchema = new mongoose.Schema({
-    userId: String,
-    firstName: String,
-    lastName: String,
-    commentText: String,
-    addedOn: { type: Date, default: Date.now }
-}, { collection: "comment" });
+ var CommentSchema = new mongoose.Schema({
+ userId: String,
+ firstName: String,
+ lastName: String,
+ commentText: String,
+ addedOn: { type: Date, default: Date.now }
+ }, { collection: "comment" });
 
-var PlaylistSchema = new mongoose.Schema({
-    name: String,
-    tracks: [TrackSchema],
-    comments: [CommentSchema],
-    publish: { type: Boolean, default: 'false' },
-    userId: String,
-    addedOn: { type: Date, default: Date.now }
-}, { collection: "playlist" });
+ var PlaylistSchema = new mongoose.Schema({
+ name: String,
+ tracks: [TrackSchema],
+ comments: [CommentSchema],
+ publish: { type: Boolean, default: 'false' },
+ userId: String,
+ addedOn: { type: Date, default: Date.now }
+ }, { collection: "playlist" });
 
-var FollowerSchema = new mongoose.Schema({
-    playlistId: String,
-    followerUserId: String
-}, { collection: "follower" });
+ var FollowerSchema = new mongoose.Schema({
+ playlistId: String,
+ followerUserId: String
+ }, { collection: "follower" });
 
-var UserSchema = new mongoose.Schema({
-    username: String,
-    password: String,
-    firstName: String,
-    lastName: String,
-    role: { type: String, default: 'Member' },
-    email: String,
-    phone: String,
-    tracks: [TrackSchema],
-    albums: [AlbumSchema],
-    artists: [ArtistSchema]
-}, { collection: "user" });
+ var UserSchema = new mongoose.Schema({
+ username: String,
+ password: String,
+ firstName: String,
+ lastName: String,
+ role: { type: String, default: 'Member' },
+ email: String,
+ phone: String,
+ tracks: [TrackSchema],
+ albums: [AlbumSchema],
+ artists: [ArtistSchema]
+ }, { collection: "user" });
 
-var UserModel = mongoose.model("User", UserSchema);
+ var UserModel = mongoose.model("User", UserSchema);
 
-var initialUser = new UserModel({
-    username: "admin",
-    password: "admin",
-    firstName: "admin",
-    lastName: "admin",
-    role: "Admin",
-    email: "kakkar.j@husky.neu.edu",
-    phone: "123-456-789",
-    tracks: [], albums: [], artists: []
-})
+ var initialUser = new UserModel({
+ username: "admin",
+ password: "admin",
+ firstName: "admin",
+ lastName: "admin",
+ role: "Admin",
+ email: "kakkar.j@husky.neu.edu",
+ phone: "123-456-789",
+ tracks: [], albums: [], artists: []
+ })
 
-//initialUser.save();*/
+ //initialUser.save();*/
 

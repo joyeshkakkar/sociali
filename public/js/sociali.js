@@ -1,4 +1,4 @@
-﻿var app = angular.module("SocialiApp", ['ngRoute', 'ui.bootstrap', 'ngPasswordStrength']);
+﻿var app = angular.module("SocialiApp", ['ngAnimate','ngRoute', 'ui.bootstrap', 'ngPasswordStrength']);
 
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.

@@ -6,8 +6,6 @@ app.factory('MyEventsService', function UserService($http) {
     };
 
     var updateUserEvents = function (username, myEvents, callback) {
-        console.log("Service-->"+username);
-        console.log("Service-->"+myEvents);
         $http.put("/api/updateUserEvents/" + username, myEvents)
             .success(callback);
     }

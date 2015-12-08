@@ -7,6 +7,8 @@
             $scope.userDetails = null;
             $rootScope.userDetails = null;
             $rootScope.preferences = null;
+            $rootScope.distance = null;
+            $rootScope=null;
             $location.url('/');
             //window.location.reload();
         }

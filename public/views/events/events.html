@@ -18,6 +18,7 @@
 <body>
 <div ng-controller="EventsController" ng-init="loadUserEvents()"> <!--ng-init="loadUserEvents()"-->
     <div id="map"></div>
+    <!-- place holder for map-->
     <form class="form-horizontal padding-20" id="filter">
         <fieldset>
             <div class="row">
@@ -41,7 +42,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-3">
-                    <label class="col-sm-4  control-label" for="radius">Radius(Km):
+                    <label class="col-sm-4  control-label" for="radius">Radius(Mi):
                     </label>
 
                     <div class=" col-sm-6 padding-10">
@@ -51,7 +52,13 @@
                                data-slider-max="10" data-slider-step="1"
                                data-slider-value="5"/>
                     </div>
-                    <button ng-click="distanceFilter()">Go</button>
+                    <div class=" col-sm-1 padding-10">
+                        <a href="" tooltip-placement="bottom" tooltip="Filter on radius"
+                           ng-click="distanceFilter()">
+                            <span style="color:green;" class="glyphicon glyphicon-filter"></span>
+                        </a>
+                    </div>
+                    <!--<button ng-click="distanceFilter()">Go</button>-->
                 </div>
                 <div class="form-group col-sm-1">
                     <button id="showAll" ng-click="showall()"
@@ -62,13 +69,31 @@
             </div>
         </fieldset>
     </form>
-    <!-- place holder for map-->
 
-    <div class="col-md-12 column">
+
+    <div class="col-sm-12" ng-show="events.length <= 0">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-1 text-center">
+                <p>
+
+                <h3>There are no events as per your preferences. Please broaden your preferences through <a
+                        href="/#/profile">Profile</a> page.
+                </h3></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 column">
         <input type="hidden" ng-model="latitude">
         <input type="hidden" ng-model="longitude">
+
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-small">
+                <div class="alert-success alert-message" id="alertMessage" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>Success!</strong> Event details are sent to your mail!
+                </div>
                 <tr ng-repeat="event in events" id="{{event.id}}" class="eventRow">
                     <div class="column col-sm-2">
                         <td><img src="{{event.logo.url}}" class="img"></td>
@@ -111,6 +136,7 @@
                                        ng-click="mailEvent(event)" ng-show="currentUser">
                                         <span style="color:forestgreen;" class="glyphicon glyphicon-envelope"></span>
                                     </a>
+
                                 </div>
 
                             </div>
@@ -179,6 +205,12 @@
     $("#radius").slider({
         tooltip: 'always'
     });
+
+    window.setTimeout(function() {
+     $(".alert-message").fadeTo(500, 0).slideUp(500, function(){
+     $(this).remove();
+     });
+     }, 2000);
 
 
 </script>
