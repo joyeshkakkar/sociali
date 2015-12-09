@@ -10,9 +10,9 @@ var nodemailer = require('nodemailer');
 var mg = require('nodemailer-mailgun-transport');
 var app = express();
 //prod env
-//var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/sociali';
+var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/sociali';
 //test environment
-var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/test';
+//var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/test';
 mongoose.connect(connectionString);
 
 app.use(express.static(__dirname + '../../public'));
