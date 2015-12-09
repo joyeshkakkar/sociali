@@ -8,10 +8,11 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var nodemailer = require('nodemailer');
 var mg = require('nodemailer-mailgun-transport');
-
 var app = express();
-
-var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/sociali';
+//prod env
+//var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/sociali';
+//test environment
+var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/test';
 mongoose.connect(connectionString);
 
 app.use(express.static(__dirname + '../../public'));
@@ -22,7 +23,7 @@ app.use(session({secret: 'secret string'}));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());// do not ask everytime for user credentials, check in session for username and password
-
+module.exports = app;
 //To check the server process env
 //app.get('/process', function (req, res) {
 //    res.json(process.env);
@@ -303,17 +304,38 @@ app.delete("/api/deleteUser/:id", function (req, res) {
         UserDetailsModel.findOne({username: currentUsername}, function (err, doc) {
             doc.remove();
             PreferencesModel.findOne({username: currentUsername}, function (err, docs) {
-                if (docs) {
-                    console.log("removing doc");
-                    docs.remove();
-                }
-                res.json({msg: "deleted"});
+                doc.remove();
+                MyEventsModel.findOne({username: currentUsername}, function (err, docs) {
+                    if (docs) {
+                        console.log("removing doc");
+                        docs.remove();
+                    }
+                    res.json({msg: "deleted"});
+                });
             });
         });
     });
 });
 
-
+app.delete("/api/deleteUserByUsername/:username", function (req, res) {
+    UserLoginModel.findOne({username: req.params.username}, function (err, doc) {
+        var currentUsername = doc.username;
+        doc.remove();
+        UserDetailsModel.findOne({username: currentUsername}, function (err, doc) {
+            doc.remove();
+            PreferencesModel.findOne({username: currentUsername}, function (err, docs) {
+                doc.remove();
+                MyEventsModel.findOne({username: currentUsername}, function (err, docs) {
+                    if (docs) {
+                        console.log("removing doc");
+                        docs.remove();
+                    }
+                    res.json({msg: "deleted"});
+                });
+            });
+        });
+    });
+});
 /*****************Passport related functions****************************/
 passport.use(new LocalStrategy(
     function (username, password, done) {

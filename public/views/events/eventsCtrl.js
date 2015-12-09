@@ -67,7 +67,7 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
                             map.setCenter(marker.getPosition());
                         });
                     //fetch user events only if the user is logged in
-                    if ($scope.currentUser != null)
+                    if ($scope.currentUser != null &&$rootScope.query == null)
                         fetchUserEvents();
                     if ($rootScope.query != null) {
                         $scope.query = $rootScope.query;
@@ -110,6 +110,7 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         //}
 
     };
+
 
     //method to fetch user events on user login based on preferences
     function fetchUserEvents() {
@@ -629,17 +630,18 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         if (!savedDistance)
             savedDistance = 5;
         $('#radius').slider('setValue', Number(savedDistance));
-
-        var username = currentUser.username;
-        console.log(username);
-        MyEventsService.getUserEvents(username, function (response) {
-            if (response) {
-                $scope.myEvents = response.events;
-                console.log(response);
-                console.log(response.events);
-                myEvents = response.events;
-            }
-        });
+        if(!currentUser && currentUser!=null) {
+            var username = currentUser.username;
+            console.log(username);
+            MyEventsService.getUserEvents(username, function (response) {
+                if (response) {
+                    $scope.myEvents = response.events;
+                    console.log(response);
+                    console.log(response.events);
+                    myEvents = response.events;
+                }
+            });
+        }
     });
 
 

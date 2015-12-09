@@ -20,9 +20,9 @@ app.controller("SearchController", function ($scope, $http, $rootScope, $locatio
             "endDate": end
         }
         $rootScope.query = query;
-        if($location.path() == '/events'){
+        /*if($location.path() == '/events'){
             $route.reload();
-        }
+        }*/
         //alert('url:'+ $location.path());
         $location.url("/events");
     }

@@ -1,53 +1,29 @@
-describe("testing", function() {
+var chai = require('chai');
+var chaiHttp = require('chai-http');
+var server = require('../../../server/server');
+var should = chai.should();
+var mongoose=require('mongoose');
+var expect = require('expect.js');
+chai.use(chaiHttp);
+describe('POST', function () {
 
-    beforeEach(module("SocialiApp"));
-
-    var LoginController,scope;
-
-    beforeEach(inject(function ($rootScope, $controller) {
-        scope = $rootScope.$new();
-        LoginController = $controller('LoginController', {
-            $scope: scope
-        });
-    }));
-        it('Scope should be defined', function () {
-            expect(scope).toBeDefined();
-        });
-        it('Valid login credentials', function () {
-            var tempUserLogin = {username: "test", password: "test"};
-            scope.userLogin = tempUserLogin;
-            scope.login();
-            expect(scope.currentUser).toBeDefined();
-        });
-        it('Invalid login credentials', function () {
-            var tempUserLogin = {username: "test", password: "t"};
-            scope.userLogin = tempUserLogin;
-            scope.login();
-            expect(scope.currentUser).toBeNull();
-        });
-        /*it('Valid login credentials and user details are fetched', function () {
-            var tempUserLogin = {username: "test", password: "test"};
-            scope.userLogin = tempUserLogin;
-            scope.login();
-            expect(scope.userDetails).toBeDefined();
-        });*/
-        it('Invalid login credentials and user details are not fetched', function () {
-            var tempUserLogin = {username: "test", password: "t"};
-            scope.userLogin = tempUserLogin;
-            scope.login();
-            expect(scope.userDetails).toBeUndefined();
-        });
-    it('Invalid should be false', function () {
-        expect(scope.invalid).toEqual(false);
-    });
-    it('currentUser should be null', function () {
-        expect(scope.currentUser).toBeNull();
-    });
-    it('invalid should be false on change method', function () {
-        scope.change();
-        expect(scope.invalid).toEqual(false);
+    it('login test case', function (done) {
+        chai.request(server)
+            .post('/api/login')
+            .send({username: "test", password: "test"})
+            .end(function (res) {
+                res.should.have.status(200);
+                done();
+            });
     });
 
-
+    it('invalid login test case', function (done) {
+        chai.request(server)
+            .post('/api/login')
+            .send({username: "tessdt", password: "test"})
+            .end(function (res) {
+                res.should.have.status(401);
+                done();
+            });
+    });
 });
-
