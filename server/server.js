@@ -10,9 +10,9 @@ var nodemailer = require('nodemailer');
 var mg = require('nodemailer-mailgun-transport');
 var app = express();
 //prod env
-var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/sociali';
+//var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/sociali';
 //test environment
-//var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/test';
+var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/test';
 mongoose.connect(connectionString);
 
 app.use(express.static(__dirname + '../../public'));
@@ -369,74 +369,4 @@ app.post("/api/logout", function (req, res) {
 app.get("/api/loggedin", function (req, res) {
     res.send(req.isAuthenticated() ? req.user : '0');
 });
-
-/*var TrackSchema = new mongoose.Schema({
- name: String,
- id: String,
- preview_url: String,
- external_url: String,
- addedOn: { type: Date, default: Date.now }
- }, { collection: "track" });
-
- var AlbumSchema = new mongoose.Schema({
- name: String,
- id: String,
- addedOn: { type: Date, default: Date.now }
- }, { collection: "album" });
-
- var ArtistSchema = new mongoose.Schema({
- name: String,
- id: String,
- addedOn: { type: Date, default: Date.now }
- }, { collection: "artist" });
-
- var CommentSchema = new mongoose.Schema({
- userId: String,
- firstName: String,
- lastName: String,
- commentText: String,
- addedOn: { type: Date, default: Date.now }
- }, { collection: "comment" });
-
- var PlaylistSchema = new mongoose.Schema({
- name: String,
- tracks: [TrackSchema],
- comments: [CommentSchema],
- publish: { type: Boolean, default: 'false' },
- userId: String,
- addedOn: { type: Date, default: Date.now }
- }, { collection: "playlist" });
-
- var FollowerSchema = new mongoose.Schema({
- playlistId: String,
- followerUserId: String
- }, { collection: "follower" });
-
- var UserSchema = new mongoose.Schema({
- username: String,
- password: String,
- firstName: String,
- lastName: String,
- role: { type: String, default: 'Member' },
- email: String,
- phone: String,
- tracks: [TrackSchema],
- albums: [AlbumSchema],
- artists: [ArtistSchema]
- }, { collection: "user" });
-
- var UserModel = mongoose.model("User", UserSchema);
-
- var initialUser = new UserModel({
- username: "admin",
- password: "admin",
- firstName: "admin",
- lastName: "admin",
- role: "Admin",
- email: "kakkar.j@husky.neu.edu",
- phone: "123-456-789",
- tracks: [], albums: [], artists: []
- })
-
- //initialUser.save();*/
 
