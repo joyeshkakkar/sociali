@@ -194,12 +194,16 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         var category = $scope.query.category;
         var startDate = $scope.query.startDate;
         var endDate = $scope.query.endDate;
+        var city = $scope.query.city;
         var url = 'https://www.eventbriteapi.com/v3//events/search/';
         var token = 'JJJKFTCUFVWB2HPKT2DS';
         var token2 = 'QC44X66MUP27NDX7MDZL';
         var start = '';
         var end = '';
         var cat = '';
+        var loc = '';
+        var lat = $scope.latitude;
+        var long = $scope.longitude;
         if (startDate != null && startDate != '') {
             start = '&start_date.range_start=' + startDate.substring(0, 19);
         }
@@ -209,17 +213,46 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         if (category != null && category != '') {
             cat = '&categories=' + category;
         }
-        var location = '&location.within=' + radius + 'mi&location.latitude=' + $scope.latitude +
-            '&location.longitude=' + $scope.longitude + '&popular=on';
+        if (city != null && city != '') {
+            loc = '&venue.city=' + city;
+            var geocoder =  new google.maps.Geocoder();
+            geocoder.geocode( { 'address': city}, function(results, status) {
 
-        var searchQuery = url + '?q=' + $scope.query.key + location +
-            '&token=' + token + cat + start + end + '&expand=venue,category';
-        $scope.currentQuery = searchQuery;
-        $scope.code = null;
-        $scope.response = null;
-        $scope.method = 'GET';
+                if (status == google.maps.GeocoderStatus.OK) {
+                    lat= results[0].geometry.location.lat();
+                    long = results[0].geometry.location.lng();
+                    var newLoc = new google.maps.LatLng(
+                        lat,
+                        long);
+                    map.setCenter(newLoc);
+                    var location = '&location.within=' + radius + 'mi&location.latitude=' + lat +
+                        '&location.longitude=' + long + '&popular=on';
 
-        search(searchQuery, true);
+                    var searchQuery = url + '?q=' + $scope.query.key + location +
+                        '&token=' + token + cat + start + end + loc +'&expand=venue,category';
+                    $scope.currentQuery = searchQuery;
+                    $scope.code = null;
+                    $scope.response = null;
+                    $scope.method = 'GET';
+
+                    search(searchQuery, true);
+                } else {
+                    alert("Something got wrong " + status);
+                }
+            });
+        } else {
+            var location = '&location.within=' + radius + 'mi&location.latitude=' + lat +
+                '&location.longitude=' + long + '&popular=on';
+
+            var searchQuery = url + '?q=' + $scope.query.key + location +
+                '&token=' + token + cat + start + end + loc + '&expand=venue,category';
+            $scope.currentQuery = searchQuery;
+            $scope.code = null;
+            $scope.response = null;
+            $scope.method = 'GET';
+
+            search(searchQuery, true);
+        }
 
     };
 

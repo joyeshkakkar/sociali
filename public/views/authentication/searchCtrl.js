@@ -14,15 +14,17 @@ app.controller("SearchController", function ($scope, $http, $rootScope, $locatio
         var query = {
 
             "key": $scope.key,
+            "city": $('#location').val(),
             "category": $scope.category,
             "radius": $("#distance").val(),
             "startDate":start,
             "endDate": end
         }
+        alert($scope.city);
         $rootScope.query = query;
-        /*if($location.path() == '/events'){
+        if($location.path() == '/events'){
             $route.reload();
-        }*/
+        }
         //alert('url:'+ $location.path());
         $location.url("/events");
     }
