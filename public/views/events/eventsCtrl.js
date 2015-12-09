@@ -377,6 +377,8 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         if(!savedDistance)
             savedDistance=5;
         $('#radius').slider('setValue', Number(savedDistance));
+        $('#catFilter').val('');
+        $('#dateFilter').val('');
 
     };
 
