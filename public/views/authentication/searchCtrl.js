@@ -20,7 +20,6 @@ app.controller("SearchController", function ($scope, $http, $rootScope, $locatio
             "startDate":start,
             "endDate": end
         }
-        alert($scope.city);
         $rootScope.query = query;
         if($location.path() == '/events'){
             $route.reload();
