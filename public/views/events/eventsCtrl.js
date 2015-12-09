@@ -628,7 +628,7 @@ app.controller("EventsController", function ($scope, $http, $rootScope, $locatio
         var userDetails= $rootScope.userDetails;
         console.log(userDetails);
         var toMail = userDetails.email;
-        var payload = { name: userDetails.firstName + " " + userDetails.lastName,
+        var payload = { name: userDetails.firstName,
             email: userDetails.email,
             username: userDetails.username,
             eventName: event.name.text,
