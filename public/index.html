@@ -35,8 +35,10 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li ng-show="currentUser"><a href="#/events">Events</a></li>
-                <li ng-show="currentUser">
-                    <a href="#/profile">Profile</a>
+                <li ng-show="currentUser"><a href="#/profile">
+                    <p ng-show="!userDetails">Profile</p>
+                    <p ng-show="userDetails">{{userDetails.firstName}}'s Profile</p>
+                </a>
                 </li>
                 <li ng-show="currentUser"><a href="#/myEvents">My Events</a></li>
             </ul>

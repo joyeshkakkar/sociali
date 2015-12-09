@@ -313,6 +313,23 @@ app.delete("/api/deleteUser/:id", function (req, res) {
     });
 });
 
+app.delete("/api/deleteUserByUsername/:id", function (req, res) {
+    UserLoginModel.findOne({username: req.params.id}, function (err, doc){
+        var currentUsername = doc.username;
+        doc.remove();
+        UserDetailsModel.findOne({username: currentUsername}, function (err, doc) {
+            doc.remove();
+            PreferencesModel.findOne({username: currentUsername}, function (err, docs) {
+                if (docs) {
+                    console.log("removing doc");
+                    docs.remove();
+                }
+                res.json({msg: "deleted"});
+            });
+        });
+    });
+});
+
 
 /*****************Passport related functions****************************/
 passport.use(new LocalStrategy(
