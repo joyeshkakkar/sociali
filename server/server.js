@@ -10,8 +10,10 @@ var nodemailer = require('nodemailer');
 var mg = require('nodemailer-mailgun-transport');
 
 var app = express();
-
-var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/sociali';
+//prod env
+//var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/sociali';
+//test environment
+var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/test';
 mongoose.connect(connectionString);
 
 app.use(express.static(__dirname + '../../public'));
@@ -22,7 +24,7 @@ app.use(session({secret: 'secret string'}));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());// do not ask everytime for user credentials, check in session for username and password
-
+module.exports = app;
 //To check the server process env
 //app.get('/process', function (req, res) {
 //    res.json(process.env);
@@ -303,34 +305,38 @@ app.delete("/api/deleteUser/:id", function (req, res) {
         UserDetailsModel.findOne({username: currentUsername}, function (err, doc) {
             doc.remove();
             PreferencesModel.findOne({username: currentUsername}, function (err, docs) {
-                if (docs) {
-                    console.log("removing doc");
-                    docs.remove();
-                }
-                res.json({msg: "deleted"});
+                doc.remove();
+                MyEventsModel.findOne({username: currentUsername}, function (err, docs) {
+                    if (docs) {
+                        console.log("removing doc");
+                        docs.remove();
+                    }
+                    res.json({msg: "deleted"});
+                });
             });
         });
     });
 });
 
-app.delete("/api/deleteUserByUsername/:id", function (req, res) {
-    UserLoginModel.findOne({username: req.params.id}, function (err, doc){
+app.delete("/api/deleteUserByUsername/:username", function (req, res) {
+    UserLoginModel.findOne({username: req.params.username}, function (err, doc) {
         var currentUsername = doc.username;
         doc.remove();
         UserDetailsModel.findOne({username: currentUsername}, function (err, doc) {
             doc.remove();
             PreferencesModel.findOne({username: currentUsername}, function (err, docs) {
-                if (docs) {
-                    console.log("removing doc");
-                    docs.remove();
-                }
-                res.json({msg: "deleted"});
+                doc.remove();
+                MyEventsModel.findOne({username: currentUsername}, function (err, docs) {
+                    if (docs) {
+                        console.log("removing doc");
+                        docs.remove();
+                    }
+                    res.json({msg: "deleted"});
+                });
             });
         });
     });
 });
-
-
 /*****************Passport related functions****************************/
 passport.use(new LocalStrategy(
     function (username, password, done) {
@@ -364,74 +370,4 @@ app.post("/api/logout", function (req, res) {
 app.get("/api/loggedin", function (req, res) {
     res.send(req.isAuthenticated() ? req.user : '0');
 });
-
-/*var TrackSchema = new mongoose.Schema({
- name: String,
- id: String,
- preview_url: String,
- external_url: String,
- addedOn: { type: Date, default: Date.now }
- }, { collection: "track" });
-
- var AlbumSchema = new mongoose.Schema({
- name: String,
- id: String,
- addedOn: { type: Date, default: Date.now }
- }, { collection: "album" });
-
- var ArtistSchema = new mongoose.Schema({
- name: String,
- id: String,
- addedOn: { type: Date, default: Date.now }
- }, { collection: "artist" });
-
- var CommentSchema = new mongoose.Schema({
- userId: String,
- firstName: String,
- lastName: String,
- commentText: String,
- addedOn: { type: Date, default: Date.now }
- }, { collection: "comment" });
-
- var PlaylistSchema = new mongoose.Schema({
- name: String,
- tracks: [TrackSchema],
- comments: [CommentSchema],
- publish: { type: Boolean, default: 'false' },
- userId: String,
- addedOn: { type: Date, default: Date.now }
- }, { collection: "playlist" });
-
- var FollowerSchema = new mongoose.Schema({
- playlistId: String,
- followerUserId: String
- }, { collection: "follower" });
-
- var UserSchema = new mongoose.Schema({
- username: String,
- password: String,
- firstName: String,
- lastName: String,
- role: { type: String, default: 'Member' },
- email: String,
- phone: String,
- tracks: [TrackSchema],
- albums: [AlbumSchema],
- artists: [ArtistSchema]
- }, { collection: "user" });
-
- var UserModel = mongoose.model("User", UserSchema);
-
- var initialUser = new UserModel({
- username: "admin",
- password: "admin",
- firstName: "admin",
- lastName: "admin",
- role: "Admin",
- email: "kakkar.j@husky.neu.edu",
- phone: "123-456-789",
- tracks: [], albums: [], artists: []
- })
-
- //initialUser.save();*/
 

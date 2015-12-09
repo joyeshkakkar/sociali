@@ -14,6 +14,7 @@ app.controller("SearchController", function ($scope, $http, $rootScope, $locatio
         var query = {
 
             "key": $scope.key,
+            "city": $('#location').val(),
             "category": $scope.category,
             "radius": $("#distance").val(),
             "startDate":start,

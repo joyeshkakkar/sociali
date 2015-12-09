@@ -1,40 +1,32 @@
-describe("testing", function() {
+var chai = require('chai');
+var chaiHttp = require('chai-http');
+var server = require('../../../server/server');
+var should = chai.should();
+var mongoose=require('mongoose');
+var expect = require('expect.js');
+chai.use(chaiHttp);
+describe('POST', function () {
 
-    beforeEach(module("SocialiApp"));
-
-    var SignupController,scope;
-
-    beforeEach(inject(function ($rootScope, $controller) {
-        scope = $rootScope.$new();
-        SignupController = $controller('SignupController', {
-            $scope: scope
-        });
-    }));
-    var tempUserLogin = {username: "aa", password: "aa"};
-    var tempUserDetails = {firstName: "test", lastName: "test", username: "aa", email: "test@test.com", password: "aa", phone: "1234567890"};
-
-    it('Scope should be defined', function () {
-        expect(scope).toBeDefined();
+    it('signup test case -- creating user login', function (done) {
+        chai.request(server)
+            .post('/api/userLogin')
+            .send({username: "test1", password: "test1"})
+            .end(function (res) {
+                res.should.have.status(200);
+                done();
+            });
     });
-    it('new user signup', function () {
-
-        scope.userLogin = tempUserLogin;
-        scope.userDetails = tempUserDetails;
-        scope.signup();
-        //scope.login();
-        expect(scope.currentUser).toBeDefined();
+    it('signup test case -- creating user details', function (done) {
+        chai.request(server)
+            .post('/api/userDetails')
+            .send({username: "test1", fname: "ftest1",
+                lname:"ltest",email:"test@test.com",phonenum :"6165656545"})
+            .end(function (res) {
+                res.should.have.status(200);
+                done();
+            });
     });
 
-    it('Invalid should be false', function () {
-        expect(scope.invalid).toEqual(false);
-    });
-    it('currentUser should be null', function () {
-        expect(scope.currentUser).toBeNull();
-    });
-    it('invalid should be false on change method', function () {
-        scope.change();
-        expect(scope.invalid).toEqual(false);
-    });
+
 
 });
-

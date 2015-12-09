@@ -1,18 +1,19 @@
-describe("testing", function() {
+var chai = require('chai');
+var chaiHttp = require('chai-http');
+var server = require('../../../server/server');
+var should = chai.should();
+var mongoose=require('mongoose');
+var expect = require('expect.js');
+chai.use(chaiHttp);
+describe('POST', function () {
 
-    beforeEach(module("SocialiApp"));
+    it('logout test case', function (done) {
+        chai.request(server)
+            .post('/api/logout')
+            .end(function (res) {
+                res.should.have.status(200);
+                done();
+            });
+    });
 
-    var LogoutController,scope;
-
-    beforeEach(inject(function ($rootScope, $controller) {
-        scope = $rootScope.$new();
-        LogoutController = $controller('LogoutController', {
-            $scope: scope
-        });
-    }));
-
-    /*it('currentUser should be null after logout', function () {
-        expect(scope.currentUser).toBeNull();
-    });*/
 });
-
